@@ -78,53 +78,17 @@
   margin-bottom: 0.5rem;
 }
 
-.menu-apps-lista {
+.menu-secao-apps {
+  margin-bottom: 0.5rem;
+}
+
+.menu-apps-gaveta {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.menu-app-grupo {
-  margin-bottom: 0.65rem;
-}
-
-.menu-app-titulo {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 0.65rem;
-  border-radius: var(--hub-raio);
-  color: var(--hub-gold);
-  text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 700;
-  transition: background 0.15s;
-}
-
-.menu-app-titulo:hover {
-  background: var(--hub-surface-hover);
-}
-
-.menu-app-titulo.ativo {
-  background: var(--hub-orange-soft);
-  color: var(--hub-orange);
-  border: 1px solid rgba(255, 107, 0, 0.25);
-}
-
-.menu-app-filhos {
-  list-style: none;
-  margin: 0.25rem 0 0;
-  padding: 0 0 0 0.85rem;
-  border-left: 1px solid var(--hub-gold-soft);
-}
-
-.menu-app-filhos .menu-link {
-  font-size: 0.85rem;
-  padding: 0.4rem 0.55rem;
-}
-
-.menu-link-app {
-  font-weight: 600;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .menu-nav ul {

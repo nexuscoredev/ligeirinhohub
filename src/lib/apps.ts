@@ -20,6 +20,20 @@ export interface AppSistema {
   rotaEntrada: string;
   /** Telas / módulos dentro do app */
   itens: ItemApp[];
+  /** Tagline curta no menu e nos cards de lançamento */
+  descricao?: string;
+  /** Cor de destaque do app (hex) — identidade visual */
+  corAccent?: string;
+}
+
+/** Variáveis CSS inline para tematizar um app */
+export function temaApp(app: AppSistema): Record<string, string> {
+  const accent = app.corAccent ?? '#ff6b00';
+  return {
+    '--app-accent': accent,
+    '--app-accent-soft': `${accent}26`,
+    '--app-accent-border': `${accent}40`,
+  };
 }
 
 /** Páginas do painel administrativo (fora dos apps de operação) */
@@ -35,6 +49,8 @@ export const APPS_SISTEMA: AppSistema[] = [
     id: 'pdv',
     nome: 'Ligeirinho PDV',
     icone: '🛒',
+    descricao: 'Vendas no balcão com caixa integrado.',
+    corAccent: '#ff6b00',
     rotaEntrada: '/pdv',
     itens: [
       {
@@ -49,6 +65,8 @@ export const APPS_SISTEMA: AppSistema[] = [
     id: 'totem',
     nome: 'Ligeirinho Totem',
     icone: '📱',
+    descricao: 'Autoatendimento touch para o cliente.',
+    corAccent: '#64d2ff',
     rotaEntrada: '/totem',
     itens: [
       {
@@ -63,6 +81,8 @@ export const APPS_SISTEMA: AppSistema[] = [
     id: 'operacional',
     nome: 'Ligeirinho Operacional',
     icone: '⚡',
+    descricao: 'Pedidos, fila, clientes e entregas.',
+    corAccent: '#bf5af2',
     rotaEntrada: '/operacional',
     itens: [
       {

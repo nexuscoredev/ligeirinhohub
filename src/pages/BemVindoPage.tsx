@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
+import { AppLauncherCard } from '@/components/AppLauncherCard';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
-import { APPS_SISTEMA, HUB_ADMIN_ITENS } from '@/lib/apps';
+import { APPS_SISTEMA, HUB_ADMIN_ITENS, appPermitido } from '@/lib/apps';
 
 export function BemVindoPage() {
   const { usuario } = usePerfil();
@@ -11,12 +12,23 @@ export function BemVindoPage() {
     (i) => i.rota === '/dashboard' || i.rota === '/produtos',
   );
 
+  const appsVisiveis = usuario
+    ? APPS_SISTEMA.filter((app) =>
+        appPermitido(
+          app,
+          usuario.cargo,
+          usuario.paginas_permitidas,
+          usuario.email,
+        ),
+      )
+    : [];
+
   return (
     <PageShell
       comLogo
       tag="Hub administrativo"
       titulo={<>Bem-vindo, {primeiroNome}</>}
-      subtitulo="O ecossistema é organizado em apps — cada um com seus módulos internos."
+      subtitulo="O ecossistema é organizado em apps — cada um com identidade visual e módulos internos."
       acoes={
         <Link to="/dashboard" className="btn">
           Ir ao dashboard
@@ -67,28 +79,20 @@ export function BemVindoPage() {
         </>
       ) : null}
 
-      <div className="hub-secao-header">
-        <h2 className="hub-secao-titulo">
-          Apps <span>disponíveis</span>
-        </h2>
-      </div>
-      <div className="hub-grid-2">
-        {APPS_SISTEMA.map((app) => (
-          <article key={app.id} className="card app-resumo-card">
-            <Link to={app.rotaEntrada} className="app-resumo-titulo">
-              <span aria-hidden>{app.icone}</span>
-              {app.nome}
-            </Link>
-            <ul className="app-resumo-itens">
-              {app.itens.map((item) => (
-                <li key={item.rota}>
-                  <Link to={item.rota}>{item.titulo}</Link>
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
-      </div>
+      {appsVisiveis.length > 0 ? (
+        <>
+          <div className="hub-secao-header">
+            <h2 className="hub-secao-titulo">
+              Apps <span>disponíveis</span>
+            </h2>
+          </div>
+          <div className="hub-apps-launcher-grid">
+            {appsVisiveis.map((app) => (
+              <AppLauncherCard key={app.id} app={app} />
+            ))}
+          </div>
+        </>
+      ) : null}
     </PageShell>
   );
 }

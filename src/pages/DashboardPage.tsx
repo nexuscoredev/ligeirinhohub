@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
 import { HubLogo } from '@/components/HubLogo';
+import { AppLauncherCard } from '@/components/AppLauncherCard';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
-import { APPS_SISTEMA } from '@/lib/apps';
+import { APPS_SISTEMA, appPermitido } from '@/lib/apps';
 import { supabaseConfigurado } from '@/lib/supabase';
 import './DashboardPage.css';
 
@@ -16,6 +16,17 @@ const kpis = [
 export function DashboardPage() {
   const { usuario } = usePerfil();
   const primeiroNome = usuario?.nome?.split(' ')[0] ?? 'equipe';
+
+  const appsVisiveis = usuario
+    ? APPS_SISTEMA.filter((app) =>
+        appPermitido(
+          app,
+          usuario.cargo,
+          usuario.paginas_permitidas,
+          usuario.email,
+        ),
+      )
+    : [];
 
   return (
     <PageShell
@@ -32,7 +43,7 @@ export function DashboardPage() {
         <HubLogo size="hero" glow className="dashboard-hero-logo" />
         <div className="dashboard-hero-kpis">
           <div className="hub-stat-card">
-            <strong>{APPS_SISTEMA.length}</strong>
+            <strong>{appsVisiveis.length || APPS_SISTEMA.length}</strong>
             <span>apps no ecossistema</span>
           </div>
           <div className="hub-stat-card">
@@ -74,35 +85,20 @@ export function DashboardPage() {
         </div>
       </section>
 
-      <section aria-labelledby="dashboard-apps-titulo">
-        <div className="hub-secao-header">
-          <h2 id="dashboard-apps-titulo" className="hub-secao-titulo">
-            Apps <span>do sistema</span>
-          </h2>
-        </div>
-        <div className="dashboard-apps-grid">
-          {APPS_SISTEMA.map((app) => (
-            <article key={app.id} className="dashboard-app-card card">
-              <header className="dashboard-app-card-header">
-                <span aria-hidden>{app.icone}</span>
-                <Link to={app.rotaEntrada} className="dashboard-app-nome">
-                  {app.nome}
-                </Link>
-              </header>
-              <ul className="dashboard-app-itens">
-                {app.itens.map((item) => (
-                  <li key={item.rota}>
-                    <Link to={item.rota}>
-                      <span aria-hidden>{item.icone}</span>
-                      {item.titulo}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
+      {appsVisiveis.length > 0 ? (
+        <section aria-labelledby="dashboard-apps-titulo">
+          <div className="hub-secao-header">
+            <h2 id="dashboard-apps-titulo" className="hub-secao-titulo">
+              Apps <span>do sistema</span>
+            </h2>
+          </div>
+          <div className="hub-apps-launcher-grid hub-apps-launcher-grid--dashboard">
+            {appsVisiveis.map((app) => (
+              <AppLauncherCard key={app.id} app={app} compact />
+            ))}
+          </div>
+        </section>
+      ) : null}
     </PageShell>
   );
 }

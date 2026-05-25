@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { AppMenuGroup } from '@/components/AppMenuGroup';
 import { HubLogo } from '@/components/HubLogo';
 import { usePerfil } from '@/contexts/PerfilContext';
 import {
@@ -6,9 +7,7 @@ import {
   HUB_ADMIN_ITENS,
   NOME_PLATAFORMA,
   appPermitido,
-  appTemSubmenu,
   itemHubPermitido,
-  type AppSistema,
   type ItemApp,
 } from '@/lib/apps';
 import { appDisplayVersion } from '@/lib/appDisplayVersion';
@@ -28,51 +27,6 @@ function MenuLink({ item }: { item: ItemApp }) {
         </span>
         {item.titulo}
       </NavLink>
-    </li>
-  );
-}
-
-function MenuApp({ app }: { app: AppSistema }) {
-  const submenu = appTemSubmenu(app);
-
-  if (!submenu) {
-    const item = app.itens[0];
-    return (
-      <li className="menu-app-item">
-        <NavLink
-          to={item.rota}
-          className={({ isActive }) =>
-            isActive ? 'menu-link menu-link-app ativo' : 'menu-link menu-link-app'
-          }
-          end
-        >
-          <span className="menu-link-icone" aria-hidden>
-            {app.icone}
-          </span>
-          {app.nome}
-        </NavLink>
-      </li>
-    );
-  }
-
-  return (
-    <li className="menu-app-grupo">
-      <NavLink
-        to={app.rotaEntrada}
-        className={({ isActive }) =>
-          isActive ? 'menu-app-titulo ativo' : 'menu-app-titulo'
-        }
-      >
-        <span className="menu-link-icone" aria-hidden>
-          {app.icone}
-        </span>
-        {app.nome}
-      </NavLink>
-      <ul className="menu-app-filhos">
-        {app.itens.map((item) => (
-          <MenuLink key={item.rota} item={item} />
-        ))}
-      </ul>
     </li>
   );
 }
@@ -124,11 +78,11 @@ export function MainLayout() {
           ) : null}
 
           {appsVisiveis.length > 0 ? (
-            <div className="menu-secao">
+            <div className="menu-secao menu-secao-apps">
               <span className="menu-secao-titulo">Apps</span>
-              <ul className="menu-apps-lista">
+              <ul className="menu-apps-gaveta" aria-label="Apps do ecossistema">
                 {appsVisiveis.map((app) => (
-                  <MenuApp key={app.id} app={app} />
+                  <AppMenuGroup key={app.id} app={app} />
                 ))}
               </ul>
             </div>
