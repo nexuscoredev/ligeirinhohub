@@ -1,4 +1,7 @@
+import { useLocation } from 'react-router-dom';
+import { AppBreadcrumb } from '@/components/AppBreadcrumb';
 import { PageShell } from '@/components/PageShell';
+import { appPorRota } from '@/lib/apps';
 
 interface PlaceholderPageProps {
   titulo: string;
@@ -11,36 +14,34 @@ export function PlaceholderPage({
   descricao,
   icone = '🚧',
 }: PlaceholderPageProps) {
-  const palavras = titulo.split(' ');
-  const destaque = palavras.length > 1 ? palavras.pop() : titulo;
-  const base =
-    palavras.length > 0 ? `${palavras.join(' ')} ` : '';
+  const { pathname } = useLocation();
+  const contexto = appPorRota(pathname);
+
+  const tituloPagina = contexto ? (
+    <>
+      {titulo} <span>· {contexto.app.nome}</span>
+    </>
+  ) : (
+    titulo
+  );
 
   return (
     <PageShell
       comLogo
-      tag="Em desenvolvimento"
-      titulo={
-        palavras.length > 0 ? (
-          <>
-            {base}
-            <span>{destaque}</span>
-          </>
-        ) : (
-          <>
-            <span>{destaque}</span>
-          </>
-        )
-      }
+      tag={contexto ? contexto.app.nome : 'Em desenvolvimento'}
+      titulo={tituloPagina}
       subtitulo={descricao}
     >
-      <div className="card" style={{ maxWidth: 520 }}>
-        <p style={{ margin: '0 0 1rem', fontSize: '2rem' }} aria-hidden>
+      {contexto ? (
+        <AppBreadcrumb app={contexto.app} item={contexto.item} />
+      ) : null}
+      <div className="card placeholder-card">
+        <p className="placeholder-icone" aria-hidden>
           {icone}
         </p>
-        <p style={{ margin: 0, color: 'var(--hub-muted)' }}>
-          Módulo previsto para a próxima etapa do roadmap (Fase 1). A estrutura de
-          navegação e permissões já está pronta.
+        <p className="placeholder-texto">
+          Módulo dentro de <strong>{contexto?.app.nome ?? 'app'}</strong> — previsto
+          para a próxima etapa do roadmap (Fase 1).
         </p>
       </div>
     </PageShell>

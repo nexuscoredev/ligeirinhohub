@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { HubLogo } from '@/components/HubLogo';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
+import { APPS_SISTEMA } from '@/lib/apps';
 import { supabaseConfigurado } from '@/lib/supabase';
 import './DashboardPage.css';
 
@@ -10,13 +11,6 @@ const kpis = [
   { rotulo: 'Em preparo', valor: '—', nota: 'Fila operacional' },
   { rotulo: 'Em rota', valor: '—', nota: 'Motoristas' },
   { rotulo: 'Faturamento', valor: 'R$ —', nota: 'Dashboard Fase 1' },
-];
-
-const modulos = [
-  { nome: 'PDV', rota: '/pdv', status: 'Em breve', icone: '🛒' },
-  { nome: 'Totem', rota: '/totem', status: 'Em breve', icone: '📱' },
-  { nome: 'Operacional', rota: '/operacional', status: 'Em breve', icone: '⚡' },
-  { nome: 'Motoristas', rota: '/motorista', status: 'Em breve', icone: '🚚' },
 ];
 
 export function DashboardPage() {
@@ -32,14 +26,14 @@ export function DashboardPage() {
           Olá, {primeiroNome} — visão <span>gerencial</span>
         </>
       }
-      subtitulo="Entrega, balcão e operação da adega em um só painel."
+      subtitulo="Apps do ecossistema: PDV, Totem e Operacional com seus módulos internos."
     >
       <header className="dashboard-hero">
         <HubLogo size="hero" glow className="dashboard-hero-logo" />
         <div className="dashboard-hero-kpis">
           <div className="hub-stat-card">
-            <strong>+100</strong>
-            <span>produtos (meta catálogo)</span>
+            <strong>{APPS_SISTEMA.length}</strong>
+            <span>apps no ecossistema</span>
           </div>
           <div className="hub-stat-card">
             <strong>1</strong>
@@ -61,9 +55,6 @@ export function DashboardPage() {
         <strong>
           {supabaseConfigurado ? 'conectado' : 'não configurado'}
         </strong>
-        {supabaseConfigurado
-          ? ' — pronto para pedidos e realtime'
-          : ' — verifique VITE_SUPABASE_* no .env'}
       </div>
 
       <section aria-labelledby="dashboard-kpis-titulo">
@@ -83,28 +74,32 @@ export function DashboardPage() {
         </div>
       </section>
 
-      <section aria-labelledby="dashboard-modulos-titulo">
+      <section aria-labelledby="dashboard-apps-titulo">
         <div className="hub-secao-header">
-          <h2 id="dashboard-modulos-titulo" className="hub-secao-titulo">
-            Explore o <span>ecossistema</span>
+          <h2 id="dashboard-apps-titulo" className="hub-secao-titulo">
+            Apps <span>do sistema</span>
           </h2>
-          <Link to="/pedidos" className="hub-link">
-            Ver pedidos →
-          </Link>
         </div>
-        <div className="dashboard-modulos-grid">
-          {modulos.map((mod) => (
-            <Link
-              key={mod.nome}
-              to={mod.rota}
-              className="hub-modulo-card"
-            >
-              <span className="hub-modulo-icone" aria-hidden>
-                {mod.icone}
-              </span>
-              <strong>{mod.nome}</strong>
-              <em>{mod.status}</em>
-            </Link>
+        <div className="dashboard-apps-grid">
+          {APPS_SISTEMA.map((app) => (
+            <article key={app.id} className="dashboard-app-card card">
+              <header className="dashboard-app-card-header">
+                <span aria-hidden>{app.icone}</span>
+                <Link to={app.rotaEntrada} className="dashboard-app-nome">
+                  {app.nome}
+                </Link>
+              </header>
+              <ul className="dashboard-app-itens">
+                {app.itens.map((item) => (
+                  <li key={item.rota}>
+                    <Link to={item.rota}>
+                      <span aria-hidden>{item.icone}</span>
+                      {item.titulo}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </article>
           ))}
         </div>
       </section>

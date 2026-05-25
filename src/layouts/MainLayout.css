@@ -64,18 +64,67 @@
   border-radius: 4px;
 }
 
-.menu-grupo {
-  margin-bottom: 1.1rem;
+.menu-secao {
+  margin-bottom: 1.25rem;
 }
 
-.menu-grupo-titulo {
+.menu-secao-titulo {
   display: block;
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--hub-muted);
   padding: 0 0.55rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.menu-apps-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-app-grupo {
+  margin-bottom: 0.65rem;
+}
+
+.menu-app-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--hub-raio);
+  color: var(--hub-gold);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: background 0.15s;
+}
+
+.menu-app-titulo:hover {
+  background: var(--hub-surface-hover);
+}
+
+.menu-app-titulo.ativo {
+  background: var(--hub-orange-soft);
+  color: var(--hub-orange);
+  border: 1px solid rgba(255, 107, 0, 0.25);
+}
+
+.menu-app-filhos {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0 0 0 0.85rem;
+  border-left: 1px solid var(--hub-gold-soft);
+}
+
+.menu-app-filhos .menu-link {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.55rem;
+}
+
+.menu-link-app {
+  font-weight: 600;
 }
 
 .menu-nav ul {
