@@ -12,6 +12,8 @@ export type CargoHub =
 export interface Usuario {
   id: string;
   email: string;
+  /** Nome para login na tela (ex.: Vinicius) */
+  login: string;
   nome: string;
   cargo: CargoHub;
   ativo: boolean;
@@ -33,6 +35,15 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      resolve_login_email: {
+        Args: { p_login: string };
+        Returns: string | null;
+      };
+    };
+    Enums: {
+      cargo_hub: CargoHub;
+    };
+    CompositeTypes: Record<string, never>;
   };
 }

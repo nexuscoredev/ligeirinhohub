@@ -2,12 +2,21 @@
 
 Itens que exigem sua conta, senha ou decisão de negócio.
 
-## 1. Primeiro usuário (Supabase Auth)
+## 1. Usuários (login por **Usuário** + senha)
 
-1. [Supabase Dashboard](https://supabase.com/dashboard/project/liszpwocwvkytzyaxvit/auth/users) → **Add user** (e-mail + senha).
-2. **Table Editor** → `usuarios` → altere `cargo` para `Administrador` ou `Desenvolvedor`.
+Na tela de login entra o campo **`login`** (ex.: `Vinicius`), não o e-mail. O Supabase Auth usa um e-mail técnico (`*@hub.ligeirinho.com`).
 
-O trigger `on_auth_user_created` já cria a linha em `usuarios` automaticamente.
+1. [Supabase Dashboard](https://supabase.com/dashboard/project/liszpwocwvkytzyaxvit/auth/users) → **Add user** com o e-mail técnico e senha.
+2. **Table Editor** → `usuarios` → preencha `login` (único, ex.: `Vinicius`), `nome`, `cargo` e `ativo`.
+
+O trigger `on_auth_user_created` cria a linha em `usuarios`; confira `login` e `cargo`.
+
+| Login (tela) | E-mail Auth | Observação |
+|--------------|-------------|------------|
+| Nexus | nexus@hub.ligeirinho.com | Admin |
+| Denis | denis@hubligeirinho.com | |
+| Rafael | rafaelcavalcante@hub.ligeirinho.com | Admin |
+| Vinicius | viniciusdemorais@hub.ligeirinho.com | Senha exemplo: `123456` |
 
 ## 2. URLs de redirect (Auth)
 

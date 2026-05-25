@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { HubLogo } from '@/components/HubLogo';
 import { usePerfil } from '@/contexts/PerfilContext';
+import { emailParaLogin } from '@/lib/authLogin';
 import { supabase, supabaseConfigurado } from '@/lib/supabase';
 import './LoginPage.css';
 
@@ -12,7 +13,7 @@ export function LoginPage() {
     (location.state as { from?: { pathname?: string } } | null)?.from
       ?.pathname ?? '/bem-vindo';
 
-  const [email, setEmail] = useState('');
+  const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const [enviando, setEnviando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
@@ -26,14 +27,21 @@ export function LoginPage() {
     setErro(null);
     setEnviando(true);
 
+    const emailAuth = await emailParaLogin(usuario);
+    if (!emailAuth) {
+      setEnviando(false);
+      setErro('Usuário ou senha incorretos.');
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
+      email: emailAuth,
       password: senha,
     });
 
     setEnviando(false);
     if (error) {
-      setErro(error.message);
+      setErro('Usuário ou senha incorretos.');
     }
   }
 
@@ -60,12 +68,14 @@ export function LoginPage() {
 
         <form onSubmit={(e) => void handleSubmit(e)}>
           <label>
-            E-mail
+            Usuário
             <input
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              name="username"
+              autoComplete="username"
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+              placeholder="Ex.: Vinicius"
               required
             />
           </label>
