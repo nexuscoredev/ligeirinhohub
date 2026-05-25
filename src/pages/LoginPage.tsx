@@ -56,7 +56,7 @@ export function LoginPage() {
           Acesso ao <span>Hub</span>
         </h1>
         <p className="login-subtitulo">
-          Gestão da adega — venda, operação e entrega em um só lugar.
+          Gestão da distribuidora — venda, operação e entrega em um só lugar.
         </p>
 
         {!supabaseConfigurado && (

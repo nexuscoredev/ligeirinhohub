@@ -2,7 +2,7 @@
 
 # 🍷 Ligeirinho Hub
 
-**Sistema operacional integrado para adega** — venda, preparo, entrega e gestão em um único ecossistema web.
+**Sistema operacional integrado para distribuidora** — venda, preparo, entrega e gestão em um único ecossistema web.
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -39,7 +39,7 @@ PDV · Totem · Delivery  →  Pedido (entidade central)  →  Operacional  → 
 
 ### Objetivo
 
-Unificar **venda**, **operação** e **gestão** da adega em uma SPA modular (PWA), com um único backend e pedido como entidade central.
+Unificar **venda**, **operação** e **gestão** da distribuidora em uma SPA modular (PWA), com um único backend e pedido como entidade central.
 
 ### Problema que resolve
 

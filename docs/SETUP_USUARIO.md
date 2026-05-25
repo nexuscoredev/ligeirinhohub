@@ -18,6 +18,28 @@ O trigger `on_auth_user_created` cria a linha em `usuarios`; confira `login` e `
 | Rafael | rafaelcavalcante@hub.ligeirinho.com | Admin |
 | Vinicius | viniciusdemorais@hub.ligeirinho.com | Senha exemplo: `123456` |
 
+### Criar usuário via SQL (cuidado)
+
+Prefira **Add user** no Dashboard. Se criar em `auth.users` por SQL, o login **falha** se faltar algum destes itens:
+
+1. **Tokens vazios** (não `NULL`): `confirmation_token`, `email_change`, `email_change_token_new`, `recovery_token` → use `''`.
+2. **Senha**: `extensions.crypt('sua_senha', extensions.gen_salt('bf'))` em `encrypted_password`.
+3. **Identidade**: linha em `auth.identities` com `provider = 'email'` e `identity_data` com `sub` + `email`.
+4. **Perfil**: `login` em `public.usuarios` (ex.: `Vinicius`) igual ao que a pessoa digita na tela.
+
+Exemplo ao corrigir senha/tokens de um usuário existente:
+
+```sql
+UPDATE auth.users SET
+  confirmation_token = '',
+  email_change = '',
+  email_change_token_new = '',
+  recovery_token = '',
+  encrypted_password = extensions.crypt('123456', extensions.gen_salt('bf')),
+  email_confirmed_at = coalesce(email_confirmed_at, now())
+WHERE email = 'viniciusdemorais@hub.ligeirinho.com';
+```
+
 ## 2. URLs de redirect (Auth)
 
 **Authentication → URL Configuration:**

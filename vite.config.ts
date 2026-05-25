@@ -14,7 +14,7 @@ export default defineConfig({
       manifest: {
         name: 'Ligeirinho Hub',
         short_name: 'Ligeirinho',
-        description: 'Gestão da adega — Hub administrativo',
+        description: 'Gestão da distribuidora — Hub administrativo',
         theme_color: '#080808',
         background_color: '#080808',
         display: 'standalone',

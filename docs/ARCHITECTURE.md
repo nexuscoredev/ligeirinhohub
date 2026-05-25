@@ -10,7 +10,7 @@ Documentação detalhada (Notion): ver seção [Documentação complementar](#do
 
 ## 1. Visão Geral do Sistema
 
-O **Ligeirinho Hub** é o sistema sob medida da adega para unificar **venda**, **operação** e **gestão** em um ecossistema web modular (PWA), com um único backend Supabase e deploy na Vercel.
+O **Ligeirinho Hub** é o sistema sob medida da distribuidora para unificar **venda**, **operação** e **gestão** em um ecossistema web modular (PWA), com um único backend Supabase e deploy na Vercel.
 
 ### Ecossistema macro
 
@@ -38,7 +38,7 @@ Delivery ─────┘         │                              │
 |----------|-----------|
 | **Problema** | Vendas, estoque e entrega desconectados; sem rastreio pós-venda; cardápio inconsistente entre canais. |
 | **Solução** | Um pedido, um ID, um banco; cardápio centralizado; realtime na operação. |
-| **Princípio** | Herdar **padrão maduro** do RG Ambiental, adaptado ao domínio **adega** — não copiar domínio de coleta/resíduos. |
+| **Princípio** | Herdar **padrão maduro** do RG Ambiental, adaptado ao domínio **distribuidora** — não copiar domínio de coleta/resíduos. |
 
 ---
 
@@ -118,7 +118,7 @@ Detalhamento validado em `Limites da Fase 1` (Notion).
 
 - **Supabase:** Auth + RLS + Realtime + Edge em um projeto; padrão já validado no RG Ambiental.
 - **React + Vite:** Mesma stack do RG; curva de aprendizado menor; deploy estático na Vercel.
-- **PWA:** Adega opera em tablet/caixa; instalação sem loja de apps.
+- **PWA:** A distribuidora opera em tablet/caixa; instalação sem loja de apps.
 - **Uma SPA (Fase 1):** Menor complexidade operacional que múltiplos deploys; lazy por módulo mitiga bundle.
 
 ---
@@ -423,7 +423,7 @@ Todo PR de feature deve respeitar:
 | **ADR-ARCH-02** | React 19 + Vite | Paridade RG; HMR; ecossistema |
 | **ADR-ARCH-03** | PWA | Tablet caixa/totem/motorista |
 | **ADR-ARCH-04** | Modular SPA (Fase 1) | Manutenção; lazy por rota |
-| **ADR-COMP-01** | Domain-first + shared/ui + shared/business | Escala por módulo adega |
+| **ADR-COMP-01** | Domain-first + shared/ui + shared/business | Escala por módulo distribuidora |
 | **ADR-NAME-01** | Nomenclatura v1 (PascalCase, snake_case DB, sem NEXUS em arquivos) | Consistência |
 | **ADR-SEC-01** | Cargo + paginas_permitidas + RLS | Dupla camada RG |
 | **ADR-FLOW-01** | Fluxo pedidos v1 + histórico imutável | Pedido único |
