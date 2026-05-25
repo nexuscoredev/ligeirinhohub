@@ -5,9 +5,26 @@ import {
   PAGINAS_SISTEMA,
   paginaPermitida,
   type GrupoMenu,
+  type PaginaSistema,
 } from '@/lib/paginasSistema';
 import { appDisplayVersion } from '@/lib/appDisplayVersion';
-import type { PaginaSistema } from '@/lib/paginasSistema';
+
+const ICONES_MENU: Record<string, string> = {
+  '/bem-vindo': '👋',
+  '/dashboard': '📊',
+  '/produtos': '🍺',
+  '/clientes': '👥',
+  '/pedidos': '📦',
+  '/pdv': '🛒',
+  '/totem': '📱',
+  '/operacional': '⚡',
+  '/motorista': '🚚',
+  '/usuarios': '🔐',
+};
+
+function iconeMenu(rota: string) {
+  return ICONES_MENU[rota] ?? '•';
+}
 
 export function MainLayout() {
   const { usuario, sair } = usePerfil();
@@ -36,10 +53,17 @@ export function MainLayout() {
     <div className="layout-hub">
       <aside className="menu-lateral">
         <div className="menu-marca">
-          <span className="menu-marca-titulo">Ligeirinho Hub</span>
-          <span className="menu-marca-versao">{appDisplayVersion()}</span>
+          <span className="menu-marca-icone" aria-hidden>
+            🍷
+          </span>
+          <div className="menu-marca-texto">
+            <span className="menu-marca-titulo">
+              Ligeirinho <span>Hub</span>
+            </span>
+            <span className="menu-marca-versao">{appDisplayVersion()}</span>
+          </div>
         </div>
-        <nav className="menu-nav">
+        <nav className="menu-nav" aria-label="Menu principal">
           {(Object.keys(GRUPOS_MENU) as GrupoMenu[]).map((grupo) => {
             const itens = porGrupo[grupo];
             if (!itens?.length) return null;
@@ -55,6 +79,9 @@ export function MainLayout() {
                           isActive ? 'menu-link ativo' : 'menu-link'
                         }
                       >
+                        <span className="menu-link-icone" aria-hidden>
+                          {iconeMenu(pagina.rota)}
+                        </span>
                         {pagina.titulo}
                       </NavLink>
                     </li>
@@ -65,9 +92,15 @@ export function MainLayout() {
           })}
         </nav>
         <div className="menu-rodape">
-          <p className="menu-usuario">{usuario.nome}</p>
-          <p className="menu-cargo">{usuario.cargo}</p>
-          <button type="button" className="btn btn-secundario" onClick={() => void sair()}>
+          <div>
+            <p className="menu-usuario">{usuario.nome}</p>
+            <p className="menu-cargo">{usuario.cargo}</p>
+          </div>
+          <button
+            type="button"
+            className="btn btn-secundario"
+            onClick={() => void sair()}
+          >
             Sair
           </button>
         </div>

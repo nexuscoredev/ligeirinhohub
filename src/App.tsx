@@ -32,6 +32,7 @@ export default function App() {
                     <PlaceholderPage
                       titulo="PDV"
                       descricao="Venda assistida no balcão — caixa e pagamento."
+                      icone="🛒"
                     />
                   }
                 />
@@ -41,6 +42,7 @@ export default function App() {
                     <PlaceholderPage
                       titulo="Totem"
                       descricao="Autoatendimento touch-first (PWA)."
+                      icone="📱"
                     />
                   }
                 />
@@ -50,6 +52,7 @@ export default function App() {
                     <PlaceholderPage
                       titulo="Operacional"
                       descricao="Fila de pedidos, preparo e despacho."
+                      icone="⚡"
                     />
                   }
                 />
@@ -59,6 +62,7 @@ export default function App() {
                     <PlaceholderPage
                       titulo="Motoristas"
                       descricao="Entregas atribuídas e confirmação em rota."
+                      icone="🚚"
                     />
                   }
                 />
@@ -68,6 +72,7 @@ export default function App() {
                     <PlaceholderPage
                       titulo="Produtos"
                       descricao="Cadastro de bebidas e preços."
+                      icone="🍺"
                     />
                   }
                 />
@@ -77,6 +82,7 @@ export default function App() {
                     <PlaceholderPage
                       titulo="Clientes"
                       descricao="Cadastro de clientes da adega."
+                      icone="👥"
                     />
                   }
                 />
@@ -86,6 +92,7 @@ export default function App() {
                     <PlaceholderPage
                       titulo="Pedidos"
                       descricao="Vendas e fluxo operacional."
+                      icone="📦"
                     />
                   }
                 />
@@ -95,6 +102,7 @@ export default function App() {
                     <PlaceholderPage
                       titulo="Usuários"
                       descricao="Gestão de acessos e cargos."
+                      icone="🔐"
                     />
                   }
                 />

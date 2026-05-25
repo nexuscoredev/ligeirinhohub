@@ -1,39 +1,29 @@
-:root {
-  --cor-primaria: #7c2d12;
-  --cor-primaria-hover: #9a3412;
-  --cor-fundo: #fffbeb;
-  --cor-superficie: #ffffff;
-  --cor-texto: #1c1917;
-  --cor-texto-suave: #78716c;
-  --cor-borda: #e7e5e4;
-  --cor-erro: #b91c1c;
-  --cor-sucesso: #15803d;
-  --largura-menu: 260px;
-  --raio: 10px;
-  --sombra: 0 1px 3px rgb(28 25 23 / 8%);
-  font-family:
-    'Segoe UI',
-    system-ui,
-    -apple-system,
-    sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color: var(--cor-texto);
-  background: var(--cor-fundo);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+html {
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--hub-text);
+  background: var(--hub-bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  background: var(--hub-bg);
+  color: var(--hub-text);
 }
 
 #root {
@@ -41,28 +31,55 @@ body {
 }
 
 a {
-  color: var(--cor-primaria);
+  color: var(--hub-orange);
+}
+
+a:hover {
+  color: var(--hub-orange-hover);
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
+  color: inherit;
 }
 
 button {
   cursor: pointer;
 }
 
-input {
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio);
-  padding: 0.6rem 0.75rem;
+input,
+select,
+textarea {
+  background: var(--hub-surface-solid);
+  border: 1px solid var(--hub-gold-soft);
+  border-radius: var(--hub-raio);
+  padding: 0.65rem 0.85rem;
   width: 100%;
+  color: var(--hub-text);
 }
 
-input:focus {
-  outline: 2px solid var(--cor-primaria);
+input::placeholder {
+  color: var(--hub-muted);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--hub-orange);
   outline-offset: 1px;
+  border-color: rgba(255, 107, 0, 0.4);
+}
+
+code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.88em;
+  background: rgba(255, 107, 0, 0.12);
+  color: var(--hub-gold);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
 }
 
 .btn {
@@ -71,46 +88,83 @@ input:focus {
   justify-content: center;
   gap: 0.5rem;
   border: none;
-  border-radius: var(--raio);
-  padding: 0.65rem 1rem;
-  font-weight: 600;
-  background: var(--cor-primaria);
-  color: #fff;
+  border-radius: var(--hub-raio);
+  padding: 0.7rem 1.1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: var(--hub-orange);
+  color: var(--hub-bg);
+  transition: background 0.15s, transform 0.15s;
 }
 
 .btn:hover:not(:disabled) {
-  background: var(--cor-primaria-hover);
+  background: var(--hub-orange-hover);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .btn-secundario {
-  background: var(--cor-superficie);
-  color: var(--cor-texto);
-  border: 1px solid var(--cor-borda);
+  background: transparent;
+  color: var(--hub-text);
+  border: 1px solid var(--hub-gold-soft);
 }
 
 .btn-secundario:hover:not(:disabled) {
-  background: var(--cor-fundo);
+  background: var(--hub-surface-hover);
+  border-color: rgba(255, 107, 0, 0.35);
 }
 
 .card {
-  background: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio);
-  box-shadow: var(--sombra);
+  background: var(--hub-surface);
+  border: 1px solid var(--hub-gold-soft);
+  border-radius: var(--hub-raio-lg);
+  backdrop-filter: blur(10px);
   padding: 1.25rem;
 }
 
 .erro {
-  color: var(--cor-erro);
+  color: var(--hub-erro);
   font-size: 0.9rem;
+  margin: 0;
 }
 
-.secao-titulo {
-  font-size: 1.1rem;
-  margin: 1.5rem 0 0.75rem;
+.estado-central {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--hub-bg);
+  gap: 0.75rem;
+}
+
+.estado-central h2 {
+  margin: 0;
+  font-weight: 800;
+}
+
+.estado-central p {
+  color: var(--hub-muted);
+  max-width: 28rem;
+}
+
+.pagina-titulo {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 800;
+  color: var(--hub-text);
+}
+
+.pagina-subtitulo {
+  margin: 0 0 1.5rem;
+  color: var(--hub-muted);
 }

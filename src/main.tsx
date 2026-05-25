@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import './styles/theme.css';
+import './styles/hub-pages.css';
 import './index.css';
 
 if (import.meta.env.DEV && 'serviceWorker' in navigator) {

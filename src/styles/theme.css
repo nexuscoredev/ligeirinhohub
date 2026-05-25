@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --hub-bg: #080808;
+  --hub-bg-elevated: #0d0d0d;
+  --hub-surface: rgba(30, 30, 30, 0.72);
+  --hub-surface-solid: #1a1a1a;
+  --hub-surface-hover: #242424;
+  --hub-orange: #ff6b00;
+  --hub-orange-hover: #ff8533;
+  --hub-orange-soft: rgba(255, 107, 0, 0.15);
+  --hub-gold: #d4af37;
+  --hub-gold-soft: rgba(212, 175, 55, 0.12);
+  --hub-text: #e5e2e1;
+  --hub-muted: rgba(229, 226, 225, 0.62);
+  --hub-erro: #f87171;
+  --hub-sucesso: #4ade80;
+  --hub-whatsapp: #075e54;
+  --hub-raio: 10px;
+  --hub-raio-lg: 16px;
+  --hub-sombra: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --largura-menu: 272px;
+
+  /* aliases legados */
+  --cor-primaria: var(--hub-orange);
+  --cor-primaria-hover: var(--hub-orange-hover);
+  --cor-fundo: var(--hub-bg);
+  --cor-superficie: var(--hub-surface-solid);
+  --cor-texto: var(--hub-text);
+  --cor-texto-suave: var(--hub-muted);
+  --cor-borda: var(--hub-gold-soft);
+  --cor-erro: var(--hub-erro);
+  --cor-sucesso: var(--hub-sucesso);
+  --raio: var(--hub-raio);
+  --sombra: var(--hub-sombra);
+}

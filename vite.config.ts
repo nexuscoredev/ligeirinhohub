@@ -15,8 +15,8 @@ export default defineConfig({
         name: 'Ligeirinho Hub',
         short_name: 'Ligeirinho',
         description: 'Gestão da adega — Hub administrativo',
-        theme_color: '#7c2d12',
-        background_color: '#fffbeb',
+        theme_color: '#080808',
+        background_color: '#080808',
         display: 'standalone',
         lang: 'pt-BR',
         icons: [

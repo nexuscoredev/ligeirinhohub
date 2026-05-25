@@ -39,8 +39,16 @@ export function LoginPage() {
   return (
     <div className="login-pagina">
       <div className="login-card card">
-        <h1>Ligeirinho Hub</h1>
-        <p className="login-subtitulo">Acesso ao painel administrativo</p>
+        <span className="login-marca-icone" aria-hidden>
+          🍷
+        </span>
+        <span className="hub-tag login-tag">Painel administrativo</span>
+        <h1>
+          Ligeirinho <span>Hub</span>
+        </h1>
+        <p className="login-subtitulo">
+          Gestão da adega — venda, operação e entrega.
+        </p>
 
         {!supabaseConfigurado && (
           <p className="login-aviso">
@@ -71,7 +79,11 @@ export function LoginPage() {
             />
           </label>
           {erro && <p className="erro">{erro}</p>}
-          <button type="submit" className="btn" disabled={enviando || !supabaseConfigurado}>
+          <button
+            type="submit"
+            className="btn"
+            disabled={enviando || !supabaseConfigurado}
+          >
             {enviando ? 'Entrando…' : 'Entrar'}
           </button>
         </form>

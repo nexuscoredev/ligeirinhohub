@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { supabaseConfigurado } from '@/lib/supabase';
 import './DashboardPage.css';
@@ -22,39 +23,31 @@ export function DashboardPage() {
   const primeiroNome = usuario?.nome?.split(' ')[0] ?? 'equipe';
 
   return (
-    <div className="dashboard-bebidas">
+    <PageShell
+      tag="• Gelada • Rápida • Completa"
+      titulo={
+        <>
+          Olá, {primeiroNome} — visão <span>gerencial</span>
+        </>
+      }
+      subtitulo="Entrega, balcão e operação da adega em um só painel."
+    >
       <header className="dashboard-hero">
         <div className="dashboard-logo-box" aria-hidden>
           🍷
         </div>
-        <div>
-          <span className="dashboard-tag">• Gelada • Rápida • Completa</span>
-          <h1 className="dashboard-titulo">
-            Ligeirinho <span>Hub</span>
-          </h1>
-          <p className="dashboard-subtitulo">
-            Olá, {primeiroNome} — visão gerencial da adega. Entrega, balcão e
-            operação em um só lugar.
-          </p>
-          <div className="dashboard-hero-kpis">
-            <div className="dashboard-mini-kpi">
-              <div>
-                <strong>+100</strong>
-                <span>produtos (meta)</span>
-              </div>
-            </div>
-            <div className="dashboard-mini-kpi">
-              <div>
-                <strong>1</strong>
-                <span>pedido · uma fila</span>
-              </div>
-            </div>
-            <div className="dashboard-mini-kpi">
-              <div>
-                <strong>{usuario?.cargo ?? '—'}</strong>
-                <span>seu cargo</span>
-              </div>
-            </div>
+        <div className="dashboard-hero-kpis">
+          <div className="hub-stat-card">
+            <strong>+100</strong>
+            <span>produtos (meta catálogo)</span>
+          </div>
+          <div className="hub-stat-card">
+            <strong>1</strong>
+            <span>pedido · uma fila</span>
+          </div>
+          <div className="hub-stat-card">
+            <strong>{usuario?.cargo ?? '—'}</strong>
+            <span>seu cargo no hub</span>
           </div>
         </div>
       </header>
@@ -74,8 +67,8 @@ export function DashboardPage() {
       </div>
 
       <section aria-labelledby="dashboard-kpis-titulo">
-        <div className="dashboard-secao-cabecalho">
-          <h2 id="dashboard-kpis-titulo" className="dashboard-secao-titulo">
+        <div className="hub-secao-header">
+          <h2 id="dashboard-kpis-titulo" className="hub-secao-titulo">
             Indicadores <span>do dia</span>
           </h2>
         </div>
@@ -91,11 +84,11 @@ export function DashboardPage() {
       </section>
 
       <section aria-labelledby="dashboard-modulos-titulo">
-        <div className="dashboard-secao-cabecalho">
-          <h2 id="dashboard-modulos-titulo" className="dashboard-secao-titulo">
+        <div className="hub-secao-header">
+          <h2 id="dashboard-modulos-titulo" className="hub-secao-titulo">
             Explore o <span>ecossistema</span>
           </h2>
-          <Link to="/pedidos" className="dashboard-secao-link">
+          <Link to="/pedidos" className="hub-link">
             Ver pedidos →
           </Link>
         </div>
@@ -104,9 +97,9 @@ export function DashboardPage() {
             <Link
               key={mod.nome}
               to={mod.rota}
-              className="dashboard-modulo-card"
+              className="hub-modulo-card"
             >
-              <span className="dashboard-modulo-icone" aria-hidden>
+              <span className="hub-modulo-icone" aria-hidden>
                 {mod.icone}
               </span>
               <strong>{mod.nome}</strong>
@@ -115,12 +108,6 @@ export function DashboardPage() {
           ))}
         </div>
       </section>
-
-      <p className="dashboard-destaque">
-        Design inspirado em{' '}
-        <strong>Ligeirinho Bebidas</strong> — mesmo DNA visual (preto, laranja e
-        dourado) aplicado ao painel administrativo.
-      </p>
-    </div>
+    </PageShell>
   );
 }

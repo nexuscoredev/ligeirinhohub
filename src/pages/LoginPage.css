@@ -4,30 +4,72 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  background: var(--hub-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-pagina::before,
+.login-pagina::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.login-pagina::before {
+  width: 320px;
+  height: 320px;
+  top: 15%;
+  left: 10%;
+  background: rgba(255, 107, 0, 0.14);
+}
+
+.login-pagina::after {
+  width: 260px;
+  height: 260px;
+  bottom: 10%;
+  right: 8%;
+  background: rgba(212, 175, 55, 0.1);
 }
 
 .login-card {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
 }
 
 .login-card h1 {
-  margin: 0 0 0.25rem;
-  color: var(--cor-primaria);
+  margin: 0 0 0.35rem;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--hub-text);
+}
+
+.login-card h1 span {
+  color: var(--hub-orange);
 }
 
 .login-subtitulo {
-  margin: 0 0 1.25rem;
-  color: var(--cor-texto-suave);
+  margin: 0 0 1.5rem;
+  color: var(--hub-muted);
+}
+
+.login-tag {
+  display: inline-flex;
+  margin-bottom: 1rem;
 }
 
 .login-aviso {
-  background: #fef3c7;
-  border: 1px solid #fcd34d;
-  border-radius: var(--raio);
+  background: rgba(255, 107, 0, 0.1);
+  border: 1px solid rgba(255, 107, 0, 0.35);
+  border-radius: var(--hub-raio);
   padding: 0.75rem;
   font-size: 0.85rem;
   margin-bottom: 1rem;
+  color: var(--hub-muted);
 }
 
 .login-card form {
@@ -39,12 +81,18 @@
 .login-card label {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  font-weight: 500;
-  font-size: 0.9rem;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--hub-muted);
 }
 
 .login-card .btn {
   width: 100%;
   margin-top: 0.25rem;
+}
+
+.login-marca-icone {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
 }

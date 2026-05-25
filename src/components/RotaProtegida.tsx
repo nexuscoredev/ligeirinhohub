@@ -9,7 +9,8 @@ export function RotaProtegida({ children }: { children: React.ReactNode }) {
   if (carregando) {
     return (
       <div className="estado-central">
-        <p>Carregando…</p>
+        <span className="hub-tag">Carregando</span>
+        <p>Preparando seu perfil…</p>
       </div>
     );
   }
@@ -20,13 +21,15 @@ export function RotaProtegida({ children }: { children: React.ReactNode }) {
 
   if (erro || !usuario) {
     return (
-      <div className="estado-central card" style={{ maxWidth: 420 }}>
-        <h2>Perfil indisponível</h2>
-        <p className="erro">{erro ?? 'Perfil não carregado.'}</p>
-        <p style={{ color: 'var(--cor-texto-suave)', fontSize: '0.9rem' }}>
-          Confirme que a migração do Supabase foi aplicada e que existe um
-          registro em <code>usuarios</code> com o mesmo id do Auth.
-        </p>
+      <div className="estado-central">
+        <div className="card" style={{ maxWidth: 440, textAlign: 'left' }}>
+          <h2 style={{ margin: '0 0 0.5rem' }}>Perfil indisponível</h2>
+          <p className="erro">{erro ?? 'Perfil não carregado.'}</p>
+          <p style={{ color: 'var(--hub-muted)', fontSize: '0.9rem', margin: 0 }}>
+            Confirme que a migração do Supabase foi aplicada e que existe um
+            registro em <code>usuarios</code> com o mesmo id do Auth.
+          </p>
+        </div>
       </div>
     );
   }

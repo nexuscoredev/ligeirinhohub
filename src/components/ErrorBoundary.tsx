@@ -22,12 +22,20 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="estado-central card">
-          <h2>Algo deu errado</h2>
-          <p>Tente recarregar a página.</p>
-          <button type="button" className="btn" onClick={() => window.location.reload()}>
-            Recarregar
-          </button>
+        <div className="estado-central">
+          <div className="card" style={{ maxWidth: 400 }}>
+            <h2 style={{ margin: '0 0 0.5rem' }}>Algo deu errado</h2>
+            <p style={{ color: 'var(--hub-muted)', margin: '0 0 1rem' }}>
+              Tente recarregar a página.
+            </p>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => window.location.reload()}
+            >
+              Recarregar
+            </button>
+          </div>
         </div>
       );
     }

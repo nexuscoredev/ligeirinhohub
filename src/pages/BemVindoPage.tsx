@@ -1,24 +1,78 @@
+import { Link } from 'react-router-dom';
+import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
+
+const atalhos = [
+  { titulo: 'Dashboard', rota: '/dashboard', icone: '📊', desc: 'KPIs e visão do dia' },
+  { titulo: 'Produtos', rota: '/produtos', icone: '🍺', desc: 'Cadastro e preços' },
+  { titulo: 'Pedidos', rota: '/pedidos', icone: '📦', desc: 'Vendas e fila única' },
+  { titulo: 'Operacional', rota: '/operacional', icone: '⚡', desc: 'Preparo e despacho' },
+];
 
 export function BemVindoPage() {
   const { usuario } = usePerfil();
+  const primeiroNome = usuario?.nome?.split(' ')[0] ?? 'usuário';
 
   return (
-    <div>
-      <h1 className="pagina-titulo">Bem-vindo, {usuario?.nome ?? 'usuário'}</h1>
-      <p className="pagina-subtitulo">
-        Hub administrativo da adega — fase 1 em construção.
-      </p>
-      <div className="card">
-        <p>
-          Ecossistema: <strong>PDV</strong>, <strong>Totem</strong>,{' '}
-          <strong>Operacional</strong>, <strong>Motoristas</strong> e{' '}
-          <strong>Dashboard</strong> — um pedido, uma fila.
-        </p>
-        <p style={{ color: 'var(--cor-texto-suave)', marginTop: '1rem' }}>
-          Seu cargo: <strong>{usuario?.cargo}</strong> · MVP Fase 1 em andamento
-        </p>
+    <PageShell
+      tag="Hub administrativo"
+      titulo={
+        <>
+          Bem-vindo, {primeiroNome}
+        </>
+      }
+      subtitulo="Um pedido, um ID, um banco — PDV, totem e delivery no mesmo ecossistema."
+      acoes={
+        <Link to="/dashboard" className="btn">
+          Ir ao dashboard
+        </Link>
+      }
+    >
+      <div className="hub-grid-2" style={{ marginBottom: '1.5rem' }}>
+        <div className="card">
+          <p style={{ margin: '0 0 0.5rem', color: 'var(--hub-muted)' }}>
+            Seu perfil
+          </p>
+          <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>
+            {usuario?.nome}
+          </p>
+          <p style={{ margin: '0.35rem 0 0', color: 'var(--hub-gold)' }}>
+            {usuario?.cargo}
+          </p>
+        </div>
+        <div className="card">
+          <p style={{ margin: '0 0 0.5rem', color: 'var(--hub-muted)' }}>
+            Fase 1 — MVP
+          </p>
+          <p style={{ margin: 0 }}>
+            Produtos, pedidos, PDV, operacional com Realtime e totem (pagar no
+            caixa).
+          </p>
+        </div>
       </div>
-    </div>
+
+      <div className="hub-secao-header">
+        <h2 className="hub-secao-titulo">
+          Acesso <span>rápido</span>
+        </h2>
+      </div>
+      <div className="hub-grid-4">
+        {atalhos.map((item) => (
+          <Link key={item.rota} to={item.rota} className="hub-modulo-card">
+            <span className="hub-modulo-icone" aria-hidden>
+              {item.icone}
+            </span>
+            <strong>{item.titulo}</strong>
+            <em>{item.desc}</em>
+          </Link>
+        ))}
+      </div>
+
+      <p className="hub-banner">
+        Visual alinhado à{' '}
+        <strong>Ligeirinho Bebidas</strong> — preto, laranja e dourado em todo o
+        painel.
+      </p>
+    </PageShell>
   );
 }
