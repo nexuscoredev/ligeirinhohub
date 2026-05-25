@@ -86,15 +86,26 @@ export function DashboardPage() {
       </section>
 
       {appsVisiveis.length > 0 ? (
-        <section aria-labelledby="dashboard-apps-titulo">
-          <div className="hub-secao-header">
-            <h2 id="dashboard-apps-titulo" className="hub-secao-titulo">
-              Apps <span>do sistema</span>
+        <section
+          className="hub-secao--apps"
+          aria-labelledby="dashboard-apps-titulo"
+        >
+          <div className="hub-apps-hero hub-apps-hero--compact">
+            <h2 id="dashboard-apps-titulo" className="hub-apps-hero__titulo">
+              Lançar <span>app</span>
             </h2>
+            <p className="hub-apps-hero__sub">
+              Acesso rápido aos módulos de operação e venda.
+            </p>
           </div>
           <div className="hub-apps-launcher-grid hub-apps-launcher-grid--dashboard">
-            {appsVisiveis.map((app) => (
-              <AppLauncherCard key={app.id} app={app} compact />
+            {appsVisiveis.map((app, i) => (
+              <AppLauncherCard
+                key={app.id}
+                app={app}
+                compact
+                staggerIndex={i}
+              />
             ))}
           </div>
         </section>

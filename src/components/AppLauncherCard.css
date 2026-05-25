@@ -2,49 +2,77 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 1.35rem 1.4rem 1.2rem;
-  border-radius: var(--hub-raio-lg);
+  min-height: 168px;
+  padding: 1.5rem 1.45rem 1.25rem;
+  border-radius: var(--app-tile-raio, 22px);
   background: linear-gradient(
-    155deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(18, 18, 18, 0.92) 48%,
-    rgba(8, 8, 8, 0.98) 100%
+    168deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(16, 16, 16, 0.9) 45%,
+    rgba(6, 6, 6, 0.98) 100%
   );
   border: 1px solid var(--app-accent-border, rgba(255, 107, 0, 0.25));
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   overflow: hidden;
+  animation: app-tile-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--app-stagger, 0ms);
   transition:
-    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.22s,
-    box-shadow 0.22s;
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.24s,
+    box-shadow 0.24s;
+}
+
+@keyframes app-tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.app-launcher-card__mesh {
+  position: absolute;
+  inset: 0;
+  background: var(--app-gradient);
+  pointer-events: none;
+  opacity: 0.85;
 }
 
 .app-launcher-card__glow {
   position: absolute;
-  top: -40%;
-  right: -20%;
-  width: 70%;
-  height: 70%;
+  top: -50%;
+  right: -25%;
+  width: 80%;
+  height: 85%;
   background: radial-gradient(
     circle at center,
-    var(--app-accent-soft, rgba(255, 107, 0, 0.15)) 0%,
-    transparent 68%
+    var(--app-accent-glow, rgba(255, 107, 0, 0.2)) 0%,
+    transparent 65%
   );
   pointer-events: none;
 }
 
 .app-launcher-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px) scale(1.01);
   border-color: var(--app-accent, var(--hub-orange));
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.45),
-    0 0 0 1px var(--app-accent-soft, rgba(255, 107, 0, 0.15));
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px var(--app-accent-soft),
+    0 0 40px var(--app-accent-soft);
+}
+
+.app-launcher-card:active {
+  transform: translateY(-2px) scale(0.995);
+  transition-duration: 0.08s;
 }
 
 .app-launcher-card:focus-within {
   outline: 2px solid var(--app-accent, var(--hub-orange));
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 .app-launcher-card__header {
@@ -53,13 +81,13 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .app-launcher-card__brand {
   display: flex;
   align-items: flex-start;
-  gap: 0.85rem;
+  gap: 1rem;
   text-decoration: none;
   color: inherit;
   min-width: 0;
@@ -68,39 +96,62 @@
 
 .app-launcher-card__brand:focus-visible {
   outline: 2px solid var(--app-accent, var(--hub-orange));
-  outline-offset: 3px;
-  border-radius: 8px;
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.app-launcher-card__icon-wrap {
+  position: relative;
+  flex-shrink: 0;
 }
 
 .app-launcher-card__icon {
-  flex-shrink: 0;
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  font-size: 1.35rem;
-  border-radius: 14px;
+  width: 3.25rem;
+  height: 3.25rem;
+  font-size: 1.5rem;
+  border-radius: var(--app-icon-raio, 18px);
   background: linear-gradient(
-    145deg,
-    var(--app-accent-soft, rgba(255, 107, 0, 0.15)) 0%,
-    rgba(0, 0, 0, 0.35) 100%
+    150deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    var(--app-accent-soft, rgba(255, 107, 0, 0.15)) 35%,
+    rgba(0, 0, 0, 0.45) 100%
   );
-  border: 1px solid var(--app-accent-border, rgba(255, 107, 0, 0.25));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--app-accent-border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 10px 28px var(--app-accent-soft),
+    0 0 16px var(--app-accent-glow, rgba(255, 107, 0, 0.15));
+}
+
+.app-launcher-card__icon-label {
+  position: absolute;
+  bottom: -0.3rem;
+  right: -0.35rem;
+  padding: 0.1rem 0.32rem;
+  border-radius: 5px;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #0a0a0a;
+  background: var(--app-accent, var(--hub-orange));
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .app-launcher-card__texto {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.22rem;
   min-width: 0;
+  padding-top: 0.1rem;
 }
 
 .app-launcher-card__nome {
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
   color: var(--hub-text);
 }
 
@@ -108,33 +159,45 @@
   color: var(--app-accent, var(--hub-orange));
 }
 
+.app-launcher-card__tagline {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--hub-gold);
+  font-style: italic;
+}
+
 .app-launcher-card__desc {
   font-size: 0.8rem;
-  line-height: 1.35;
+  line-height: 1.4;
   color: var(--hub-muted);
   font-weight: 500;
 }
 
 .app-launcher-card__abrir {
   flex-shrink: 0;
-  padding: 0.35rem 0.7rem;
+  align-self: flex-start;
+  padding: 0.42rem 0.85rem;
   border-radius: 999px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--app-accent, var(--hub-orange));
-  background: var(--app-accent-soft, var(--hub-orange-soft));
-  border: 1px solid var(--app-accent-border, rgba(255, 107, 0, 0.3));
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--app-accent-border);
+  backdrop-filter: blur(8px);
   transition:
-    background 0.15s,
-    color 0.15s;
+    background 0.18s,
+    color 0.18s,
+    transform 0.18s;
 }
 
 .app-launcher-card__abrir:hover {
   background: var(--app-accent, var(--hub-orange));
   color: #0a0a0a;
+  transform: scale(1.04);
 }
 
 .app-launcher-card__abrir:focus-visible {
@@ -146,30 +209,51 @@
   position: relative;
   z-index: 1;
   list-style: none;
-  margin: 1rem 0 0;
-  padding: 0.65rem 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin: 1.1rem 0 0;
+  padding: 0.75rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.app-launcher-card__modulos li {
+  animation: app-modulo-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--app-stagger, 0ms) + var(--modulo-stagger, 0ms) + 120ms);
+}
+
+@keyframes app-modulo-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .app-launcher-card__modulos li a {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.42rem 0.35rem;
-  margin: 0 -0.35rem;
-  border-radius: 8px;
+  gap: 0.6rem;
+  padding: 0.48rem 0.5rem;
+  margin: 0 -0.5rem;
+  border-radius: 10px;
   color: var(--hub-muted);
   text-decoration: none;
   font-size: 0.88rem;
-  font-weight: 500;
+  font-weight: 600;
   transition:
-    background 0.15s,
-    color 0.15s;
+    background 0.16s,
+    color 0.16s,
+    transform 0.16s;
 }
 
 .app-launcher-card__modulos li a:hover {
   background: var(--app-accent-soft, var(--hub-orange-soft));
   color: var(--hub-text);
+  transform: translateX(3px);
 }
 
 .app-launcher-card__modulos li a:focus-visible {
@@ -178,25 +262,49 @@
 }
 
 .app-launcher-card__modulo-icone {
-  width: 1.35rem;
-  text-align: center;
-  font-size: 0.95rem;
-  opacity: 0.9;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.app-launcher-card__modulo-texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-launcher-card__modulo-seta {
+  opacity: 0;
+  font-size: 0.85rem;
+  color: var(--app-accent, var(--hub-orange));
+  transition: opacity 0.15s;
+}
+
+.app-launcher-card__modulos li a:hover .app-launcher-card__modulo-seta {
+  opacity: 1;
 }
 
 .app-launcher-card__unico {
   position: relative;
   z-index: 1;
-  margin: 0.85rem 0 0;
-  padding-top: 0.65rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin: 0.95rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
   font-size: 0.85rem;
 }
 
 .app-launcher-card__unico a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   color: var(--hub-muted);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
+  transition: color 0.15s;
 }
 
 .app-launcher-card__unico a:hover {
@@ -204,30 +312,34 @@
 }
 
 .app-launcher-card--compact {
-  padding: 1.1rem 1.15rem 1rem;
+  min-height: 140px;
+  padding: 1.15rem 1.2rem 1rem;
 }
 
 .app-launcher-card--compact .app-launcher-card__icon {
-  width: 2.4rem;
-  height: 2.4rem;
-  font-size: 1.15rem;
-  border-radius: 12px;
+  width: 2.65rem;
+  height: 2.65rem;
+  font-size: 1.25rem;
+  border-radius: 15px;
 }
 
 .app-launcher-card--compact .app-launcher-card__nome {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
+}
+
+.app-launcher-card--compact .app-launcher-card__tagline {
+  display: none;
 }
 
 .app-launcher-card--compact .app-launcher-card__desc {
-  font-size: 0.75rem;
+  font-size: 0.74rem;
 }
 
 .app-launcher-card--compact .app-launcher-card__modulos {
-  margin-top: 0.75rem;
-  padding-top: 0.5rem;
+  margin-top: 0.8rem;
+  padding-top: 0.55rem;
 }
 
-.app-launcher-card--compact .app-launcher-card__modulos li a {
-  padding: 0.35rem 0.3rem;
-  font-size: 0.84rem;
+.app-launcher-card--compact:hover {
+  transform: translateY(-3px);
 }

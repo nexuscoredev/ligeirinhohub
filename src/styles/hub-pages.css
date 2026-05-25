@@ -263,20 +263,128 @@
   color: var(--hub-gold);
 }
 
+/* —— Apps: vitrine estilo App Store —— */
+.hub-apps-hero {
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 1.35rem 1.4rem 1.2rem;
+  border-radius: var(--hub-raio-lg);
+  background: linear-gradient(
+    155deg,
+    rgba(255, 107, 0, 0.1) 0%,
+    rgba(18, 18, 18, 0.85) 40%,
+    rgba(8, 8, 8, 0.95) 100%
+  );
+  border: 1px solid rgba(255, 107, 0, 0.2);
+  overflow: hidden;
+}
+
+.hub-apps-hero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 55%;
+  height: 120%;
+  background: radial-gradient(
+    circle,
+    rgba(212, 175, 55, 0.12) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.hub-apps-hero__titulo {
+  position: relative;
+  margin: 0 0 0.35rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.hub-apps-hero__titulo span {
+  color: var(--hub-orange);
+}
+
+.hub-apps-hero__sub {
+  position: relative;
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--hub-muted);
+  max-width: 32rem;
+}
+
+.hub-apps-hero--compact {
+  margin-bottom: 1rem;
+  padding: 1rem 1.15rem;
+}
+
+.hub-apps-hero--compact .hub-apps-hero__titulo {
+  font-size: 1.15rem;
+}
+
+.hub-secao--hub-admin {
+  margin-bottom: 2rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--hub-gold-soft);
+}
+
+.hub-secao--apps {
+  margin-top: 0.25rem;
+}
+
+.hub-modulo-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.hub-modulo-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+  pointer-events: none;
+}
+
 .hub-apps-launcher-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.15rem;
+  grid-template-columns: repeat(auto-fill, minmax(var(--app-tile-min, 300px), 1fr));
+  gap: 1.25rem;
 }
 
 .hub-apps-launcher-grid--dashboard {
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
   gap: 1rem;
+}
+
+.app-placeholder-card {
+  border-color: var(--app-accent-border, rgba(255, 107, 0, 0.25));
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(14, 14, 14, 0.9) 100%
+  );
+}
+
+.app-page .app-breadcrumb a {
+  color: var(--app-accent, var(--hub-gold));
+}
+
+.app-page .app-breadcrumb a:hover {
+  color: var(--hub-text);
 }
 
 @media (max-width: 520px) {
   .hub-apps-launcher-grid,
   .hub-apps-launcher-grid--dashboard {
     grid-template-columns: 1fr;
+  }
+
+  .hub-apps-hero {
+    padding: 1.1rem 1.15rem;
   }
 }

@@ -60,13 +60,13 @@ export function BemVindoPage() {
       </div>
 
       {atalhosHub.length > 0 ? (
-        <>
+        <section className="hub-secao--hub-admin" aria-labelledby="hub-admin-titulo">
           <div className="hub-secao-header">
-            <h2 className="hub-secao-titulo">
+            <h2 id="hub-admin-titulo" className="hub-secao-titulo">
               Hub <span>administrativo</span>
             </h2>
           </div>
-          <div className="hub-grid-4" style={{ marginBottom: '1.75rem' }}>
+          <div className="hub-grid-4">
             {atalhosHub.map((item) => (
               <Link key={item.rota} to={item.rota} className="hub-modulo-card">
                 <span className="hub-modulo-icone" aria-hidden>
@@ -76,22 +76,26 @@ export function BemVindoPage() {
               </Link>
             ))}
           </div>
-        </>
+        </section>
       ) : null}
 
       {appsVisiveis.length > 0 ? (
-        <>
-          <div className="hub-secao-header">
-            <h2 className="hub-secao-titulo">
-              Apps <span>disponíveis</span>
+        <section className="hub-secao--apps" aria-labelledby="hub-apps-titulo">
+          <div className="hub-apps-hero">
+            <h2 id="hub-apps-titulo" className="hub-apps-hero__titulo">
+              Seus <span>apps</span>
             </h2>
+            <p className="hub-apps-hero__sub">
+              Abra como aplicativos instalados — cada um com cor, telas e fluxo
+              próprios.
+            </p>
           </div>
           <div className="hub-apps-launcher-grid">
-            {appsVisiveis.map((app) => (
-              <AppLauncherCard key={app.id} app={app} />
+            {appsVisiveis.map((app, i) => (
+              <AppLauncherCard key={app.id} app={app} staggerIndex={i} />
             ))}
           </div>
-        </>
+        </section>
       ) : null}
     </PageShell>
   );

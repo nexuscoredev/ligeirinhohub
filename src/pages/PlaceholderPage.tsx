@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { AppBreadcrumb } from '@/components/AppBreadcrumb';
+import { AppPageHeader } from '@/components/AppPageHeader';
 import { PageShell } from '@/components/PageShell';
 import { appPorRota } from '@/lib/apps';
 
@@ -17,31 +17,42 @@ export function PlaceholderPage({
   const { pathname } = useLocation();
   const contexto = appPorRota(pathname);
 
-  const tituloPagina = contexto ? (
-    <>
-      {titulo} <span>· {contexto.app.nome}</span>
-    </>
-  ) : (
-    titulo
-  );
+  if (contexto) {
+    return (
+      <AppPageHeader
+        app={contexto.app}
+        item={contexto.item}
+        titulo={titulo}
+        subtitulo={descricao}
+      >
+        <div className="card placeholder-card app-placeholder-card">
+          <p className="placeholder-icone" aria-hidden>
+            {icone}
+          </p>
+          <p className="placeholder-texto">
+            Tela em construção dentro de{' '}
+            <strong>{contexto.app.nome}</strong> — próxima etapa do roadmap
+            (Fase 1).
+          </p>
+        </div>
+      </AppPageHeader>
+    );
+  }
 
   return (
     <PageShell
       comLogo
-      tag={contexto ? contexto.app.nome : 'Em desenvolvimento'}
-      titulo={tituloPagina}
+      tag="Hub administrativo"
+      titulo={titulo}
       subtitulo={descricao}
     >
-      {contexto ? (
-        <AppBreadcrumb app={contexto.app} item={contexto.item} />
-      ) : null}
       <div className="card placeholder-card">
         <p className="placeholder-icone" aria-hidden>
           {icone}
         </p>
         <p className="placeholder-texto">
-          Módulo dentro de <strong>{contexto?.app.nome ?? 'app'}</strong> — previsto
-          para a próxima etapa do roadmap (Fase 1).
+          Módulo do painel administrativo — previsto para a próxima etapa do
+          roadmap (Fase 1).
         </p>
       </div>
     </PageShell>

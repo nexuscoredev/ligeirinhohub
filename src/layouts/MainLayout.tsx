@@ -79,7 +79,12 @@ export function MainLayout() {
 
           {appsVisiveis.length > 0 ? (
             <div className="menu-secao menu-secao-apps">
-              <span className="menu-secao-titulo">Apps</span>
+              <span className="menu-secao-titulo">
+                Apps instalados
+                <span className="menu-secao-badge" aria-label={`${appsVisiveis.length} apps`}>
+                  {appsVisiveis.length}
+                </span>
+              </span>
               <ul className="menu-apps-gaveta" aria-label="Apps do ecossistema">
                 {appsVisiveis.map((app) => (
                   <AppMenuGroup key={app.id} app={app} />

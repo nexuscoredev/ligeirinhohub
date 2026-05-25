@@ -16,14 +16,20 @@ export interface AppSistema {
   /** Nome exibido: ex. Ligeirinho Operacional */
   nome: string;
   icone: string;
+  /** Sigla no ícone estilo App Store (ex.: PDV) */
+  iconeLabel?: string;
   /** Rota principal ao abrir o app */
   rotaEntrada: string;
   /** Telas / módulos dentro do app */
   itens: ItemApp[];
   /** Tagline curta no menu e nos cards de lançamento */
   descricao?: string;
+  /** Frase de impacto nos tiles grandes */
+  tagline?: string;
   /** Cor de destaque do app (hex) — identidade visual */
   corAccent?: string;
+  /** Mesh / aurora do app (CSS background) */
+  gradient?: string;
 }
 
 /** Variáveis CSS inline para tematizar um app */
@@ -33,6 +39,8 @@ export function temaApp(app: AppSistema): Record<string, string> {
     '--app-accent': accent,
     '--app-accent-soft': `${accent}26`,
     '--app-accent-border': `${accent}40`,
+    '--app-accent-glow': `${accent}55`,
+    '--app-gradient': app.gradient ?? `radial-gradient(ellipse 120% 80% at 85% 0%, ${accent}33 0%, transparent 55%)`,
   };
 }
 
@@ -49,8 +57,12 @@ export const APPS_SISTEMA: AppSistema[] = [
     id: 'pdv',
     nome: 'Ligeirinho PDV',
     icone: '🛒',
+    iconeLabel: 'PDV',
+    tagline: 'Caixa rápido, venda sem atrito.',
     descricao: 'Vendas no balcão com caixa integrado.',
     corAccent: '#ff6b00',
+    gradient:
+      'radial-gradient(ellipse 100% 70% at 90% -10%, rgba(255,107,0,0.35) 0%, transparent 50%), radial-gradient(ellipse 60% 50% at 10% 100%, rgba(212,175,55,0.12) 0%, transparent 45%)',
     rotaEntrada: '/pdv',
     itens: [
       {
@@ -65,8 +77,12 @@ export const APPS_SISTEMA: AppSistema[] = [
     id: 'totem',
     nome: 'Ligeirinho Totem',
     icone: '📱',
+    iconeLabel: 'TOTEM',
+    tagline: 'Touch-first, fila zero no balcão.',
     descricao: 'Autoatendimento touch para o cliente.',
     corAccent: '#64d2ff',
+    gradient:
+      'radial-gradient(ellipse 90% 65% at 88% 5%, rgba(100,210,255,0.32) 0%, transparent 52%), radial-gradient(ellipse 50% 40% at 5% 95%, rgba(100,210,255,0.08) 0%, transparent 40%)',
     rotaEntrada: '/totem',
     itens: [
       {
@@ -81,8 +97,12 @@ export const APPS_SISTEMA: AppSistema[] = [
     id: 'operacional',
     nome: 'Ligeirinho Operacional',
     icone: '⚡',
+    iconeLabel: 'OPS',
+    tagline: 'Uma fila, do pedido à entrega.',
     descricao: 'Pedidos, fila, clientes e entregas.',
     corAccent: '#bf5af2',
+    gradient:
+      'radial-gradient(ellipse 95% 70% at 92% 0%, rgba(191,90,242,0.34) 0%, transparent 50%), radial-gradient(ellipse 55% 45% at 0% 80%, rgba(191,90,242,0.1) 0%, transparent 42%)',
     rotaEntrada: '/operacional',
     itens: [
       {

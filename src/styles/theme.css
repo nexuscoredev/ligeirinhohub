@@ -19,7 +19,12 @@
   --hub-raio: 10px;
   --hub-raio-lg: 16px;
   --hub-sombra: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --largura-menu: 272px;
+  --largura-menu: 280px;
+
+  /* apps — identidade tipo App Store */
+  --app-tile-raio: 22px;
+  --app-icon-raio: 18px;
+  --app-tile-min: 300px;
 
   /* aliases legados */
   --cor-primaria: var(--hub-orange);
