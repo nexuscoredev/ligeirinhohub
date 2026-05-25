@@ -140,6 +140,14 @@ export function todasRotasSistema(): ItemApp[] {
   return [...HUB_ADMIN_ITENS, ...APPS_SISTEMA.flatMap((app) => app.itens)];
 }
 
+/** Item de menu do app pela rota (fallback: primeiro item) */
+export function itemAppPorRota(app: AppSistema, rota: string): ItemApp {
+  return (
+    app.itens.find((i) => i.rota === rota || rota.startsWith(`${i.prefixo}/`)) ??
+    app.itens[0]
+  );
+}
+
 export function appPorId(id: AppId): AppSistema | undefined {
   return APPS_SISTEMA.find((a) => a.id === id);
 }
@@ -181,6 +189,13 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
   '/pdv': ['Desenvolvedor', 'Administrador', 'Gerente', 'Caixa'],
   '/totem': ['Desenvolvedor', 'Administrador', 'Gerente'],
   '/operacional': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Estoquista',
+    'Logistica',
+  ],
+  '/operacional/separar': [
     'Desenvolvedor',
     'Administrador',
     'Gerente',

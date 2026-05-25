@@ -2,6 +2,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { AppMenuGroup } from '@/components/AppMenuGroup';
 import { HubLogo } from '@/components/HubLogo';
 import { usePerfil } from '@/contexts/PerfilContext';
+import { useSessionTimeout } from '@/hooks/useSessionTimeout';
 import {
   APPS_SISTEMA,
   HUB_ADMIN_ITENS,
@@ -32,7 +33,9 @@ function MenuLink({ item }: { item: ItemApp }) {
 }
 
 export function MainLayout() {
-  const { usuario, sair } = usePerfil();
+  const { usuario, sair, session } = usePerfil();
+
+  useSessionTimeout(Boolean(session && usuario));
 
   if (!usuario) return null;
 

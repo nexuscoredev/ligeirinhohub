@@ -5,9 +5,15 @@ import { PerfilProvider } from '@/contexts/PerfilContext';
 import { MainLayout } from '@/layouts/MainLayout';
 import '@/layouts/MainLayout.css';
 import { BemVindoPage } from '@/pages/BemVindoPage';
+import { ClientesPage } from '@/pages/clientes/ClientesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { LoginPage } from '@/pages/LoginPage';
+import { MotoristaPage } from '@/pages/motorista/MotoristaPage';
+import { FilaOperacionalPage } from '@/pages/operacional/FilaOperacionalPage';
+import { SeparacaoPage } from '@/pages/operacional/SeparacaoPage';
+import { PedidosPage } from '@/pages/pedidos/PedidosPage';
 import { PlaceholderPage } from '@/pages/PlaceholderPage';
+import { ProdutosPage } from '@/pages/produtos/ProdutosPage';
 
 export default function App() {
   return (
@@ -27,89 +33,40 @@ export default function App() {
               <Route path="/bem-vindo" element={<BemVindoPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
 
-              {/* App: Ligeirinho PDV */}
               <Route
                 path="/pdv"
                 element={
                   <PlaceholderPage
                     titulo="Painel do caixa"
-                    descricao="Venda assistida no balcão — caixa e pagamento."
+                    descricao="PDV — vendas no balcão (Fase 2)."
                     icone="🛒"
                   />
                 }
               />
-
-              {/* App: Ligeirinho Totem */}
               <Route
                 path="/totem"
                 element={
                   <PlaceholderPage
                     titulo="Autoatendimento"
-                    descricao="Interface touch-first para o cliente (PWA)."
+                    descricao="Totem touch — pedido pelo cliente (Fase 2)."
                     icone="📱"
                   />
                 }
               />
 
-              {/* App: Ligeirinho Operacional */}
-              <Route
-                path="/operacional"
-                element={
-                  <PlaceholderPage
-                    titulo="Fila operacional"
-                    descricao="Fila de pedidos, preparo e despacho."
-                    icone="⚡"
-                  />
-                }
-              />
-              <Route
-                path="/pedidos"
-                element={
-                  <PlaceholderPage
-                    titulo="Pedidos"
-                    descricao="Vendas e fluxo operacional unificado."
-                    icone="📦"
-                  />
-                }
-              />
-              <Route
-                path="/clientes"
-                element={
-                  <PlaceholderPage
-                    titulo="Clientes"
-                    descricao="Cadastro de clientes — módulo do app Operacional."
-                    icone="👥"
-                  />
-                }
-              />
-              <Route
-                path="/motorista"
-                element={
-                  <PlaceholderPage
-                    titulo="Motoristas"
-                    descricao="Entregas atribuídas e confirmação em rota."
-                    icone="🚚"
-                  />
-                }
-              />
+              <Route path="/operacional" element={<FilaOperacionalPage />} />
+              <Route path="/operacional/separar/:id" element={<SeparacaoPage />} />
+              <Route path="/pedidos" element={<PedidosPage />} />
+              <Route path="/clientes" element={<ClientesPage />} />
+              <Route path="/motorista" element={<MotoristaPage />} />
 
-              {/* Hub administrativo */}
-              <Route
-                path="/produtos"
-                element={
-                  <PlaceholderPage
-                    titulo="Produtos"
-                    descricao="Cadastro de bebidas e preços no Hub."
-                    icone="🍺"
-                  />
-                }
-              />
+              <Route path="/produtos" element={<ProdutosPage />} />
               <Route
                 path="/usuarios"
                 element={
                   <PlaceholderPage
                     titulo="Usuários"
-                    descricao="Gestão de acessos e cargos no Hub."
+                    descricao="Gestão de perfis e permissões (Fase 1)."
                     icone="🔐"
                   />
                 }
