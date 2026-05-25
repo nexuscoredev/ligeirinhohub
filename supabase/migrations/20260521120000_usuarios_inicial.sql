@@ -36,20 +36,31 @@ create policy usuarios_select_own
   to authenticated
   using (auth.uid() = id);
 
--- Admins leem todos (ajustar conforme evoluir o sistema)
+-- Admins leem todos — função SECURITY DEFINER evita recursão na RLS
+create or replace function public.is_hub_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.usuarios u
+    where u.id = auth.uid()
+      and u.ativo = true
+      and u.cargo in ('Desenvolvedor', 'Administrador')
+  );
+$$;
+
+revoke all on function public.is_hub_admin() from public;
+grant execute on function public.is_hub_admin() to authenticated;
+
 create policy usuarios_select_admin
   on public.usuarios
   for select
   to authenticated
-  using (
-    exists (
-      select 1
-      from public.usuarios u
-      where u.id = auth.uid()
-        and u.ativo = true
-        and u.cargo in ('Desenvolvedor', 'Administrador')
-    )
-  );
+  using (public.is_hub_admin());
 
 -- Trigger: criar linha em usuarios ao registrar no Auth (opcional — útil em dev)
 create or replace function public.handle_new_user()

@@ -99,6 +99,12 @@
   flex: 1;
   padding: 1.5rem 2rem;
   overflow: auto;
+  background: var(--cor-fundo);
+}
+
+.conteudo-principal:has(.dashboard-bebidas) {
+  padding: 0;
+  background: #080808;
 }
 
 .estado-central {
