@@ -1,4 +1,3 @@
-import { HubLogo } from '@/components/HubLogo';
 import { AppLauncherCard } from '@/components/AppLauncherCard';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
@@ -30,32 +29,29 @@ export function DashboardPage() {
 
   return (
     <PageShell
-      comLogo
+      className="hub-page--denso"
       tag="• Gelada • Rápida • Completa"
       titulo={
         <>
           Olá, {primeiroNome} — visão <span>gerencial</span>
         </>
       }
-      subtitulo="Apps do ecossistema: PDV, Totem e Operacional com seus módulos internos."
+      subtitulo="PDV, Totem e Operacional."
     >
-      <header className="dashboard-hero">
-        <HubLogo size="hero" glow className="dashboard-hero-logo" />
-        <div className="dashboard-hero-kpis">
-          <div className="hub-stat-card">
-            <strong>{appsVisiveis.length || APPS_SISTEMA.length}</strong>
-            <span>apps no ecossistema</span>
-          </div>
-          <div className="hub-stat-card">
-            <strong>1</strong>
-            <span>pedido · uma fila</span>
-          </div>
-          <div className="hub-stat-card">
-            <strong>{usuario?.cargo ?? '—'}</strong>
-            <span>seu cargo no hub</span>
-          </div>
+      <div className="dashboard-topo">
+        <div className="hub-stat-card">
+          <strong>{appsVisiveis.length || APPS_SISTEMA.length}</strong>
+          <span>apps</span>
         </div>
-      </header>
+        <div className="hub-stat-card">
+          <strong>1</strong>
+          <span>pedido · fila</span>
+        </div>
+        <div className="hub-stat-card">
+          <strong>{usuario?.cargo ?? '—'}</strong>
+          <span>seu cargo</span>
+        </div>
+      </div>
 
       <div
         className={`dashboard-status ${supabaseConfigurado ? 'ok' : ''}`}
@@ -90,13 +86,10 @@ export function DashboardPage() {
           className="hub-secao--apps"
           aria-labelledby="dashboard-apps-titulo"
         >
-          <div className="hub-apps-hero hub-apps-hero--compact">
-            <h2 id="dashboard-apps-titulo" className="hub-apps-hero__titulo">
+          <div className="hub-secao-header">
+            <h2 id="dashboard-apps-titulo" className="hub-secao-titulo">
               Lançar <span>app</span>
             </h2>
-            <p className="hub-apps-hero__sub">
-              Acesso rápido aos módulos de operação e venda.
-            </p>
           </div>
           <div className="hub-apps-launcher-grid hub-apps-launcher-grid--dashboard">
             {appsVisiveis.map((app, i) => (

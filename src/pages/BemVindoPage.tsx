@@ -25,42 +25,31 @@ export function BemVindoPage() {
 
   return (
     <PageShell
-      comLogo
+      className="hub-page--denso"
       tag="Hub administrativo"
       titulo={<>Bem-vindo, {primeiroNome}</>}
-      subtitulo="O ecossistema é organizado em apps — cada um com identidade visual e módulos internos."
+      subtitulo="Apps do ecossistema Ligeirinho."
       acoes={
         <Link to="/dashboard" className="btn">
-          Ir ao dashboard
+          Dashboard
         </Link>
       }
     >
-      <div className="hub-grid-2" style={{ marginBottom: '1.5rem' }}>
-        <div className="card">
-          <p style={{ margin: '0 0 0.5rem', color: 'var(--hub-muted)' }}>
-            Seu perfil
-          </p>
-          <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>
-            {usuario?.nome}
-          </p>
-          <p style={{ margin: '0.35rem 0 0', color: 'var(--hub-gold)' }}>
-            {usuario?.cargo}
-          </p>
-        </div>
-        <div className="card">
-          <p style={{ margin: '0 0 0.5rem', color: 'var(--hub-muted)' }}>
-            Conceito
-          </p>
-          <p style={{ margin: 0 }}>
-            <strong>Apps</strong> são módulos nomeados (ex.: Ligeirinho
-            Operacional) com telas dentro — Clientes e Motoristas ficam no app
-            Operacional.
-          </p>
-        </div>
-      </div>
+      <p className="hub-perfil-linha">
+        <span>
+          <strong>{usuario?.nome}</strong>
+        </span>
+        <span className="hub-perfil-sep" aria-hidden>
+          ·
+        </span>
+        <span className="hub-perfil-cargo">{usuario?.cargo}</span>
+      </p>
 
       {atalhosHub.length > 0 ? (
-        <section className="hub-secao--hub-admin" aria-labelledby="hub-admin-titulo">
+        <section
+          className="hub-secao--hub-admin"
+          aria-labelledby="hub-admin-titulo"
+        >
           <div className="hub-secao-header">
             <h2 id="hub-admin-titulo" className="hub-secao-titulo">
               Hub <span>administrativo</span>
@@ -81,14 +70,10 @@ export function BemVindoPage() {
 
       {appsVisiveis.length > 0 ? (
         <section className="hub-secao--apps" aria-labelledby="hub-apps-titulo">
-          <div className="hub-apps-hero">
-            <h2 id="hub-apps-titulo" className="hub-apps-hero__titulo">
+          <div className="hub-secao-header">
+            <h2 id="hub-apps-titulo" className="hub-secao-titulo">
               Seus <span>apps</span>
             </h2>
-            <p className="hub-apps-hero__sub">
-              Abra como aplicativos instalados — cada um com cor, telas e fluxo
-              próprios.
-            </p>
           </div>
           <div className="hub-apps-launcher-grid">
             {appsVisiveis.map((app, i) => (

@@ -67,11 +67,6 @@ export function AppMenuGroup({ app }: AppMenuGroupProps) {
           </span>
           <span className="app-menu-pill-texto">
             <span className="app-menu-pill-nome">{app.nome}</span>
-            {app.tagline ? (
-              <span className="app-menu-pill-tagline">{app.tagline}</span>
-            ) : app.descricao ? (
-              <span className="app-menu-pill-desc">{app.descricao}</span>
-            ) : null}
           </span>
         </NavLink>
       </li>
@@ -103,11 +98,6 @@ export function AppMenuGroup({ app }: AppMenuGroupProps) {
             </span>
             <span className="app-menu-pill-texto">
               <span className="app-menu-pill-nome">{app.nome}</span>
-              {app.tagline ? (
-                <span className="app-menu-pill-tagline">{app.tagline}</span>
-              ) : app.descricao ? (
-                <span className="app-menu-pill-desc">{app.descricao}</span>
-              ) : null}
             </span>
           </NavLink>
           <span className="app-menu-chevron" aria-hidden />

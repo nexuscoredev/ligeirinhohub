@@ -19,7 +19,7 @@
 .app-page__aurora {
   position: absolute;
   inset: -2rem -1rem auto;
-  height: 280px;
+  height: 200px;
   background: var(--app-gradient);
   pointer-events: none;
   z-index: 0;
@@ -30,8 +30,8 @@
 .app-page-hero {
   position: relative;
   z-index: 1;
-  margin-bottom: 1.75rem;
-  padding: 1.25rem 1.35rem 1.1rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem 0.75rem;
   border-radius: var(--hub-raio-lg);
   background: linear-gradient(
     165deg,
@@ -82,8 +82,8 @@
 .app-page-hero__corpo {
   display: flex;
   align-items: flex-start;
-  gap: 1.15rem;
-  margin-bottom: 1rem;
+  gap: 0.85rem;
+  margin-bottom: 0.65rem;
 }
 
 .app-page-hero__icon-wrap {
@@ -94,9 +94,9 @@
 .app-page-hero__icon {
   display: grid;
   place-items: center;
-  width: 3.5rem;
-  height: 3.5rem;
-  font-size: 1.65rem;
+  width: 2.85rem;
+  height: 2.85rem;
+  font-size: 1.4rem;
   border-radius: var(--app-icon-raio, 18px);
   background: linear-gradient(
     145deg,
@@ -135,8 +135,8 @@
 }
 
 .app-page-hero__titulo {
-  margin: 0 0 0.35rem;
-  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  margin: 0 0 0.2rem;
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.15;
@@ -152,11 +152,7 @@
 }
 
 .app-page-hero__tagline {
-  margin: 0.5rem 0 0;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--hub-gold);
-  font-style: italic;
+  display: none;
 }
 
 .app-page .app-breadcrumb {

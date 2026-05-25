@@ -11,15 +11,17 @@ Na tela de login entra o campo **`login`** (ex.: `Vinicius`), não o e-mail. O S
 
 O trigger `on_auth_user_created` cria a linha em `usuarios`; confira `login` e `cargo`.
 
-| Login (tela) | E-mail Auth | Observação |
-|--------------|-------------|------------|
-| Nexus | nexus@hub.ligeirinho.com | Admin |
-| Denis | denis@hubligeirinho.com | |
-| Rafael | rafaelcavalcante@hub.ligeirinho.com | Admin |
-| Vinicius | viniciusdemorais@hub.ligeirinho.com | Senha exemplo: `123456` |
-| Denise | denise@hub.ligeirinho.com | Gerente; senha: `ligueirinho123` |
-| Patricia | patricia@hub.ligeirinho.com | Gerente; senha: `ligueirinho123` |
-| Giovana | giovana@hub.ligeirinho.com | Gerente; senha: `ligueirinho123` |
+**Senha atual (todos os usuários abaixo):** `123456`
+
+| Login (tela) | E-mail Auth | Cargo |
+|--------------|-------------|-------|
+| Nexus | nexus@hub.ligeirinho.com | Administrador |
+| Denis | denis@hubligeirinho.com | Gerente |
+| Rafael | rafaelcavalcante@hub.ligeirinho.com | Administrador |
+| Vinicius | viniciusdemorais@hub.ligeirinho.com | Administrador |
+| Denise | denise@hub.ligeirinho.com | Gerente |
+| Patricia | patricia@hub.ligeirinho.com | Gerente |
+| Geovanna | geovanna@hub.ligeirinho.com | Gerente |
 
 ### Criar usuário via SQL (cuidado)
 

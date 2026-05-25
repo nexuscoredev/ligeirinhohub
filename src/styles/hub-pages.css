@@ -1,7 +1,11 @@
 .hub-page {
   position: relative;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
+}
+
+.hub-page--denso {
+  --hub-secao-gap: 0.75rem;
 }
 
 .hub-page::before,
@@ -48,7 +52,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .hub-page-header {
@@ -56,8 +60,8 @@
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.75rem;
+  gap: 0.65rem 1rem;
+  margin-bottom: 1rem;
 }
 
 .hub-page-header-texto {
@@ -72,8 +76,8 @@
 }
 
 .hub-page-title {
-  margin: 0 0 0.4rem;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 0 0 0.2rem;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
   font-weight: 800;
   line-height: 1.15;
   color: var(--hub-text);
@@ -86,21 +90,22 @@
 .hub-page-subtitle {
   margin: 0;
   color: var(--hub-muted);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   max-width: 40rem;
+  line-height: 1.35;
 }
 
 .hub-secao-header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 0.75rem;
+  margin-bottom: var(--hub-secao-gap, 0.65rem);
 }
 
 .hub-secao-titulo {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 800;
 }
 
@@ -123,18 +128,45 @@
 
 .hub-grid-2 {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.65rem;
 }
 
 .hub-grid-4 {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.65rem;
+}
+
+.hub-perfil-linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.85rem;
+  border-radius: var(--hub-raio-lg);
+  background: var(--hub-surface);
+  border: 1px solid var(--hub-gold-soft);
+  font-size: 0.88rem;
+}
+
+.hub-perfil-linha strong {
+  font-weight: 700;
+}
+
+.hub-perfil-linha .hub-perfil-cargo {
+  color: var(--hub-gold);
+  font-weight: 600;
+}
+
+.hub-perfil-linha .hub-perfil-sep {
+  color: var(--hub-muted);
+  opacity: 0.5;
 }
 
 .hub-stat-card {
-  padding: 1.15rem 1.25rem;
+  padding: 0.75rem 0.95rem;
   border-radius: var(--hub-raio-lg);
   background: var(--hub-surface);
   border: 1px solid var(--hub-gold-soft);
@@ -143,7 +175,7 @@
 
 .hub-stat-card strong {
   display: block;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: var(--hub-text);
 }
@@ -155,8 +187,8 @@
 
 .hub-modulo-card {
   position: relative;
-  padding: 1.2rem;
-  min-height: 110px;
+  padding: 0.85rem 1rem;
+  min-height: 72px;
   border-radius: var(--hub-raio-lg);
   background: linear-gradient(145deg, #1c1c1c 0%, #121212 100%);
   border: 1px solid var(--hub-gold-soft);
@@ -191,9 +223,9 @@
 
 .hub-modulo-icone {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.35rem;
+  top: 0.65rem;
+  right: 0.65rem;
+  font-size: 1.15rem;
 }
 
 .hub-banner {
@@ -226,8 +258,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
-  margin-bottom: 1.25rem;
-  font-size: 0.82rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.78rem;
   color: var(--hub-muted);
 }
 
@@ -263,11 +295,11 @@
   color: var(--hub-gold);
 }
 
-/* —— Apps: vitrine estilo App Store —— */
+/* —— Apps: vitrine —— */
 .hub-apps-hero {
   position: relative;
-  margin-bottom: 1.5rem;
-  padding: 1.35rem 1.4rem 1.2rem;
+  margin-bottom: 0.65rem;
+  padding: 0.65rem 0.85rem;
   border-radius: var(--hub-raio-lg);
   background: linear-gradient(
     155deg,
@@ -296,8 +328,8 @@
 
 .hub-apps-hero__titulo {
   position: relative;
-  margin: 0 0 0.35rem;
-  font-size: 1.35rem;
+  margin: 0;
+  font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: -0.03em;
 }
@@ -307,30 +339,36 @@
 }
 
 .hub-apps-hero__sub {
-  position: relative;
-  margin: 0;
-  font-size: 0.88rem;
-  color: var(--hub-muted);
-  max-width: 32rem;
+  display: none;
 }
 
 .hub-apps-hero--compact {
-  margin-bottom: 1rem;
-  padding: 1rem 1.15rem;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.hub-apps-hero--compact::before {
+  display: none;
 }
 
 .hub-apps-hero--compact .hub-apps-hero__titulo {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
 }
 
 .hub-secao--hub-admin {
-  margin-bottom: 2rem;
-  padding-bottom: 1.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--hub-gold-soft);
 }
 
 .hub-secao--apps {
-  margin-top: 0.25rem;
+  margin-top: 0;
+}
+
+.hub-secao--apps .hub-secao-header {
+  margin-bottom: 0.5rem;
 }
 
 .hub-modulo-card {
@@ -352,13 +390,13 @@
 
 .hub-apps-launcher-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--app-tile-min, 300px), 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+  gap: 0.65rem;
 }
 
 .hub-apps-launcher-grid--dashboard {
-  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.6rem;
 }
 
 .app-placeholder-card {
