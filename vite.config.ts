@@ -10,7 +10,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'prompt',
-      includeAssets: ['favicon.svg'],
+      includeAssets: ['img/ligeirinhologo.png'],
       manifest: {
         name: 'Ligeirinho Hub',
         short_name: 'Ligeirinho',
@@ -21,10 +21,16 @@ export default defineConfig({
         lang: 'pt-BR',
         icons: [
           {
-            src: '/favicon.svg',
-            sizes: 'any',
-            type: 'image/svg+xml',
+            src: '/img/ligeirinhologo.png',
+            sizes: '500x500',
+            type: 'image/png',
             purpose: 'any',
+          },
+          {
+            src: '/img/ligeirinhologo.png',
+            sizes: '500x500',
+            type: 'image/png',
+            purpose: 'maskable',
           },
         ],
       },

@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { HubLogo } from '@/components/HubLogo';
 
 interface Props {
   children: ReactNode;
@@ -23,6 +24,7 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="estado-central">
+          <HubLogo size="md" badgeHub />
           <div className="card" style={{ maxWidth: 400 }}>
             <h2 style={{ margin: '0 0 0.5rem' }}>Algo deu errado</h2>
             <p style={{ color: 'var(--hub-muted)', margin: '0 0 1rem' }}>

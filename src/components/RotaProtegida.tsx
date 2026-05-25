@@ -1,4 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
+import { HubLogo } from '@/components/HubLogo';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { paginaPermitida } from '@/lib/paginasSistema';
 
@@ -9,6 +10,7 @@ export function RotaProtegida({ children }: { children: React.ReactNode }) {
   if (carregando) {
     return (
       <div className="estado-central">
+        <HubLogo size="lg" glow />
         <span className="hub-tag">Carregando</span>
         <p>Preparando seu perfil…</p>
       </div>

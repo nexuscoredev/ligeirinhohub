@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { HubLogo } from '@/components/HubLogo';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { supabaseConfigurado } from '@/lib/supabase';
@@ -24,6 +25,7 @@ export function DashboardPage() {
 
   return (
     <PageShell
+      comLogo
       tag="• Gelada • Rápida • Completa"
       titulo={
         <>
@@ -33,9 +35,7 @@ export function DashboardPage() {
       subtitulo="Entrega, balcão e operação da adega em um só painel."
     >
       <header className="dashboard-hero">
-        <div className="dashboard-logo-box" aria-hidden>
-          🍷
-        </div>
+        <HubLogo size="hero" glow className="dashboard-hero-logo" />
         <div className="dashboard-hero-kpis">
           <div className="hub-stat-card">
             <strong>+100</strong>

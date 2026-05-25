@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { HubLogo } from '@/components/HubLogo';
 import { usePerfil } from '@/contexts/PerfilContext';
 import {
   GRUPOS_MENU,
@@ -52,17 +53,13 @@ export function MainLayout() {
   return (
     <div className="layout-hub">
       <aside className="menu-lateral">
-        <div className="menu-marca">
-          <span className="menu-marca-icone" aria-hidden>
-            🍷
-          </span>
+        <NavLink to="/bem-vindo" className="menu-marca" title="Início do Hub">
+          <HubLogo size="sm" badgeHub />
           <div className="menu-marca-texto">
-            <span className="menu-marca-titulo">
-              Ligeirinho <span>Hub</span>
-            </span>
+            <span className="menu-marca-titulo">Painel Hub</span>
             <span className="menu-marca-versao">{appDisplayVersion()}</span>
           </div>
-        </div>
+        </NavLink>
         <nav className="menu-nav" aria-label="Menu principal">
           {(Object.keys(GRUPOS_MENU) as GrupoMenu[]).map((grupo) => {
             const itens = porGrupo[grupo];

@@ -18,6 +18,7 @@ export function PlaceholderPage({
 
   return (
     <PageShell
+      comLogo
       tag="Em desenvolvimento"
       titulo={
         palavras.length > 0 ? (

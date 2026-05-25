@@ -60,6 +60,17 @@
   margin-bottom: 1.75rem;
 }
 
+.hub-page-header-texto {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.hub-page-header-logo {
+  margin-top: 0.15rem;
+}
+
 .hub-page-title {
   margin: 0 0 0.4rem;
   font-size: clamp(1.5rem, 3vw, 2rem);

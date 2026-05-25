@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import { HubLogo } from '@/components/HubLogo';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { supabase, supabaseConfigurado } from '@/lib/supabase';
 import './LoginPage.css';
@@ -39,15 +40,15 @@ export function LoginPage() {
   return (
     <div className="login-pagina">
       <div className="login-card card">
-        <span className="login-marca-icone" aria-hidden>
-          🍷
-        </span>
+        <div className="login-marca">
+          <HubLogo size="xl" badgeHub glow />
+        </div>
         <span className="hub-tag login-tag">Painel administrativo</span>
-        <h1>
-          Ligeirinho <span>Hub</span>
+        <h1 className="login-titulo">
+          Acesso ao <span>Hub</span>
         </h1>
         <p className="login-subtitulo">
-          Gestão da adega — venda, operação e entrega.
+          Gestão da adega — venda, operação e entrega em um só lugar.
         </p>
 
         {!supabaseConfigurado && (

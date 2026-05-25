@@ -12,17 +12,8 @@
   }
 }
 
-.dashboard-logo-box {
-  width: 112px;
-  height: 112px;
-  border-radius: var(--hub-raio-lg);
-  background: var(--hub-surface-solid);
-  border: 1px solid var(--hub-gold-soft);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.75rem;
-  box-shadow: 0 0 40px rgba(255, 107, 0, 0.08);
+.dashboard-hero-logo {
+  align-self: center;
 }
 
 .dashboard-hero-kpis {

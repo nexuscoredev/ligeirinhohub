@@ -22,19 +22,14 @@
   padding: 0.25rem 0.5rem 1.25rem;
   border-bottom: 1px solid var(--hub-gold-soft);
   margin-bottom: 1rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--hub-raio);
+  transition: background 0.15s;
 }
 
-.menu-marca-icone {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--hub-raio);
-  background: var(--hub-surface-solid);
-  border: 1px solid var(--hub-gold-soft);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  flex-shrink: 0;
+.menu-marca:hover {
+  background: var(--hub-surface-hover);
 }
 
 .menu-marca-texto {
@@ -44,13 +39,9 @@
 .menu-marca-titulo {
   display: block;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.2;
-  color: var(--hub-gold);
-}
-
-.menu-marca-titulo span {
-  color: var(--hub-orange);
+  color: var(--hub-text);
 }
 
 .menu-marca-versao {
@@ -160,6 +151,11 @@
   padding: 1.75rem 2rem 2.5rem;
   overflow: auto;
   background: var(--hub-bg);
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 107, 0, 0.04) 0%,
+    transparent 120px
+  );
 }
 
 @media (max-width: 900px) {

@@ -15,6 +15,7 @@ export function BemVindoPage() {
 
   return (
     <PageShell
+      comLogo
       tag="Hub administrativo"
       titulo={
         <>
@@ -69,9 +70,8 @@ export function BemVindoPage() {
       </div>
 
       <p className="hub-banner">
-        Visual alinhado à{' '}
-        <strong>Ligeirinho Bebidas</strong> — preto, laranja e dourado em todo o
-        painel.
+        Marca oficial <strong>Ligeirinho Bebidas</strong> — mesmo padrão visual do
+        site e catálogo, aplicado ao painel administrativo.
       </p>
     </PageShell>
   );
