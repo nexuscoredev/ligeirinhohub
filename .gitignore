@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Env e segredos
+.env
+.env.local
+.env.*.local
+supabase/.secrets.edge.env
+.vercel/
+
+# Logs e cache
+*.log
+.DS_Store
+coverage/
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.vercel

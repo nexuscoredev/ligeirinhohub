@@ -1,0 +1,162 @@
+:root {
+  --cor-primaria: #7c2d12;
+  --cor-primaria-hover: #9a3412;
+  --cor-fundo: #fffbeb;
+  --cor-superficie: #ffffff;
+  --cor-texto: #1c1917;
+  --cor-texto-suave: #78716c;
+  --cor-borda: #e7e5e4;
+  --cor-erro: #b91c1c;
+  --cor-sucesso: #15803d;
+  --largura-menu: 260px;
+  --raio: 10px;
+  --sombra: 0 1px 3px rgb(28 25 23 / 8%);
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--cor-primaria);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+input {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 0.6rem 0.75rem;
+  width: 100%;
+}
+
+input:focus {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 1px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: var(--raio);
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--cor-primaria-hover);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secundario {
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  border: 1px solid var(--cor-borda);
+}
+
+.btn-secundario:hover:not(:disabled) {
+  background: var(--cor-fundo);
+}
+
+.card {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 1.25rem;
+}
+
+.erro {
+  color: var(--cor-erro);
+  font-size: 0.9rem;
+}
+
+.secao-titulo {
+  font-size: 1.1rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.grid-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.card-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card-kpi-rotulo {
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+}
+
+.card-kpi-valor {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.card-kpi-nota {
+  font-size: 0.8rem;
+  color: var(--cor-texto-suave);
+}
+
+.grid-modulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.card-modulo {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: border-color 0.15s;
+}
+
+.card-modulo:hover {
+  border-color: var(--cor-primaria);
+}

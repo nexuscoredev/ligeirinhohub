@@ -1,0 +1,46 @@
+import { Navigate, useLocation } from 'react-router-dom';
+import { usePerfil } from '@/contexts/PerfilContext';
+import { paginaPermitida } from '@/lib/paginasSistema';
+
+export function RotaProtegida({ children }: { children: React.ReactNode }) {
+  const { session, usuario, carregando, erro } = usePerfil();
+  const location = useLocation();
+
+  if (carregando) {
+    return (
+      <div className="estado-central">
+        <p>Carregando…</p>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  if (erro || !usuario) {
+    return (
+      <div className="estado-central card" style={{ maxWidth: 420 }}>
+        <h2>Perfil indisponível</h2>
+        <p className="erro">{erro ?? 'Perfil não carregado.'}</p>
+        <p style={{ color: 'var(--cor-texto-suave)', fontSize: '0.9rem' }}>
+          Confirme que a migração do Supabase foi aplicada e que existe um
+          registro em <code>usuarios</code> com o mesmo id do Auth.
+        </p>
+      </div>
+    );
+  }
+
+  const permitido = paginaPermitida(
+    location.pathname,
+    usuario.cargo,
+    usuario.paginas_permitidas,
+    usuario.email,
+  );
+
+  if (!permitido) {
+    return <Navigate to="/bem-vindo" replace />;
+  }
+
+  return children;
+}

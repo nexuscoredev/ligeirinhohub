@@ -1,0 +1,10 @@
+# Configuração local do Supabase CLI (quando instalar: supabase init já está parcialmente feito)
+# Documentação: https://supabase.com/docs/guides/cli/config
+
+project_id = "ligeirinho-hub"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15
