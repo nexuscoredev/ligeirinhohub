@@ -10,12 +10,18 @@ import {
   iniciarSeparacao,
   pausarSeparacao,
   retomarSeparacao,
-  atualizarItemSeparado,
+  atualizarStatusItemSeparado,
 } from '@/lib/pedidos/api';
 import { formatarMoeda, STATUS_LABEL } from '@/lib/pedidos/constants';
+import {
+  statusItemFromRow,
+  todosItensComStatusDefinido,
+  valorItemSeparado,
+} from '@/lib/pedidos/itemStatusSeparacao';
 import { agruparItensPorCategoria } from '@/lib/pedidos/ordenarItens';
 import { podeSeparar } from '@/lib/pedidos/permissoes';
-import type { Pedido, PedidoItem } from '@/types/pedidos';
+import type { ItemStatusSeparacao, Pedido, PedidoItem } from '@/types/pedidos';
+import { ItemStatusPicker } from '@/pages/operacional/ItemStatusPicker';
 import './operacional.css';
 
 export function SeparacaoPage() {
@@ -55,10 +61,7 @@ export function SeparacaoPage() {
   const podeOperar = podeSeparar(usuario.cargo) && emSeparacao;
   const grupos = agruparItensPorCategoria(itens);
 
-  const totalSeparado = itens.reduce((s, i) => {
-    const q = i.qty_separada ?? 0;
-    return s + q * Number(i.preco_unitario);
-  }, 0);
+  const totalSeparado = itens.reduce((s, i) => s + valorItemSeparado(i), 0);
 
   async function handleIniciar() {
     if (!id) return;
@@ -87,12 +90,10 @@ export function SeparacaoPage() {
     else void carregar();
   }
 
-  async function handleQty(item: PedidoItem, valor: string) {
+  async function handleStatus(item: PedidoItem, status: ItemStatusSeparacao) {
     if (!id || !podeOperar) return;
-    const qty = valor === '' ? 0 : Number(valor);
-    if (Number.isNaN(qty) || qty < 0) return;
     setSalvando(true);
-    const { error } = await atualizarItemSeparado(item.id, qty, id);
+    const { error } = await atualizarStatusItemSeparado(item, status, id);
     setSalvando(false);
     if (error) setErro(error.message);
     else void carregar();
@@ -100,9 +101,8 @@ export function SeparacaoPage() {
 
   async function handleConcluir() {
     if (!id) return;
-    const pendente = itens.some((i) => i.qty_separada === null);
-    if (pendente) {
-      setErro('Informe a quantidade separada em todos os itens.');
+    if (!todosItensComStatusDefinido(itens)) {
+      setErro('Defina o status de todos os itens antes de concluir.');
       return;
     }
     setSalvando(true);
@@ -204,19 +204,13 @@ export function SeparacaoPage() {
                   Pedido: {item.qty_pedida} · {formatarMoeda(Number(item.preco_unitario))}/un
                 </p>
               </div>
-              <div className="ops-qty">
+              <div className="ops-item-status">
                 <span className="ops-qty-pedida">Pedido: {item.qty_pedida}</span>
-                <label>
-                  Separado
-                  <input
-                    type="number"
-                    min={0}
-                    step={1}
-                    disabled={!podeOperar || salvando}
-                    value={item.qty_separada ?? ''}
-                    onBlur={(e) => void handleQty(item, e.target.value)}
-                  />
-                </label>
+                <ItemStatusPicker
+                  value={statusItemFromRow(item)}
+                  disabled={!podeOperar || salvando}
+                  onChange={(status) => void handleStatus(item, status)}
+                />
               </div>
             </div>
           ))}

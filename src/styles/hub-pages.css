@@ -55,6 +55,13 @@
   margin-bottom: 0.5rem;
 }
 
+.hub-page--dashboard .hub-tag {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: rgba(212, 175, 55, 0.35);
+  color: var(--hub-gold);
+  letter-spacing: 0.05em;
+}
+
 .hub-page-header {
   display: flex;
   flex-wrap: wrap;

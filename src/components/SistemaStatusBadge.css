@@ -1,0 +1,24 @@
+.sistema-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--hub-raio);
+  background: var(--hub-surface);
+  border: 1px solid var(--hub-gold-soft);
+  font-size: 0.78rem;
+}
+
+.sistema-status-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--hub-orange);
+  box-shadow: 0 0 6px var(--hub-orange);
+  flex-shrink: 0;
+}
+
+.sistema-status-badge.ok .sistema-status-badge-dot {
+  background: var(--hub-sucesso);
+  box-shadow: 0 0 6px var(--hub-sucesso);
+}

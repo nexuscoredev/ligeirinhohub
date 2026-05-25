@@ -1,0 +1,218 @@
+.admin-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+  padding: 0.35rem;
+  border-radius: var(--hub-raio);
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-subnav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--hub-muted);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.admin-subnav-link:hover {
+  color: var(--hub-text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.admin-subnav-link.ativo {
+  color: var(--hub-gold);
+  background: var(--hub-orange-soft);
+  border: 1px solid rgba(255, 107, 0, 0.25);
+}
+
+.admin-sistemas-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-sistemas-nota {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.admin-modulos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.admin-modulo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem;
+  border-radius: var(--hub-raio);
+  background: var(--hub-surface);
+  border: 1px solid var(--hub-gold-soft);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.admin-modulo-card:hover {
+  border-color: var(--hub-gold);
+  transform: translateY(-1px);
+}
+
+.admin-modulo-card span:first-child {
+  font-size: 1.5rem;
+}
+
+.admin-modulo-card strong {
+  font-size: 0.95rem;
+}
+
+.admin-modulo-card em {
+  font-style: normal;
+  font-size: 0.78rem;
+  color: var(--hub-muted);
+}
+
+.admin-tabela-wrap {
+  overflow-x: auto;
+  border-radius: var(--hub-raio);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.admin-tabela th,
+.admin-tabela td {
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-tabela th {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--hub-muted);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.admin-tabela tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-tabela tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.admin-badge--ativo {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+.admin-badge--inativo {
+  background: rgba(248, 113, 113, 0.15);
+  color: #f87171;
+}
+
+.admin-form-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.admin-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--hub-muted);
+}
+
+.admin-form-grid input,
+.admin-form-grid select,
+.admin-form-grid textarea {
+  font-size: 0.9rem;
+}
+
+.admin-form-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.admin-permissoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.35rem;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 0.65rem;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-permissoes label {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--hub-text);
+  cursor: pointer;
+}
+
+.admin-drawer {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--hub-raio);
+  background: var(--hub-surface);
+  border: 1px solid var(--hub-gold-soft);
+}
+
+.admin-drawer h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.admin-busca {
+  margin-bottom: 1rem;
+  max-width: 320px;
+}
+
+.admin-sistemas-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-sistemas-nota {
+  font-size: 0.85rem;
+}
+
+.admin-sistemas-nota code {
+  font-size: 0.78rem;
+  word-break: break-all;
+}

@@ -16,7 +16,7 @@
 | Erros pós-entrega | Troca whisky (Buchanan’s ↔ Ballantine’s) sem rastro | **Ocorrência** na entrega + status de correção com prioridade |
 | Crédito / inadimplência | >R$ 100k em aberto, pagamento “quebrado” | Bloqueio de **novo pedido** por cliente inadimplente + regra de vencimento (ex.: terça) |
 | Preço | Tabela promoção recalcula pedido antigo | **Preço congelado no pedido**; tabela fixa por cliente no cadastro |
-| Canais | WhatsApp, Kaena, balcão misturados | Um pedido / um ID; filtro por origem (Kaena, app, tablet, WhatsApp fase 2) |
+| Canais | WhatsApp, Cayena, balcão misturados | Um pedido / um ID; filtro por origem (Cayena, app, tablet, WhatsApp fase 2) |
 | PDV / Totem | Fila no caixa, pagamento misturado no balcão | Totem/PDV **só unidade (varejo)**; pagamento definido **pelo cliente no totem**; caixa só confere |
 | Marketing | Tempo alto em arte + lista WhatsApp | App **Ligeirinho Marketing** no Hub; TV com promoções; site com promoções (evolução) |
 
@@ -58,7 +58,7 @@
 |-----------------|------|--------|
 | WhatsApp | Principal | Transcrição “como chegou” → no sistema, ordenação na **exibição** |
 | App/site cliente | Planejado | Pedido direto, sem digitação manual |
-| Kaena (outro CNPJ) | Pasta separada | Mesma tabela de pedidos, flag **origem = Kaena** |
+| Cayena (outro CNPJ) | Pasta separada | Mesma tabela de pedidos, flag **origem = Cayena** |
 | Balcão / tablet loja | Parcial | Flag origem |
 | Totem | MVP | Número do pedido → caixa |
 
@@ -220,12 +220,12 @@ Estados sugeridos a partir da conversa (nomes podem ser refinados):
 | Filtro na fila/lista | Uso |
 |----------------------|-----|
 | Todos os pedidos | Visão geral |
-| Kaena | Símbolo/origem Kaena (impressão Kaena ainda existe hoje — digitalizar) |
+| Cayena | Símbolo/origem Cayena (impressão Cayena ainda existe hoje — digitalizar) |
 | Tablet loja | Pedidos digitados no balcão |
 | App cliente | Futuro: cliente digitou |
 | WhatsApp | Até migrar para app |
 
-**Multi-CNPJ:** Ligeirinho + Kaena → mesma tabela, campo `origem` / `marca`.
+**Multi-CNPJ:** Ligeirinho + Cayena → mesma tabela, campo `origem` / `marca`.
 
 ---
 
@@ -280,7 +280,7 @@ Estados sugeridos a partir da conversa (nomes podem ser refinados):
 | WhatsApp | Fase 2 | Ainda é canal real hoje — integração ou entrada manual estruturada |
 | Preço congelado | Implícito em “pedido central” | Explicitar `preco_unitario` snapshot + tabela por cliente |
 | Inadimplência | Não detalhado | Novo: regra de bloqueio + condição pagamento |
-| Kaena / multi-origem | Parcial | Campo origem + UI filtro |
+| Cayena / multi-origem | Parcial | Campo origem + UI filtro |
 | Marketing app | Não no MVP | Novo app no Hub (paralelo) |
 | Assinatura digital | Não detalhado | Novo requisito retirada/entrega |
 | Orçamento vs pedido | Não detalhado | Estados e permissões diferentes |
@@ -293,7 +293,7 @@ Estados sugeridos a partir da conversa (nomes podem ser refinados):
 ### Onda 0 — Fundação (bloqueia tudo)
 
 1. Migração **produtos + categorias** (tipos: whisky, cerveja, água…).
-2. Modelo **pedido + itens_pedido** com preço snapshot e origem (Kaena, etc.).
+2. Modelo **pedido + itens_pedido** com preço snapshot e origem (Cayena, etc.).
 3. **Clientes** + tabela de preço por cliente + condição de pagamento / inadimplência.
 
 ### Onda 1 — Operacional tablet (prioridade Denis)
@@ -364,8 +364,8 @@ Use esta lista na próxima conversa com Denis — marcar ✓/✗/ajustar texto.
 
 ### Canais
 
-- [ ] Campo origem: Kaena, balcão, totem, app, WhatsApp (manual).
-- [ ] Kaena na mesma fila com filtro (e impressão digital futura).
+- [ ] Campo origem: Cayena, balcão, totem, app, WhatsApp (manual).
+- [ ] Cayena na mesma fila com filtro (e impressão digital futura).
 
 ### PDV / Totem
 
@@ -392,7 +392,7 @@ Use esta lista na próxima conversa com Denis — marcar ✓/✗/ajustar texto.
 |---|------|---------------------|
 | 1 | Quem pode **concluir separação** e disparar novo valor? | Só separador ou também gerente? |
 | 2 | **Gerente** pode pausar pedido de outro separador? | |
-| 3 | Impressão Kaena | Mesmo layout da Karen hoje ou novo template? |
+| 3 | Impressão Cayena | Mesmo layout da Karen hoje ou novo template? |
 | 4 | Orçamento no legado | Migrar histórico ou só pedidos novos? |
 | 5 | Conferência Coca “não tinha” | Fluxo: gerente confere estoque antes de concluir separação? |
 | 6 | Ocorrência | SLA / quem é notificado além de Denis? |

@@ -15,13 +15,33 @@ export type PedidoStatus =
 
 export type PedidoOrigem =
   | 'whatsapp'
-  | 'kaena'
+  | 'cayena'
   | 'balcao'
   | 'totem'
   | 'app'
   | 'hub';
 
 export type PedidoModalidade = 'retirada' | 'entrega';
+
+export interface PagamentoSplitItem {
+  forma: string;
+  valor: number;
+}
+
+export type FormaPagamento =
+  | 'dinheiro'
+  | 'pix'
+  | 'cartao_debito'
+  | 'cartao_credito';
+
+export interface PagamentoSplitLinha {
+  forma: FormaPagamento;
+  valor: number;
+}
+
+export type PagamentoSplit = PagamentoSplitLinha[];
+
+export type ItemStatusSeparacao = 'pendente' | 'separado' | 'indisponivel';
 
 export interface CategoriaProduto {
   id: string;
@@ -70,6 +90,8 @@ export interface Pedido {
   separador_id: string | null;
   tem_ocorrencia: boolean;
   observacoes: string | null;
+  pagamento_split: PagamentoSplit | null;
+  pagamento_recebido_em: string | null;
   created_at: string;
   clientes?: Pick<Cliente, 'nome' | 'nome_fantasia' | 'bloqueado_pedido' | 'inadimplente'>;
   usuarios?: { nome: string } | null;
@@ -83,6 +105,7 @@ export interface PedidoItem {
   categoria_ordem: number;
   qty_pedida: number;
   qty_separada: number | null;
+  status_separacao?: ItemStatusSeparacao;
   preco_unitario: number;
   separado_ok: boolean;
   produtos?: Pick<Produto, 'imagem_url' | 'nome' | 'sku'> | null;

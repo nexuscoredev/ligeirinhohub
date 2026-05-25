@@ -19,7 +19,7 @@ create type public.pedido_status as enum (
 
 create type public.pedido_origem as enum (
   'whatsapp',
-  'kaena',
+  'cayena',
   'balcao',
   'totem',
   'app',

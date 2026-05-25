@@ -1,7 +1,9 @@
 import { supabase } from '@/lib/supabase';
 import { ordenarItensSeparacao } from '@/lib/pedidos/ordenarItens';
+import { qtyParaStatus } from '@/lib/pedidos/itemStatusSeparacao';
 import type {
   Cliente,
+  ItemStatusSeparacao,
   Pedido,
   PedidoItem,
   PedidoOcorrencia,
@@ -141,18 +143,21 @@ export async function retomarSeparacao(pedidoId: string, usuarioId: string) {
   return { error };
 }
 
-export async function atualizarItemSeparado(
-  itemId: string,
-  qtySeparada: number,
+export async function atualizarStatusItemSeparado(
+  item: PedidoItem,
+  status: ItemStatusSeparacao,
   pedidoId: string,
 ) {
+  const { qty_separada, separado_ok } = qtyParaStatus(status, Number(item.qty_pedida));
+
   const { error } = await supabase
     .from('pedido_itens')
     .update({
-      qty_separada: qtySeparada,
-      separado_ok: true,
+      status_separacao: status,
+      qty_separada,
+      separado_ok,
     } as never)
-    .eq('id', itemId);
+    .eq('id', item.id);
 
   if (!error) {
     await supabase.rpc(

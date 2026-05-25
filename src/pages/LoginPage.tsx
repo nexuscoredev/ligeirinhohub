@@ -75,7 +75,6 @@ export function LoginPage() {
               autoComplete="username"
               value={usuario}
               onChange={(e) => setUsuario(e.target.value)}
-              placeholder="Ex.: Vinicius"
               required
             />
           </label>

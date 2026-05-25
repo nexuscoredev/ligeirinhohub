@@ -2,15 +2,23 @@ import { Link } from 'react-router-dom';
 import { AppLauncherCard } from '@/components/AppLauncherCard';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
-import { APPS_SISTEMA, HUB_ADMIN_ITENS, appPermitido } from '@/lib/apps';
+import { APPS_SISTEMA, appPermitido, itemHubPermitido } from '@/lib/apps';
+import { HUB_ADMIN_MODULOS } from '@/lib/admin/modulos';
 
 export function BemVindoPage() {
   const { usuario } = usePerfil();
   const primeiroNome = usuario?.nome?.split(' ')[0] ?? 'usuário';
 
-  const atalhosHub = HUB_ADMIN_ITENS.filter(
-    (i) => i.rota === '/dashboard' || i.rota === '/produtos',
-  );
+  const atalhosHub = usuario
+    ? HUB_ADMIN_MODULOS.filter((item) =>
+        itemHubPermitido(
+          item,
+          usuario.cargo,
+          usuario.paginas_permitidas,
+          usuario.email,
+        ),
+      )
+    : [];
 
   const appsVisiveis = usuario
     ? APPS_SISTEMA.filter((app) =>

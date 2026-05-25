@@ -57,8 +57,8 @@ export function DashboardPage() {
 
   return (
     <PageShell
-      className="hub-page--denso"
-      tag="• Gelada • Rápida • Completa"
+      className="hub-page--denso hub-page--dashboard"
+      tag="Visão gerencial"
       titulo={
         <>
           Olá, {primeiroNome} — visão <span>gerencial</span>
@@ -79,17 +79,6 @@ export function DashboardPage() {
           <strong>{usuario?.cargo ?? '—'}</strong>
           <span>seu cargo</span>
         </div>
-      </div>
-
-      <div
-        className={`dashboard-status ${supabaseConfigurado ? 'ok' : ''}`}
-        role="status"
-      >
-        <span className="dashboard-status-dot" aria-hidden />
-        Supabase:{' '}
-        <strong>
-          {supabaseConfigurado ? 'conectado' : 'não configurado'}
-        </strong>
       </div>
 
       <section aria-labelledby="dashboard-kpis-titulo">

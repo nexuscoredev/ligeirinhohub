@@ -2,7 +2,7 @@ import type { CargoHub } from '@/types/database';
 import { CARGOS_HUB } from '@/lib/cargos';
 
 /** Identificador interno do app (não é app nativo — nomenclatura de produto) */
-export type AppId = 'hub' | 'pdv' | 'totem' | 'operacional';
+export type AppId = 'hub' | 'pdv' | 'totem' | 'operacional' | 'marketing';
 
 export interface ItemApp {
   rota: string;
@@ -47,9 +47,11 @@ export function temaApp(app: AppSistema): Record<string, string> {
 /** Páginas do painel administrativo (fora dos apps de operação) */
 export const HUB_ADMIN_ITENS: ItemApp[] = [
   { rota: '/bem-vindo', titulo: 'Bem-vindo', icone: '👋', prefixo: '/bem-vindo' },
+  { rota: '/admin', titulo: 'Painel admin', icone: '⚙️', prefixo: '/admin' },
   { rota: '/dashboard', titulo: 'Dashboard', icone: '📊', prefixo: '/dashboard' },
-  { rota: '/produtos', titulo: 'Produtos', icone: '🍺', prefixo: '/produtos' },
-  { rota: '/usuarios', titulo: 'Usuários', icone: '🔐', prefixo: '/usuarios' },
+  { rota: '/admin/produtos', titulo: 'Produtos', icone: '🍺', prefixo: '/admin/produtos' },
+  { rota: '/admin/usuarios', titulo: 'Usuários', icone: '🔐', prefixo: '/admin/usuarios' },
+  { rota: '/admin/sistemas', titulo: 'Sistemas', icone: '🔌', prefixo: '/admin/sistemas' },
 ];
 
 export const APPS_SISTEMA: AppSistema[] = [
@@ -78,8 +80,8 @@ export const APPS_SISTEMA: AppSistema[] = [
     nome: 'Ligeirinho Totem',
     icone: '📱',
     iconeLabel: 'TOTEM',
-    tagline: 'Touch-first, fila zero no balcão.',
-    descricao: 'Autoatendimento touch para o cliente.',
+    tagline: 'Touch-first — unidade, split e retirada no caixa.',
+    descricao: 'Autoatendimento: catálogo unitário, pagamento dividido e número para o caixa.',
     corAccent: '#64d2ff',
     gradient:
       'radial-gradient(ellipse 90% 65% at 88% 5%, rgba(100,210,255,0.32) 0%, transparent 52%), radial-gradient(ellipse 50% 40% at 5% 95%, rgba(100,210,255,0.08) 0%, transparent 40%)',
@@ -131,6 +133,38 @@ export const APPS_SISTEMA: AppSistema[] = [
       },
     ],
   },
+  {
+    id: 'marketing',
+    nome: 'Ligeirinho Marketing',
+    icone: '📺',
+    iconeLabel: 'MKT',
+    tagline: 'Promoções na TV e no WhatsApp, sem retrabalho.',
+    descricao: 'Promoções do dia na TV da loja.',
+    corAccent: '#ff9f0a',
+    gradient:
+      'radial-gradient(ellipse 95% 70% at 90% 0%, rgba(255,159,10,0.36) 0%, transparent 52%), radial-gradient(ellipse 55% 45% at 0% 85%, rgba(255,214,10,0.12) 0%, transparent 42%)',
+    rotaEntrada: '/marketing',
+    itens: [
+      {
+        rota: '/marketing',
+        titulo: 'Painel',
+        icone: '📺',
+        prefixo: '/marketing',
+      },
+      {
+        rota: '/marketing/promocoes',
+        titulo: 'Promoções do dia',
+        icone: '🏷️',
+        prefixo: '/marketing/promocoes',
+      },
+      {
+        rota: '/marketing/tv',
+        titulo: 'Preview TV',
+        icone: '🖥️',
+        prefixo: '/marketing/tv',
+      },
+    ],
+  },
 ];
 
 export const NOME_PLATAFORMA = 'Ligeirinho Hub';
@@ -171,6 +205,23 @@ export function appTemSubmenu(app: AppSistema): boolean {
 
 export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
   '/bem-vindo': CARGOS_HUB as unknown as CargoHub[],
+  '/admin': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+    'Comercial',
+    'Estoquista',
+  ],
+  '/admin/produtos': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Estoquista',
+    'Comercial',
+  ],
+  '/admin/usuarios': ['Desenvolvedor', 'Administrador'],
+  '/admin/sistemas': ['Desenvolvedor', 'Administrador'],
   '/dashboard': [
     'Desenvolvedor',
     'Administrador',
@@ -224,14 +275,34 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Gerente',
     'Logistica',
   ],
+  '/marketing': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+  ],
+  '/marketing/promocoes': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+  ],
+  '/marketing/tv': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+  ],
 };
 
 export const ROTAS_PUBLICAS_AUTENTICADAS = ['/bem-vindo'];
 
 export function rotaPermitidaParaCargo(rota: string, cargo: CargoHub): boolean {
-  const chave = Object.keys(HUB_CARGOS_POR_ROTA).find(
-    (prefixo) => rota === prefixo || rota.startsWith(`${prefixo}/`),
-  );
+  const chave = Object.keys(HUB_CARGOS_POR_ROTA)
+    .filter(
+      (prefixo) => rota === prefixo || rota.startsWith(`${prefixo}/`),
+    )
+    .sort((a, b) => b.length - a.length)[0];
   if (!chave) return false;
   return HUB_CARGOS_POR_ROTA[chave]?.includes(cargo) ?? false;
 }

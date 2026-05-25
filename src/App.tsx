@@ -4,16 +4,23 @@ import { RotaProtegida } from '@/components/RotaProtegida';
 import { PerfilProvider } from '@/contexts/PerfilContext';
 import { MainLayout } from '@/layouts/MainLayout';
 import '@/layouts/MainLayout.css';
+import { PainelAdminPage } from '@/pages/admin/PainelAdminPage';
+import { ProdutosAdminPage } from '@/pages/admin/ProdutosAdminPage';
+import { SistemasPage } from '@/pages/admin/SistemasPage';
+import { UsuariosPage } from '@/pages/admin/UsuariosPage';
 import { BemVindoPage } from '@/pages/BemVindoPage';
 import { ClientesPage } from '@/pages/clientes/ClientesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MotoristaPage } from '@/pages/motorista/MotoristaPage';
+import { MarketingPainelPage } from '@/pages/marketing/MarketingPainelPage';
+import { PromocoesPage } from '@/pages/marketing/PromocoesPage';
+import { TvPreviewPage } from '@/pages/marketing/TvPreviewPage';
 import { FilaOperacionalPage } from '@/pages/operacional/FilaOperacionalPage';
 import { SeparacaoPage } from '@/pages/operacional/SeparacaoPage';
 import { PedidosPage } from '@/pages/pedidos/PedidosPage';
-import { PlaceholderPage } from '@/pages/PlaceholderPage';
-import { ProdutosPage } from '@/pages/produtos/ProdutosPage';
+import { PdvPage } from '@/pages/pdv/PdvPage';
+import { TotemPage } from '@/pages/totem/TotemPage';
 
 export default function App() {
   return (
@@ -31,46 +38,25 @@ export default function App() {
             >
               <Route path="/" element={<Navigate to="/bem-vindo" replace />} />
               <Route path="/bem-vindo" element={<BemVindoPage />} />
+              <Route path="/admin" element={<PainelAdminPage />} />
+              <Route path="/admin/usuarios" element={<UsuariosPage />} />
+              <Route path="/admin/sistemas" element={<SistemasPage />} />
+              <Route path="/admin/produtos" element={<ProdutosAdminPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/produtos" element={<Navigate to="/admin/produtos" replace />} />
+              <Route path="/usuarios" element={<Navigate to="/admin/usuarios" replace />} />
 
-              <Route
-                path="/pdv"
-                element={
-                  <PlaceholderPage
-                    titulo="Painel do caixa"
-                    descricao="PDV — vendas no balcão (Fase 2)."
-                    icone="🛒"
-                  />
-                }
-              />
-              <Route
-                path="/totem"
-                element={
-                  <PlaceholderPage
-                    titulo="Autoatendimento"
-                    descricao="Totem touch — pedido pelo cliente (Fase 2)."
-                    icone="📱"
-                  />
-                }
-              />
+              <Route path="/pdv" element={<PdvPage />} />
+              <Route path="/totem" element={<TotemPage />} />
 
               <Route path="/operacional" element={<FilaOperacionalPage />} />
               <Route path="/operacional/separar/:id" element={<SeparacaoPage />} />
               <Route path="/pedidos" element={<PedidosPage />} />
               <Route path="/clientes" element={<ClientesPage />} />
               <Route path="/motorista" element={<MotoristaPage />} />
-
-              <Route path="/produtos" element={<ProdutosPage />} />
-              <Route
-                path="/usuarios"
-                element={
-                  <PlaceholderPage
-                    titulo="Usuários"
-                    descricao="Gestão de perfis e permissões (Fase 1)."
-                    icone="🔐"
-                  />
-                }
-              />
+              <Route path="/marketing" element={<MarketingPainelPage />} />
+              <Route path="/marketing/promocoes" element={<PromocoesPage />} />
+              <Route path="/marketing/tv" element={<TvPreviewPage />} />
             </Route>
             <Route path="*" element={<Navigate to="/bem-vindo" replace />} />
           </Routes>

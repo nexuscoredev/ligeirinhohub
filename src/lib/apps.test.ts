@@ -31,6 +31,15 @@ describe('apps do sistema', () => {
     expect(ctx?.app.nome).toBe('Ligeirinho Operacional');
     expect(ctx?.item.titulo).toBe('Clientes');
   });
+
+  it('Ligeirinho Marketing tem painel, promoções e TV', () => {
+    const mkt = APPS_SISTEMA.find((a) => a.id === 'marketing');
+    const rotas = mkt?.itens.map((i) => i.rota) ?? [];
+    expect(mkt?.nome).toBe('Ligeirinho Marketing');
+    expect(mkt?.iconeLabel).toBe('MKT');
+    expect(rotas).toEqual(['/marketing', '/marketing/promocoes', '/marketing/tv']);
+    expect(appTemSubmenu(mkt!)).toBe(true);
+  });
 });
 
 describe('rotaPermitidaParaCargo', () => {
@@ -40,6 +49,34 @@ describe('rotaPermitidaParaCargo', () => {
 
   it('nega Caixa em usuarios', () => {
     expect(rotaPermitidaParaCargo('/usuarios', 'Caixa')).toBe(false);
+  });
+
+  it('permite Desenvolvedor em admin/sistemas', () => {
+    expect(rotaPermitidaParaCargo('/admin/sistemas', 'Desenvolvedor')).toBe(
+      true,
+    );
+  });
+
+  it('nega Gerente em admin/sistemas', () => {
+    expect(rotaPermitidaParaCargo('/admin/sistemas', 'Gerente')).toBe(false);
+  });
+
+  it('nega Gerente em admin/usuarios', () => {
+    expect(rotaPermitidaParaCargo('/admin/usuarios', 'Gerente')).toBe(false);
+  });
+
+  it('permite Gerente no painel admin', () => {
+    expect(rotaPermitidaParaCargo('/admin', 'Gerente')).toBe(true);
+  });
+
+  it('permite Comercial em marketing', () => {
+    expect(rotaPermitidaParaCargo('/marketing/promocoes', 'Comercial')).toBe(
+      true,
+    );
+  });
+
+  it('nega Caixa em marketing', () => {
+    expect(rotaPermitidaParaCargo('/marketing', 'Caixa')).toBe(false);
   });
 });
 

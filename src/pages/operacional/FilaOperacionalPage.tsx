@@ -11,7 +11,7 @@ import './operacional.css';
 const FILTROS: { id: PedidoOrigem | 'todos'; label: string }[] = [
   { id: 'todos', label: 'Todos' },
   { id: 'whatsapp', label: 'WhatsApp' },
-  { id: 'kaena', label: 'Kaena' },
+  { id: 'cayena', label: 'Cayena' },
   { id: 'balcao', label: 'Balcão' },
   { id: 'totem', label: 'Totem' },
   { id: 'app', label: 'App' },
@@ -121,7 +121,7 @@ export function FilaOperacionalPage() {
                   </span>
                 </span>
                 <span
-                  className={`ops-badge${p.origem === 'kaena' ? ' ops-badge--kaena' : ''}${p.tem_ocorrencia ? ' ops-badge--ocorrencia' : ''}`}
+                  className={`ops-badge${p.origem === 'cayena' ? ' ops-badge--cayena' : ''}${p.tem_ocorrencia ? ' ops-badge--ocorrencia' : ''}`}
                 >
                   {ORIGEM_LABEL[p.origem]}
                 </span>

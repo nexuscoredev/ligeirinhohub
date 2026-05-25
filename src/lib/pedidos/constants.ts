@@ -1,4 +1,4 @@
-import type { PedidoOrigem, PedidoStatus } from '@/types/pedidos';
+import type { FormaPagamento, PedidoOrigem, PedidoStatus } from '@/types/pedidos';
 
 export const STATUS_LABEL: Record<PedidoStatus, string> = {
   orcamento: 'Orçamento',
@@ -18,7 +18,7 @@ export const STATUS_LABEL: Record<PedidoStatus, string> = {
 
 export const ORIGEM_LABEL: Record<PedidoOrigem, string> = {
   whatsapp: 'WhatsApp',
-  kaena: 'Kaena',
+  cayena: 'Cayena',
   balcao: 'Balcão',
   totem: 'Totem',
   app: 'App',
@@ -39,6 +39,20 @@ export const STATUS_POS_SEPARACAO: PedidoStatus[] = [
   'aguardando_entrega',
   'em_rota',
   'com_ocorrencia',
+];
+
+export const FORMA_PAGAMENTO_LABEL: Record<FormaPagamento, string> = {
+  dinheiro: 'Dinheiro',
+  pix: 'PIX',
+  cartao_debito: 'Cartão débito',
+  cartao_credito: 'Cartão crédito',
+};
+
+export const FORMAS_PAGAMENTO: FormaPagamento[] = [
+  'dinheiro',
+  'pix',
+  'cartao_debito',
+  'cartao_credito',
 ];
 
 export function formatarMoeda(valor: number): string {

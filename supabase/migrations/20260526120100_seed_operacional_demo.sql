@@ -32,7 +32,7 @@ insert into public.clientes (nome, nome_fantasia, tabela_preco, dia_vencimento_s
 values
   ('Bar do Chico', 'Bar do Chico', 'padrao', 2, false),
   ('Cantinho do Vale', 'Cantinho do Vale', 'padrao', 2, false),
-  ('Distribuidora Teste', 'Kaena Parceiro', 'kaena', 2, false);
+  ('Distribuidora Teste', 'Cayena Parceiro', 'cayena', 2, false);
 
 -- Pedido 1: fila (Bar do Chico)
 do $$
@@ -78,7 +78,7 @@ begin
     cliente_id, status, origem, modalidade, prioridade,
     aceito_em, valor_pedido, tem_ocorrencia
   ) values (
-    v_cliente, 'refazer_separacao', 'kaena', 'retirada', 100,
+    v_cliente, 'refazer_separacao', 'cayena', 'retirada', 100,
     now() - interval '1 hour', 0, true
   ) returning id into v_pedido;
 
