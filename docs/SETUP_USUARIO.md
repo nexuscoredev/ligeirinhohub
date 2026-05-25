@@ -17,6 +17,9 @@ O trigger `on_auth_user_created` cria a linha em `usuarios`; confira `login` e `
 | Denis | denis@hubligeirinho.com | |
 | Rafael | rafaelcavalcante@hub.ligeirinho.com | Admin |
 | Vinicius | viniciusdemorais@hub.ligeirinho.com | Senha exemplo: `123456` |
+| Denise | denise@hub.ligeirinho.com | Gerente; senha: `ligueirinho123` |
+| Patricia | patricia@hub.ligeirinho.com | Gerente; senha: `ligueirinho123` |
+| Giovana | giovana@hub.ligeirinho.com | Gerente; senha: `ligueirinho123` |
 
 ### Criar usuário via SQL (cuidado)
 
