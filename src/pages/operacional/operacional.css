@@ -69,10 +69,19 @@
 
 .ops-field--check {
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   font-weight: 500;
   color: var(--hub-text);
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.ops-field--check input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
 }
 
 .ops-criar-pedido-grid {

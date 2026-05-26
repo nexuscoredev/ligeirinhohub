@@ -238,12 +238,20 @@ function NovoClienteForm({
           />
         </label>
       </div>
-      <label style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
-        <input type="checkbox" checked={bloqueado} onChange={(e) => setBloqueado(e.target.checked)} />
+      <label className="ops-field ops-field--check" style={{ marginBottom: '0.5rem' }}>
+        <input
+          type="checkbox"
+          checked={bloqueado}
+          onChange={(e) => setBloqueado(e.target.checked)}
+        />
         Bloqueado para novos pedidos
       </label>
-      <label style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.65rem' }}>
-        <input type="checkbox" checked={inadimplente} onChange={(e) => setInadimplente(e.target.checked)} />
+      <label className="ops-field ops-field--check" style={{ marginBottom: '0.65rem' }}>
+        <input
+          type="checkbox"
+          checked={inadimplente}
+          onChange={(e) => setInadimplente(e.target.checked)}
+        />
         Inadimplente
       </label>
       <label style={{ display: 'block', marginBottom: '0.75rem' }}>

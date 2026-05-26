@@ -80,9 +80,11 @@ export function DashboardPage() {
           <strong>{kpiFila}</strong>
           <span>pedido · fila</span>
         </div>
-        <div className="hub-stat-card">
-          <strong>{usuario?.cargo ?? '—'}</strong>
-          <span>seu cargo</span>
+        <div className="hub-stat-card hub-stat-card--cargo">
+          <span className="hub-stat-card__rotulo">Cargo</span>
+          <strong className="hub-stat-card__valor" title={usuario?.cargo ?? undefined}>
+            {usuario?.cargo ?? '—'}
+          </strong>
         </div>
       </div>
 

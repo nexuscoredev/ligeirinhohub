@@ -297,6 +297,12 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Gerente',
     'Logistica',
   ],
+  '/veiculos': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Logistica',
+  ],
   '/marketing': [
     'Desenvolvedor',
     'Administrador',
