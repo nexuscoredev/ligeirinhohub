@@ -72,6 +72,21 @@
   margin-bottom: 1rem;
 }
 
+.login-aguardando {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--hub-raio);
+  background: var(--hub-surface);
+  border: 1px solid var(--hub-gold-soft);
+  text-align: center;
+  color: var(--hub-muted);
+  font-size: 0.9rem;
+}
+
+.login-aguardando p {
+  margin: 0;
+}
+
 .login-aviso {
   background: rgba(255, 107, 0, 0.1);
   border: 1px solid rgba(255, 107, 0, 0.35);

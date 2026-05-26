@@ -7,7 +7,7 @@ import { supabase, supabaseConfigurado } from '@/lib/supabase';
 import './LoginPage.css';
 
 export function LoginPage() {
-  const { session, carregando } = usePerfil();
+  const { session, usuario: perfil, carregando, erro: erroPerfil } = usePerfil();
   const location = useLocation();
   const from =
     (location.state as { from?: { pathname?: string } } | null)?.from
@@ -18,7 +18,9 @@ export function LoginPage() {
   const [enviando, setEnviando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
 
-  if (!carregando && session) {
+  const aguardandoPerfil = Boolean(session && !perfil && !erroPerfil);
+
+  if (!carregando && session && perfil) {
     return <Navigate to={from} replace />;
   }
 
@@ -66,7 +68,17 @@ export function LoginPage() {
           </p>
         )}
 
-        <form onSubmit={(e) => void handleSubmit(e)}>
+        {aguardandoPerfil ? (
+          <div className="login-aguardando" role="status">
+            <p>Preparando seu acesso…</p>
+          </div>
+        ) : null}
+
+        {erroPerfil && session && !perfil ? (
+          <p className="erro">{erroPerfil}</p>
+        ) : null}
+
+        <form onSubmit={(e) => void handleSubmit(e)} hidden={aguardandoPerfil}>
           <label>
             Usuário
             <input
@@ -92,9 +104,9 @@ export function LoginPage() {
           <button
             type="submit"
             className="btn"
-            disabled={enviando || !supabaseConfigurado}
+            disabled={enviando || aguardandoPerfil || !supabaseConfigurado}
           >
-            {enviando ? 'Entrando…' : 'Entrar'}
+            {enviando || aguardandoPerfil ? 'Entrando…' : 'Entrar'}
           </button>
         </form>
       </div>

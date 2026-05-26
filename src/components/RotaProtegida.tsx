@@ -7,7 +7,9 @@ export function RotaProtegida({ children }: { children: React.ReactNode }) {
   const { session, usuario, carregando, erro } = usePerfil();
   const location = useLocation();
 
-  if (carregando) {
+  const aguardandoPerfil = Boolean(session && !usuario && !erro);
+
+  if (carregando || aguardandoPerfil) {
     return (
       <div className="estado-central">
         <HubLogo size="lg" glow />

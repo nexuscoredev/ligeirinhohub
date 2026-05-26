@@ -29,6 +29,7 @@ export function PerfilProvider({ children }: { children: ReactNode }) {
   const [erro, setErro] = useState<string | null>(null);
 
   const carregarPerfil = useCallback(async (userId: string) => {
+    setErro(null);
     const { data, error } = await supabase
       .from('usuarios')
       .select('*')
