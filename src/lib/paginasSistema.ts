@@ -24,7 +24,7 @@ export const PAGINAS_SISTEMA = todasRotasSistema().map((item) => {
   const hub = HUB_ADMIN_ITENS.some((h) => h.rota === item.rota);
   let grupo: GrupoMenu = 'operacional';
   if (hub) {
-    if (item.rota === '/bem-vindo' || item.rota === '/dashboard') {
+    if (item.rota === '/bem-vindo' || item.rota === '/admin/dashboard') {
       grupo = 'visao-geral';
     } else if (item.rota === '/usuarios') {
       grupo = 'sistema';

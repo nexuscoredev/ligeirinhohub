@@ -38,7 +38,7 @@ export function BemVindoPage() {
       titulo={<>Bem-vindo, {primeiroNome}</>}
       subtitulo="Apps do ecossistema Ligeirinho."
       acoes={
-        <Link to="/dashboard" className="btn">
+        <Link to="/admin/dashboard" className="btn">
           Dashboard
         </Link>
       }

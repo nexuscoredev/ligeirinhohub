@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import { AppLauncherCard } from '@/components/AppLauncherCard';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
+import { ADMIN_DESCRICAO } from '@/lib/admin/modulos';
 import { APPS_SISTEMA, appPermitido } from '@/lib/apps';
 import { formatarMoeda } from '@/lib/pedidos/constants';
 import { listarEntregasPendentes, listarFilaPedidos, listarPedidosGeral } from '@/lib/pedidos/api';
 import { supabaseConfigurado } from '@/lib/supabase';
+import { AdminSubnav } from '@/pages/admin/AdminSubnav';
+import '@/pages/admin/admin.css';
 import './DashboardPage.css';
 
 export function DashboardPage() {
@@ -58,14 +61,16 @@ export function DashboardPage() {
   return (
     <PageShell
       className="hub-page--denso hub-page--dashboard"
-      tag="Visão gerencial"
+      tag="Painel administrativo"
       titulo={
         <>
-          Olá, {primeiroNome} — visão <span>gerencial</span>
+          Dashboard — <span>{primeiroNome}</span>
         </>
       }
-      subtitulo="PDV, Totem e Operacional."
+      subtitulo={ADMIN_DESCRICAO}
     >
+      <AdminSubnav />
+
       <div className="dashboard-topo">
         <div className="hub-stat-card">
           <strong>{appsVisiveis.length || APPS_SISTEMA.length}</strong>

@@ -12,7 +12,7 @@ import './admin.css';
 
 const MODULO_DESC: Record<string, string> = {
   '/admin': 'Central do painel e atalhos',
-  '/dashboard': 'KPIs e indicadores do dia',
+  '/admin/dashboard': 'KPIs e indicadores do dia',
   '/admin/produtos': 'Catálogo, preços e categorias',
   '/admin/usuarios': 'Cargos, acesso e permissões',
   '/admin/sistemas': 'Status de conexões e integrações',
@@ -48,7 +48,7 @@ export function PainelAdminPage() {
       tag="Painel administrativo"
       titulo={
         <>
-          Hub <span>administrativo</span>
+          Visão <span>geral</span>
         </>
       }
       subtitulo={ADMIN_DESCRICAO}

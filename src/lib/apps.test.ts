@@ -44,7 +44,9 @@ describe('apps do sistema', () => {
 
 describe('rotaPermitidaParaCargo', () => {
   it('permite Administrador no dashboard', () => {
-    expect(rotaPermitidaParaCargo('/dashboard', 'Administrador')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/dashboard', 'Administrador')).toBe(
+      true,
+    );
   });
 
   it('nega Caixa em usuarios', () => {
@@ -89,7 +91,7 @@ describe('paginaPermitida', () => {
 
   it('Visualizador sem paginas_permitidas não acessa dashboard', () => {
     expect(
-      paginaPermitida('/dashboard', 'Visualizador', null, 'v@test.com'),
+      paginaPermitida('/admin/dashboard', 'Visualizador', null, 'v@test.com'),
     ).toBe(false);
   });
 });
