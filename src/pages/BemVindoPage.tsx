@@ -82,7 +82,7 @@ export function BemVindoPage() {
               Seus <span>apps</span>
             </h2>
           </div>
-          <div className="hub-apps-launcher-grid">
+          <div className="hub-apps-launcher-grid hub-apps-launcher-grid--home">
             {appsVisiveis.map((app, i) => (
               <AppLauncherCard key={app.id} app={app} staggerIndex={i} />
             ))}
