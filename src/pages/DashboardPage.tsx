@@ -110,7 +110,7 @@ export function DashboardPage() {
         >
           <div className="hub-secao-header">
             <h2 id="dashboard-apps-titulo" className="hub-secao-titulo">
-              Lançar <span>app</span>
+              Aplicativos
             </h2>
           </div>
           <div className="hub-apps-launcher-grid hub-apps-launcher-grid--dashboard">

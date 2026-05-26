@@ -14,6 +14,13 @@ import {
 } from '@/lib/apps';
 import { appDisplayVersion } from '@/lib/appDisplayVersion';
 
+function iniciaisNome(nome: string): string {
+  const partes = nome.trim().split(/\s+/).filter(Boolean);
+  if (partes.length === 0) return '?';
+  if (partes.length === 1) return partes[0].slice(0, 2).toUpperCase();
+  return (partes[0][0] + partes[partes.length - 1][0]).toUpperCase();
+}
+
 function MenuLink({ item }: { item: ItemApp }) {
   return (
     <li>
@@ -152,13 +159,22 @@ export function MainLayout() {
         </nav>
 
         <div className="menu-rodape">
-          <div>
-            <p className="menu-usuario">{usuario.nome}</p>
-            <p className="menu-cargo">{usuario.cargo}</p>
+          <div className="menu-perfil-card" aria-label="Seu perfil">
+            <div className="menu-perfil-avatar" aria-hidden>
+              <span className="menu-perfil-iniciais">
+                {iniciaisNome(usuario.nome)}
+              </span>
+            </div>
+            <div className="menu-perfil-info">
+              <p className="menu-usuario" title={usuario.nome}>
+                {usuario.nome}
+              </p>
+              <span className="menu-perfil-badge">{usuario.cargo}</span>
+            </div>
           </div>
           <button
             type="button"
-            className="btn btn-secundario"
+            className="btn btn-secundario menu-perfil-sair"
             onClick={() => void sair()}
           >
             Sair
