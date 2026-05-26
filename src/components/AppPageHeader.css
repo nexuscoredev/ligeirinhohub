@@ -3,6 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   animation: app-page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  overflow-x: clip;
 }
 
 @keyframes app-page-in {

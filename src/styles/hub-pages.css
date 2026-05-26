@@ -2,6 +2,7 @@
   position: relative;
   max-width: 1280px;
   margin: 0 auto;
+  overflow-x: clip;
 }
 
 .hub-page--denso {

@@ -204,6 +204,10 @@ body.hub-menu-aberto {
 }
 
 @media (max-width: 900px) {
+  .layout-hub {
+    flex-direction: column;
+  }
+
   .menu-mobile-topbar {
     display: flex;
     align-items: center;
@@ -330,6 +334,7 @@ body.hub-menu-aberto {
     flex: 1;
     width: 100%;
     min-height: 0;
+    overflow-x: hidden;
     padding: 1rem 1rem 2rem;
     padding-bottom: max(2rem, env(safe-area-inset-bottom, 0px));
   }
