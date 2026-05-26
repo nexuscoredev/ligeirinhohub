@@ -250,6 +250,15 @@
   line-height: 1;
 }
 
+/* Touch comfort: não afeta desktop */
+@media (max-width: 900px) {
+  .pdv-qty-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
+}
+
 .pdv-qty-valor {
   min-width: 1.5rem;
   text-align: center;

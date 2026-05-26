@@ -653,6 +653,24 @@
   font-size: 0.85rem;
 }
 
+/* Mobile: alvos de toque maiores sem afetar desktop */
+@media (max-width: 520px) {
+  .mkt-chip,
+  .mkt-galeria-filtro,
+  .mkt-toggle,
+  .mkt-creator-stepper-btn {
+    min-height: 44px;
+  }
+
+  .mkt-chip {
+    padding: 0.55rem 0.8rem;
+  }
+
+  .mkt-galeria-filtro {
+    padding: 0.5rem 0.85rem;
+  }
+}
+
 .mkt-galeria-filtro.ativo {
   border-color: rgba(255, 45, 120, 0.65);
   color: #ff2d78;
