@@ -2,7 +2,12 @@ import type { CargoHub } from '@/types/database';
 import { CARGOS_HUB } from '@/lib/cargos';
 
 /** Identificador interno do app (não é app nativo — nomenclatura de produto) */
-export type AppId = 'hub' | 'pdv' | 'totem' | 'operacional' | 'marketing';
+export type AppId =
+  | 'hub'
+  | 'pdv'
+  | 'totem'
+  | 'operacional'
+  | 'marketing';
 
 export interface ItemApp {
   rota: string;
@@ -151,6 +156,18 @@ export const APPS_SISTEMA: AppSistema[] = [
         prefixo: '/marketing',
       },
       {
+        rota: '/marketing/criar',
+        titulo: 'Criar arte',
+        icone: '✨',
+        prefixo: '/marketing/criar',
+      },
+      {
+        rota: '/marketing/galeria',
+        titulo: 'Galeria',
+        icone: '🖼️',
+        prefixo: '/marketing/galeria',
+      },
+      {
         rota: '/marketing/promocoes',
         titulo: 'Promoções do dia',
         icone: '🏷️',
@@ -275,6 +292,18 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Logistica',
   ],
   '/marketing': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+  ],
+  '/marketing/criar': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+  ],
+  '/marketing/galeria': [
     'Desenvolvedor',
     'Administrador',
     'Gerente',

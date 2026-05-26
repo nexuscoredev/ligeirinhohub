@@ -37,7 +37,13 @@ describe('apps do sistema', () => {
     const rotas = mkt?.itens.map((i) => i.rota) ?? [];
     expect(mkt?.nome).toBe('Ligeirinho Marketing');
     expect(mkt?.iconeLabel).toBe('MKT');
-    expect(rotas).toEqual(['/marketing', '/marketing/promocoes', '/marketing/tv']);
+    expect(rotas).toEqual([
+      '/marketing',
+      '/marketing/criar',
+      '/marketing/galeria',
+      '/marketing/promocoes',
+      '/marketing/tv',
+    ]);
     expect(appTemSubmenu(mkt!)).toBe(true);
   });
 });

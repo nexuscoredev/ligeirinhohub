@@ -14,6 +14,8 @@ import { DashboardPage } from '@/pages/DashboardPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MotoristaPage } from '@/pages/motorista/MotoristaPage';
 import { MarketingPainelPage } from '@/pages/marketing/MarketingPainelPage';
+import { CriarArtePage } from '@/pages/marketing/creator/CriarArtePage';
+import { GaleriaPage } from '@/pages/marketing/creator/GaleriaPage';
 import { PromocoesPage } from '@/pages/marketing/PromocoesPage';
 import { TvPreviewPage } from '@/pages/marketing/TvPreviewPage';
 import { FilaOperacionalPage } from '@/pages/operacional/FilaOperacionalPage';
@@ -56,6 +58,8 @@ export default function App() {
               <Route path="/clientes" element={<ClientesPage />} />
               <Route path="/motorista" element={<MotoristaPage />} />
               <Route path="/marketing" element={<MarketingPainelPage />} />
+              <Route path="/marketing/criar" element={<CriarArtePage />} />
+              <Route path="/marketing/galeria" element={<GaleriaPage />} />
               <Route path="/marketing/promocoes" element={<PromocoesPage />} />
               <Route path="/marketing/tv" element={<TvPreviewPage />} />
             </Route>
