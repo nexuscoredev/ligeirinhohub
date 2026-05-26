@@ -44,10 +44,15 @@ export type RealismoArte = 'foto' | 'ilustrado' | '3d';
 
 export interface ProdutoArte {
   id: string;
+  sku?: string | null;
   nome: string;
   descricao: string;
   tipo: TipoProdutoArte;
   quantidade: number;
+  preco_base?: number | null;
+  imagem_url?: string | null;
+  categoria_nome?: string | null;
+  fromCatalogo?: boolean;
 }
 
 export interface CamposArte {

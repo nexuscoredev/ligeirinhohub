@@ -9,10 +9,17 @@ import {
   TIPOS_PRODUTO,
   TITULOS_SUGERIDOS,
 } from '@/lib/marketing/creator/constants';
+import { imagemCatalogoUrl } from '@/lib/catalogo/imagemUrl';
 import { novoProdutoArte } from '@/lib/marketing/creator/defaults';
+import {
+  formatarPrecoArte,
+  imagemProdutoArte,
+} from '@/lib/marketing/creator/catalogoProduto';
 import { gerarPreviewDataUrl, gerarVariacoes } from '@/lib/marketing/creator/gerarPreview';
 import { salvarArteGaleria, tituloArte } from '@/lib/marketing/creator/storage';
+import type { ProdutoArte } from '@/lib/marketing/creator/types';
 import { ArtePreview } from '@/pages/marketing/creator/components/ArtePreview';
+import { CatalogoProdutoPicker } from '@/pages/marketing/creator/components/CatalogoProdutoPicker';
 import { CreatorStepper } from '@/pages/marketing/creator/components/CreatorStepper';
 import {
   MarketingCreatorProvider,
@@ -144,6 +151,30 @@ function CreatorWizard() {
     a.click();
   }
 
+  function adicionarProdutoCatalogo(produto: ProdutoArte) {
+    const produtos = [...estado.produtos, produto];
+    dispatch({ type: 'SET_PRODUTOS', produtos });
+
+    if (produto.preco_base != null && produtos.length === 1) {
+      const preco = formatarPrecoArte(produto.preco_base);
+      dispatch({
+        type: 'PATCH_CONFIG',
+        patch: { precoDe: preco, precoPor: preco, mostrarPreco: true },
+      });
+    }
+
+    if (!estado.imagemProduto && produto.imagem_url) {
+      const url = imagemCatalogoUrl(produto.imagem_url);
+      if (url) {
+        dispatch({
+          type: 'SET_IMAGEM',
+          dataUrl: url,
+          nome: `${produto.nome} (catálogo)`,
+        });
+      }
+    }
+  }
+
   const passo = estado.passo;
 
   return (
@@ -207,13 +238,33 @@ function CreatorWizard() {
           {passo === 3 ? (
             <>
               <h2 className="mkt-creator-titulo">Produtos na arte</h2>
-              <p className="mkt-creator-sub">Opcional — nome, tipo e quantidade na composição.</p>
+              <p className="mkt-creator-sub">
+                Escolha no catálogo do Hub ou ajuste manualmente — tudo opcional.
+              </p>
+
+              <CatalogoProdutoPicker
+                produtosSelecionados={estado.produtos}
+                onAdicionar={adicionarProdutoCatalogo}
+              />
+
               {estado.produtos.length === 0 ? (
-                <p className="mkt-creator-vazio">Nenhum produto adicionado.</p>
+                <p className="mkt-creator-vazio">Nenhum produto na arte ainda.</p>
               ) : (
                 <ul className="mkt-produto-lista">
                   {estado.produtos.map((p, idx) => (
                     <li key={p.id} className="mkt-produto-item">
+                      {p.fromCatalogo ? (
+                        <span className="mkt-produto-catalogo-badge">Catálogo</span>
+                      ) : null}
+                      {p.imagem_url ? (
+                        <span className="mkt-produto-item-mini">
+                          <img
+                            src={imagemCatalogoUrl(p.imagem_url) ?? p.imagem_url}
+                            alt=""
+                            loading="lazy"
+                          />
+                        </span>
+                      ) : null}
                       <label>
                         Nome
                         <input
@@ -257,6 +308,16 @@ function CreatorWizard() {
                           ))}
                         </select>
                       </label>
+                      {p.preco_base != null ? (
+                        <label>
+                          Preço catálogo
+                          <input
+                            value={formatarPrecoArte(p.preco_base)}
+                            readOnly
+                            aria-readonly
+                          />
+                        </label>
+                      ) : null}
                       <label>
                         Qtd. na arte
                         <input
@@ -300,7 +361,7 @@ function CreatorWizard() {
                   })
                 }
               >
-                + Adicionar produto
+                + Produto manual (sem catálogo)
               </button>
             </>
           ) : null}
@@ -420,7 +481,15 @@ function CreatorWizard() {
             <>
               <p className="mkt-creator-etapa-label">IMAGEM</p>
               <h2 className="mkt-creator-titulo">Imagem do produto</h2>
-              <p className="mkt-creator-sub">PNG transparente, JPG ou foto simples.</p>
+              <p className="mkt-creator-sub">
+                Use a foto do catálogo (passo anterior) ou envie PNG/JPG para substituir.
+              </p>
+              {imagemProdutoArte(estado) && !estado.imagemProduto ? (
+                <p className="card" style={{ fontSize: '0.82rem', marginBottom: '0.75rem' }}>
+                  Usando imagem do catálogo:{' '}
+                  <strong>{estado.produtos.find((p) => p.imagem_url)?.nome ?? 'produto'}</strong>
+                </p>
+              ) : null}
               <label className="mkt-upload-zone">
                 <input
                   type="file"
@@ -428,10 +497,13 @@ function CreatorWizard() {
                   onChange={handleUpload}
                   hidden
                 />
-                {estado.imagemProduto ? (
+                {imagemProdutoArte(estado) ? (
                   <div className="mkt-upload-preview">
-                    <img src={estado.imagemProduto} alt="" />
-                    <span>{estado.imagemProdutoNome}</span>
+                    <img src={imagemProdutoArte(estado)!} alt="" />
+                    <span>
+                      {estado.imagemProdutoNome ??
+                        `${estado.produtos.find((p) => p.imagem_url)?.nome ?? 'Catálogo'}`}
+                    </span>
                   </div>
                 ) : (
                   <span>Arraste ou clique para enviar</span>

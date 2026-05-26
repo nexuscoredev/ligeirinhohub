@@ -1,4 +1,5 @@
 import { TEMAS_VISUAIS } from '@/lib/marketing/creator/constants';
+import { imagemProdutoArte } from '@/lib/marketing/creator/catalogoProduto';
 import type { MarketingCreatorState } from '@/lib/marketing/creator/types';
 
 const DIMENSOES: Record<string, { w: number; h: number }> = {
@@ -72,9 +73,10 @@ export async function gerarPreviewDataUrl(
   }
 
   const produtoY = h * 0.38;
-  if (estado.imagemProduto) {
+  const imagemSrc = imagemProdutoArte(estado);
+  if (imagemSrc) {
     try {
-      const img = await carregarImagem(estado.imagemProduto);
+      const img = await carregarImagem(imagemSrc);
       const maxW = w * 0.55;
       const maxH = h * 0.42;
       const scale = Math.min(maxW / img.width, maxH / img.height, 1);

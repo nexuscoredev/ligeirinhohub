@@ -1,3 +1,4 @@
+import { imagemProdutoArte } from '@/lib/marketing/creator/catalogoProduto';
 import { TEMAS_VISUAIS } from '@/lib/marketing/creator/constants';
 import { FORMATOS_ARTE } from '@/lib/marketing/creator/constants';
 import type { MarketingCreatorState } from '@/lib/marketing/creator/types';
@@ -13,6 +14,7 @@ export function ArtePreview({ estado, className = '', compacto }: ArtePreviewPro
   const formato = FORMATOS_ARTE.find((f) => f.id === estado.formato);
   const ratio = formato?.ratio ?? '1 / 1';
   const escuro = !tema?.textoEscuro;
+  const imgProduto = imagemProdutoArte(estado);
 
   return (
     <div
@@ -36,8 +38,8 @@ export function ArtePreview({ estado, className = '', compacto }: ArtePreviewPro
       ) : null}
 
       <div className="mkt-arte-preview__produto">
-        {estado.imagemProduto ? (
-          <img src={estado.imagemProduto} alt="" />
+        {imgProduto ? (
+          <img src={imgProduto} alt="" />
         ) : (
           <span className="mkt-arte-preview__placeholder">Produto</span>
         )}
