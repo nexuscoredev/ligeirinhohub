@@ -67,8 +67,6 @@ export function MarketingPainelPage() {
       titulo="Painel Marketing"
       subtitulo="Promoções na TV da loja — vigência e preços sincronizados com o catálogo."
     >
-      <span className="hub-tag mkt-tag">• Gelada • Rápida • Completa</span>
-
       {erro ? <p className="erro">{erro}</p> : null}
 
       <div className="mkt-kpis" aria-busy={carregando}>

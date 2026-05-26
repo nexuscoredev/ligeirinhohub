@@ -5,7 +5,7 @@ export async function listarMotoristasCadastrados() {
   const { data, error } = await supabase
     .from('motoristas')
     .select('*')
-    .eq('ativo', true)
+    .order('ativo', { ascending: false })
     .order('nome');
 
   return { motoristas: (data ?? []) as Motorista[], error };

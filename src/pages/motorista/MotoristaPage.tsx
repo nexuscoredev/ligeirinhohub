@@ -38,6 +38,7 @@ export function MotoristaPage() {
   const { usuario } = usePerfil();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [motoristas, setMotoristas] = useState<Motorista[]>([]);
+  const [carregando, setCarregando] = useState(true);
   const [descricao, setDescricao] = useState('');
   const [pedidoOcorrencia, setPedidoOcorrencia] = useState('');
   const [ocorrenciaAberta, setOcorrenciaAberta] = useState(false);
@@ -51,10 +52,12 @@ export function MotoristaPage() {
   const [erro, setErro] = useState<string | null>(null);
 
   const carregar = () => {
+    setCarregando(true);
     void listarEntregasPendentes().then(({ pedidos: lista }) => setPedidos(lista));
     void listarMotoristasCadastrados().then(({ motoristas: lista, error }) => {
       if (error) setErro(error.message);
       else setMotoristas(lista);
+      setCarregando(false);
     });
   };
 
@@ -285,7 +288,9 @@ export function MotoristaPage() {
         <h2 id="motoristas-cad-titulo" className="ops-motor-secao-titulo">
           Motoristas cadastrados
         </h2>
-        {motoristas.length === 0 ? (
+        {carregando ? (
+          <p style={{ color: 'var(--hub-muted)' }}>Carregando motoristas…</p>
+        ) : motoristas.length === 0 ? (
           <p className="card">Nenhum motorista cadastrado.</p>
         ) : (
           <ul className="ops-motor-lista">
@@ -301,7 +306,11 @@ export function MotoristaPage() {
                     {m.placa ? ` · ${m.placa}` : ''}
                   </span>
                 </div>
-                <span className="ops-motor-badge">Ativo</span>
+                <span
+                  className={`ops-motor-badge${m.ativo ? '' : ' ops-motor-badge--inativo'}`}
+                >
+                  {m.ativo ? 'Ativo' : 'Inativo'}
+                </span>
               </li>
             ))}
           </ul>

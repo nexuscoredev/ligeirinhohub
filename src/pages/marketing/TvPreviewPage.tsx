@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppPageHeader } from '@/components/AppPageHeader';
+import { MktProdutoThumb } from '@/components/marketing/MktProdutoThumb';
 import { appPorId, itemAppPorRota } from '@/lib/apps';
+import { fetchCatalogoLegado, flattenCatalogo } from '@/lib/catalogo/fetchCatalogo';
+import type { ProdutoCatalogoView } from '@/lib/catalogo/types';
 import { listarPromocoesAtivas } from '@/lib/marketing/api';
+import { imagemPromocaoSku, mapaImagensCatalogo } from '@/lib/marketing/catalogoImagens';
 import { formatarValidade } from '@/lib/marketing/helpers';
 import { formatarMoeda } from '@/lib/pedidos/constants';
 import { supabase } from '@/lib/supabase';
@@ -15,18 +19,28 @@ export function TvPreviewPage() {
   const app = appPorId('marketing');
   const stageRef = useRef<HTMLDivElement>(null);
   const [promocoes, setPromocoes] = useState<Promocao[]>([]);
+  const [catalogo, setCatalogo] = useState<ProdutoCatalogoView[]>([]);
   const [indice, setIndice] = useState(0);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
 
+  const imagensPorSku = useMemo(() => mapaImagensCatalogo(catalogo), [catalogo]);
+
   const carregar = useCallback(async () => {
-    const { promocoes: lista, error } = await listarPromocoesAtivas();
-    if (error) setErro(error.message);
+    setCarregando(true);
+    const [promRes, cat] = await Promise.all([
+      listarPromocoesAtivas(),
+      fetchCatalogoLegado().then(flattenCatalogo).catch(() => [] as ProdutoCatalogoView[]),
+    ]);
+    if (promRes.error) setErro(promRes.error.message);
     else {
-      setPromocoes(lista);
+      setPromocoes(promRes.promocoes);
       setErro(null);
-      setIndice((i) => (lista.length ? Math.min(i, lista.length - 1) : 0));
+      setIndice((i) =>
+        promRes.promocoes.length ? Math.min(i, promRes.promocoes.length - 1) : 0,
+      );
     }
+    setCatalogo(cat);
     setCarregando(false);
   }, []);
 
@@ -111,14 +125,24 @@ export function TvPreviewPage() {
             </p>
           ) : (
             <article key={atual.id} className="mkt-tv-card">
-              <h2 className="mkt-tv-nome">{atual.produto_nome}</h2>
-              <p className="mkt-tv-preco">{formatarMoeda(atual.preco_promo)}</p>
-              {atual.preco_promo < atual.preco_original ? (
-                <p className="mkt-tv-preco-de">de {formatarMoeda(atual.preco_original)}</p>
-              ) : null}
-              <p className="mkt-tv-validade">
-                Válido {formatarValidade(atual.validade_inicio, atual.validade_fim)}
-              </p>
+              <div className="mkt-tv-card__visual">
+                <MktProdutoThumb
+                  src={imagemPromocaoSku(atual.produto_sku, imagensPorSku)}
+                  nome={atual.produto_nome}
+                  size="tv"
+                />
+              </div>
+              <div className="mkt-tv-card__copy">
+                <p className="mkt-tv-eyebrow">Promoção do dia</p>
+                <h2 className="mkt-tv-nome">{atual.produto_nome}</h2>
+                <p className="mkt-tv-preco">{formatarMoeda(atual.preco_promo)}</p>
+                {atual.preco_promo < atual.preco_original ? (
+                  <p className="mkt-tv-preco-de">de {formatarMoeda(atual.preco_original)}</p>
+                ) : null}
+                <p className="mkt-tv-validade">
+                  Válido {formatarValidade(atual.validade_inicio, atual.validade_fim)}
+                </p>
+              </div>
             </article>
           )}
         </div>

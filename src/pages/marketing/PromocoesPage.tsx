@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AppPageHeader } from '@/components/AppPageHeader';
+import { MktProdutoThumb } from '@/components/marketing/MktProdutoThumb';
 import { appPorId, itemAppPorRota } from '@/lib/apps';
 import { fetchCatalogoLegado, flattenCatalogo } from '@/lib/catalogo/fetchCatalogo';
 import type { ProdutoCatalogoView } from '@/lib/catalogo/types';
+import { imagemPromocaoSku, mapaImagensCatalogo } from '@/lib/marketing/catalogoImagens';
 import {
   atualizarPromocao,
   criarPromocao,
@@ -87,6 +89,8 @@ export function PromocoesPage() {
   }, [catalogo, busca]);
 
   const produtoSel = catalogo.find((p) => p.sku === form.produto_sku);
+
+  const imagensPorSku = useMemo(() => mapaImagensCatalogo(catalogo), [catalogo]);
 
   function resetForm() {
     setForm({ ...FORM_VAZIO, validade_inicio: ref, validade_fim: ref });
@@ -252,9 +256,19 @@ export function PromocoesPage() {
         </div>
 
         {produtoSel ? (
-          <p style={{ fontSize: '0.8rem', color: 'var(--hub-muted)', margin: '0 0 0.75rem' }}>
-            Preço de tabela: {formatarMoeda(produtoSel.preco_base)} · SKU {produtoSel.sku}
-          </p>
+          <div className="mkt-form-preview">
+            <MktProdutoThumb
+              src={imagemPromocaoSku(produtoSel.sku, imagensPorSku)}
+              nome={produtoSel.nome}
+              size="sm"
+            />
+            <div>
+              <strong>{produtoSel.nome}</strong>
+              <p>
+                Tabela {formatarMoeda(produtoSel.preco_base)} · SKU {produtoSel.sku}
+              </p>
+            </div>
+          </div>
         ) : null}
 
         <div className="mkt-form-acoes">
@@ -272,36 +286,58 @@ export function PromocoesPage() {
       {carregando ? (
         <p style={{ color: 'var(--hub-muted)' }}>Carregando…</p>
       ) : (
-        <ul className="mkt-lista" aria-label="Lista de promoções">
+        <ul className="mkt-promo-grid" aria-label="Lista de promoções">
           {promocoes.map((p) => {
             const vigente = promoVigente(p, ref);
             const expira = promoExpiraEmBreve(p, 3, ref);
             const expirada = promoExpirada(p, ref);
+            const img = imagemPromocaoSku(p.produto_sku, imagensPorSku);
+            const desconto =
+              p.preco_original > 0 && p.preco_promo < p.preco_original
+                ? Math.round((1 - p.preco_promo / p.preco_original) * 100)
+                : null;
+            const statusLabel = vigente
+              ? 'Na TV'
+              : expira && p.ativo && !expirada
+                ? 'Expira em breve'
+                : !p.ativo
+                  ? 'Inativa'
+                  : expirada
+                    ? 'Expirada'
+                    : 'Fora do período';
+            const statusClass = vigente
+              ? 'mkt-badge--ok'
+              : expira && p.ativo && !expirada
+                ? 'mkt-badge--warn'
+                : 'mkt-badge--off';
+
             return (
               <li
                 key={p.id}
-                className={`mkt-item${vigente ? ' mkt-item--vigente' : ''}${expira && vigente ? ' mkt-item--expira' : ''}${!p.ativo || expirada ? ' mkt-item--inativa' : ''}`}
+                className={`mkt-promo-card${vigente ? ' mkt-promo-card--vigente' : ''}${expira && vigente ? ' mkt-promo-card--expira' : ''}${!p.ativo || expirada ? ' mkt-promo-card--inativa' : ''}`}
               >
-                <div>
-                  <strong>{p.produto_nome}</strong>
-                  <p style={{ margin: '0.25rem 0', fontSize: '0.75rem', color: 'var(--hub-muted)' }}>
-                    SKU {p.produto_sku} · {formatarValidade(p.validade_inicio, p.validade_fim)}
+                <MktProdutoThumb src={img} nome={p.produto_nome} size="md" />
+
+                <div className="mkt-promo-card__corpo">
+                  <div className="mkt-promo-card__topo">
+                    <h3 className="mkt-promo-card__nome">{p.produto_nome}</h3>
+                    <span className={`mkt-badge ${statusClass}`}>{statusLabel}</span>
+                  </div>
+                  <p className="mkt-promo-card__meta">
+                    {formatarValidade(p.validade_inicio, p.validade_fim)}
                   </p>
-                  <div className="mkt-precos">
+                  <div className="mkt-promo-card__precos">
                     <span className="mkt-preco-promo">{formatarMoeda(p.preco_promo)}</span>
-                    <span className="mkt-preco-original">{formatarMoeda(p.preco_original)}</span>
-                    {vigente ? (
-                      <span className="mkt-badge mkt-badge--ok">Na TV</span>
-                    ) : expira && p.ativo && !expirada ? (
-                      <span className="mkt-badge mkt-badge--warn">Expira em breve</span>
-                    ) : (
-                      <span className="mkt-badge mkt-badge--off">
-                        {!p.ativo ? 'Inativa' : expirada ? 'Expirada' : 'Fora do período'}
-                      </span>
-                    )}
+                    {p.preco_promo < p.preco_original ? (
+                      <span className="mkt-preco-original">{formatarMoeda(p.preco_original)}</span>
+                    ) : null}
+                    {desconto != null && desconto > 0 ? (
+                      <span className="mkt-promo-card__desconto">−{desconto}%</span>
+                    ) : null}
                   </div>
                 </div>
-                <div className="mkt-form-acoes" style={{ flexDirection: 'column' }}>
+
+                <div className="mkt-promo-card__acoes">
                   <button type="button" className="btn btn-secundario" onClick={() => iniciarEdicao(p)}>
                     Editar
                   </button>

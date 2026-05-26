@@ -67,6 +67,11 @@
   color: #4ade80;
 }
 
+.ops-motor-badge--inativo {
+  background: rgba(229, 226, 225, 0.12);
+  color: var(--hub-muted);
+}
+
 .ops-modal-backdrop {
   position: fixed;
   inset: 0;
