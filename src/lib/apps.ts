@@ -135,6 +135,12 @@ export const APPS_SISTEMA: AppSistema[] = [
         icone: '🚚',
         prefixo: '/motorista',
       },
+      {
+        rota: '/veiculos',
+        titulo: 'Veículos',
+        icone: '🚛',
+        prefixo: '/veiculos',
+      },
     ],
   },
   {

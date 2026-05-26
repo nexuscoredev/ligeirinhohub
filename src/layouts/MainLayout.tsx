@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { AppMenuGroup } from '@/components/AppMenuGroup';
 import { HubLogo } from '@/components/HubLogo';
+import { HubPerfilCard } from '@/components/HubPerfilCard';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { useSessionTimeout } from '@/hooks/useSessionTimeout';
 import {
@@ -13,13 +14,6 @@ import {
   type ItemApp,
 } from '@/lib/apps';
 import { appDisplayVersion } from '@/lib/appDisplayVersion';
-
-function iniciaisNome(nome: string): string {
-  const partes = nome.trim().split(/\s+/).filter(Boolean);
-  if (partes.length === 0) return '?';
-  if (partes.length === 1) return partes[0].slice(0, 2).toUpperCase();
-  return (partes[0][0] + partes[partes.length - 1][0]).toUpperCase();
-}
 
 function MenuLink({ item }: { item: ItemApp }) {
   return (
@@ -159,19 +153,7 @@ export function MainLayout() {
         </nav>
 
         <div className="menu-rodape">
-          <div className="menu-perfil-card" aria-label="Seu perfil">
-            <div className="menu-perfil-avatar" aria-hidden>
-              <span className="menu-perfil-iniciais">
-                {iniciaisNome(usuario.nome)}
-              </span>
-            </div>
-            <div className="menu-perfil-info">
-              <p className="menu-usuario" title={usuario.nome}>
-                {usuario.nome}
-              </p>
-              <span className="menu-perfil-badge">{usuario.cargo}</span>
-            </div>
-          </div>
+          <HubPerfilCard nome={usuario.nome} cargo={usuario.cargo} />
           <button
             type="button"
             className="btn btn-secundario menu-perfil-sair"

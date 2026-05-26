@@ -2,13 +2,36 @@ import { useEffect, useState } from 'react';
 import { AppPageHeader } from '@/components/AppPageHeader';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { appPorId, itemAppPorRota } from '@/lib/apps';
-import { listarMotoristasCadastrados } from '@/lib/motoristas/api';
+import { criarMotorista, importarMotoristas, listarMotoristasCadastrados } from '@/lib/motoristas/api';
 import { criarOcorrencia, listarEntregasPendentes } from '@/lib/pedidos/api';
 import { formatarMoeda, STATUS_LABEL } from '@/lib/pedidos/constants';
 import type { Motorista } from '@/types/motoristas';
 import type { Pedido } from '@/types/pedidos';
 import '../operacional/operacional.css';
 import './motorista.css';
+
+function podeEditarMotoristas(cargo?: string) {
+  return ['Desenvolvedor', 'Administrador', 'Gerente'].includes(String(cargo));
+}
+
+function parseImportMotoristas(raw: string) {
+  const linhas = raw
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean);
+
+  return linhas
+    .map((line) => {
+      const cols = line.includes(';')
+        ? line.split(';')
+        : line.includes('\t')
+          ? line.split('\t')
+          : line.split(',');
+      const [nome, telefone, placa] = cols.map((c) => c.trim());
+      return { nome, telefone, placa };
+    })
+    .filter((l) => l.nome);
+}
 
 export function MotoristaPage() {
   const app = appPorId('operacional');
@@ -18,6 +41,13 @@ export function MotoristaPage() {
   const [descricao, setDescricao] = useState('');
   const [pedidoOcorrencia, setPedidoOcorrencia] = useState('');
   const [ocorrenciaAberta, setOcorrenciaAberta] = useState(false);
+  const [novoAberto, setNovoAberto] = useState(false);
+  const [importAberto, setImportAberto] = useState(false);
+  const [importRaw, setImportRaw] = useState('');
+  const [novoNome, setNovoNome] = useState('');
+  const [novoTelefone, setNovoTelefone] = useState('');
+  const [novoPlaca, setNovoPlaca] = useState('');
+  const [sucesso, setSucesso] = useState<string | null>(null);
   const [erro, setErro] = useState<string | null>(null);
 
   const carregar = () => {
@@ -54,6 +84,7 @@ export function MotoristaPage() {
   if (!app) return null;
 
   const item = itemAppPorRota(app, '/motorista');
+  const podeEditar = podeEditarMotoristas(usuario?.cargo);
 
   return (
     <AppPageHeader
@@ -63,12 +94,27 @@ export function MotoristaPage() {
       subtitulo="Entregas pendentes e equipe de rota."
     >
       <div className="ops-motor-toolbar">
+        {podeEditar ? (
+          <>
+            <button type="button" className="btn btn-secundario" onClick={() => setImportAberto(true)}>
+              Importar base
+            </button>
+            <button type="button" className="btn" onClick={() => setNovoAberto(true)}>
+              Novo motorista
+            </button>
+          </>
+        ) : null}
         <button type="button" className="btn" onClick={() => setOcorrenciaAberta(true)}>
           Nova ocorrência
         </button>
       </div>
 
       {erro ? <p className="erro">{erro}</p> : null}
+      {sucesso ? (
+        <p className="ops-resumo" role="status">
+          {sucesso}
+        </p>
+      ) : null}
 
       {ocorrenciaAberta ? (
         <div
@@ -118,6 +164,116 @@ export function MotoristaPage() {
                 className="btn btn-secundario"
                 onClick={() => setOcorrenciaAberta(false)}
               >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {novoAberto ? (
+        <div className="ops-modal-backdrop" role="presentation" onClick={() => setNovoAberto(false)}>
+          <div className="ops-modal card" role="dialog" aria-labelledby="motor-novo" onClick={(e) => e.stopPropagation()}>
+            <h3 id="motor-novo" style={{ margin: '0 0 0.75rem', fontSize: '1rem' }}>
+              Novo motorista
+            </h3>
+            <label style={{ display: 'block', marginBottom: '0.5rem' }}>
+              Nome
+              <input value={novoNome} onChange={(e) => setNovoNome(e.target.value)} style={{ marginTop: '0.25rem' }} />
+            </label>
+            <label style={{ display: 'block', marginBottom: '0.5rem' }}>
+              Telefone
+              <input
+                value={novoTelefone}
+                onChange={(e) => setNovoTelefone(e.target.value)}
+                placeholder="Opcional"
+                style={{ marginTop: '0.25rem' }}
+              />
+            </label>
+            <label style={{ display: 'block', marginBottom: '0.75rem' }}>
+              Placa
+              <input
+                value={novoPlaca}
+                onChange={(e) => setNovoPlaca(e.target.value)}
+                placeholder="Opcional"
+                style={{ marginTop: '0.25rem' }}
+              />
+            </label>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => {
+                  setErro(null);
+                  setSucesso(null);
+                  void criarMotorista({ nome: novoNome, telefone: novoTelefone, placa: novoPlaca }).then(
+                    ({ error }) => {
+                      if (error) {
+                        setErro(error.message);
+                        return;
+                      }
+                      setNovoAberto(false);
+                      setNovoNome('');
+                      setNovoTelefone('');
+                      setNovoPlaca('');
+                      setSucesso('Motorista criado com sucesso.');
+                      carregar();
+                    },
+                  );
+                }}
+              >
+                Criar
+              </button>
+              <button type="button" className="btn btn-secundario" onClick={() => setNovoAberto(false)}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {importAberto ? (
+        <div className="ops-modal-backdrop" role="presentation" onClick={() => setImportAberto(false)}>
+          <div className="ops-modal card" role="dialog" aria-labelledby="motor-import" onClick={(e) => e.stopPropagation()}>
+            <h3 id="motor-import" style={{ margin: '0 0 0.75rem', fontSize: '1rem' }}>
+              Importar base de motoristas
+            </h3>
+            <p style={{ margin: '0 0 0.65rem', color: 'var(--hub-muted)', fontSize: '0.85rem' }}>
+              Cole linhas no formato: <code>nome;telefone;placa</code>
+            </p>
+            <textarea
+              rows={7}
+              value={importRaw}
+              onChange={(e) => setImportRaw(e.target.value)}
+              placeholder="Ex.:\nJoão Silva;(11) 99999-0000;ABC-1D23\nMarcos Oliveira;;DEF-4G56"
+            />
+            <p style={{ margin: '0.6rem 0 0', color: 'var(--hub-muted)', fontSize: '0.85rem' }}>
+              Prévia: <strong>{parseImportMotoristas(importRaw).length}</strong> motorista(s)
+            </p>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.75rem' }}>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => {
+                  setErro(null);
+                  setSucesso(null);
+                  const linhas = parseImportMotoristas(importRaw);
+                  void importarMotoristas(linhas).then(({ inseridos, error }) => {
+                    if (error) {
+                      setErro(error.message);
+                      return;
+                    }
+                    setImportAberto(false);
+                    setImportRaw('');
+                    setSucesso(`${inseridos} motorista(s) importado(s).`);
+                    carregar();
+                  });
+                }}
+                disabled={parseImportMotoristas(importRaw).length === 0}
+              >
+                Importar
+              </button>
+              <button type="button" className="btn btn-secundario" onClick={() => setImportAberto(false)}>
                 Cancelar
               </button>
             </div>

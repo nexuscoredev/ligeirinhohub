@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
-import { listarProdutosAdmin } from '@/lib/admin/produtosApi';
+import { fetchCatalogoLegado } from '@/lib/catalogo/fetchCatalogo';
 import { ADMIN_DESCRICAO, HUB_ADMIN_MODULOS } from '@/lib/admin/modulos';
 import { listarUsuarios } from '@/lib/admin/usuariosApi';
 import { itemHubPermitido } from '@/lib/apps';
@@ -31,15 +31,17 @@ export function PainelAdminPage() {
     : [];
 
   useEffect(() => {
-    void Promise.all([listarUsuarios(), listarProdutosAdmin(), listarClientes()]).then(
-      ([u, p, c]) => {
-        setStats({
-          usuarios: u.error ? '—' : String(u.usuarios.length),
-          produtos: String(p.produtos.length),
-          clientes: String(c.clientes.length),
-        });
-      },
-    );
+    void Promise.all([
+      listarUsuarios(),
+      fetchCatalogoLegado().catch(() => null),
+      listarClientes(),
+    ]).then(([u, catalogo, c]) => {
+      setStats({
+        usuarios: u.error ? '—' : String(u.usuarios.length),
+        produtos: catalogo ? String(catalogo.totalProducts) : '—',
+        clientes: String(c.clientes.length),
+      });
+    });
   }, []);
 
   return (
@@ -86,11 +88,6 @@ export function PainelAdminPage() {
           ))}
         </div>
       </section>
-
-      <p className="card" style={{ marginTop: '1.25rem', fontSize: '0.85rem' }}>
-        Logado como <strong>{usuario?.nome}</strong> ({usuario?.cargo}). Apps operacionais
-        (PDV, Totem, Operacional) ficam no menu <strong>Apps instalados</strong>.
-      </p>
     </PageShell>
   );
 }

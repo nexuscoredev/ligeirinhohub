@@ -145,33 +145,6 @@
   gap: 0.65rem;
 }
 
-.hub-perfil-linha {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 1.25rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.85rem;
-  border-radius: var(--hub-raio-lg);
-  background: var(--hub-surface);
-  border: 1px solid var(--hub-gold-soft);
-  font-size: 0.88rem;
-}
-
-.hub-perfil-linha strong {
-  font-weight: 700;
-}
-
-.hub-perfil-linha .hub-perfil-cargo {
-  color: var(--hub-gold);
-  font-weight: 600;
-}
-
-.hub-perfil-linha .hub-perfil-sep {
-  color: var(--hub-muted);
-  opacity: 0.5;
-}
-
 .hub-stat-card {
   padding: 0.75rem 0.95rem;
   border-radius: var(--hub-raio-lg);
@@ -429,7 +402,7 @@
     display: none;
   }
 
-  .hub-page--bem-vindo .hub-perfil-linha {
+  .hub-page--bem-vindo .hub-perfil-card--pagina {
     display: none;
   }
 

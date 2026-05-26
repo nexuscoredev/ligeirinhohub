@@ -23,6 +23,7 @@ import { SeparacaoPage } from '@/pages/operacional/SeparacaoPage';
 import { PedidosPage } from '@/pages/pedidos/PedidosPage';
 import { PdvPage } from '@/pages/pdv/PdvPage';
 import { TotemPage } from '@/pages/totem/TotemPage';
+import { VeiculosPage } from '@/pages/veiculos/VeiculosPage';
 
 export default function App() {
   return (
@@ -57,6 +58,7 @@ export default function App() {
               <Route path="/pedidos" element={<PedidosPage />} />
               <Route path="/clientes" element={<ClientesPage />} />
               <Route path="/motorista" element={<MotoristaPage />} />
+              <Route path="/veiculos" element={<VeiculosPage />} />
               <Route path="/marketing" element={<MarketingPainelPage />} />
               <Route path="/marketing/criar" element={<CriarArtePage />} />
               <Route path="/marketing/galeria" element={<GaleriaPage />} />

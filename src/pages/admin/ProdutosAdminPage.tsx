@@ -82,14 +82,6 @@ export function ProdutosAdminPage() {
     >
       <AdminSubnav />
 
-      <p className="card" style={{ fontSize: '0.82rem', marginBottom: '1rem' }}>
-        Lista lida de <code>/data/catalogo.json</code> (mesma fonte de{' '}
-        <a href="https://ligeirinhobebidas.vercel.app/pedidos.html" target="_blank" rel="noreferrer">
-          pedidos.html
-        </a>
-        ). Uma requisição em cache — não consulta o Supabase a cada abertura.
-      </p>
-
       {erro ? <p className="erro">{erro}</p> : null}
       {syncMsg ? (
         <p className="card" style={{ fontSize: '0.85rem', marginBottom: '1rem' }}>

@@ -6,6 +6,7 @@ import type {
   ItemStatusSeparacao,
   Pedido,
   PedidoItem,
+  PedidoModalidade,
   PedidoOcorrencia,
   PedidoOrigem,
   PedidoStatus,
@@ -216,6 +217,156 @@ export async function listarPedidosGeral() {
   return { pedidos: (data ?? []) as Pedido[], error };
 }
 
+export interface LinhaNovoPedido {
+  sku: string;
+  nome: string;
+  preco_unitario: number;
+  categoria_ordem: number;
+  qty: number;
+}
+
+export async function criarPedido(input: {
+  clienteId: string;
+  origem: PedidoOrigem;
+  modalidade: PedidoModalidade;
+  itens: LinhaNovoPedido[];
+  usuarioId: string;
+  comoOrcamento?: boolean;
+  observacoes?: string;
+}) {
+  const {
+    clienteId,
+    origem,
+    modalidade,
+    itens,
+    usuarioId,
+    comoOrcamento = false,
+    observacoes,
+  } = input;
+
+  if (!itens.length) {
+    return { pedido: null, error: new Error('Adicione pelo menos um item ao pedido.') };
+  }
+
+  const { data: cliente, error: eCliente } = await supabase
+    .from('clientes')
+    .select('id, nome, bloqueado_pedido, inadimplente')
+    .eq('id', clienteId)
+    .eq('ativo', true)
+    .maybeSingle();
+
+  if (eCliente) return { pedido: null, error: eCliente };
+  if (!cliente) {
+    return { pedido: null, error: new Error('Cliente não encontrado ou inativo.') };
+  }
+
+  const clienteRow = cliente as {
+    nome: string;
+    bloqueado_pedido: boolean;
+    inadimplente: boolean;
+  };
+
+  if (
+    !comoOrcamento &&
+    (clienteRow.bloqueado_pedido || clienteRow.inadimplente)
+  ) {
+    return {
+      pedido: null,
+      error: new Error(
+        `Cliente "${clienteRow.nome}" está bloqueado ou inadimplente — use orçamento ou regularize o cadastro.`,
+      ),
+    };
+  }
+
+  const skus = [...new Set(itens.map((i) => i.sku))];
+  const { data: produtosDb, error: eProd } = await supabase
+    .from('produtos')
+    .select('id, sku, nome, categorias_produto ( ordem_separacao )')
+    .in('sku', skus)
+    .eq('ativo', true);
+
+  if (eProd) return { pedido: null, error: eProd };
+
+  const porSku = new Map(
+    (produtosDb ?? []).map((p) => {
+      const row = p as {
+        id: string;
+        sku: string;
+        nome: string;
+        categorias_produto?: { ordem_separacao: number };
+      };
+      return [row.sku, row];
+    }),
+  );
+
+  for (const item of itens) {
+    if (!porSku.has(item.sku)) {
+      return {
+        pedido: null,
+        error: new Error(
+          `Produto SKU "${item.sku}" (${item.nome}) não cadastrado. Sincronize em Admin → Produtos.`,
+        ),
+      };
+    }
+  }
+
+  const status: PedidoStatus = comoOrcamento ? 'orcamento' : 'aguardando_separacao';
+  const agora = comoOrcamento ? null : new Date().toISOString();
+
+  const { data: pedidoCriado, error: ePedido } = await supabase
+    .from('pedidos')
+    .insert({
+      cliente_id: clienteId,
+      status,
+      origem,
+      modalidade,
+      aceito_em: agora,
+      observacoes: observacoes?.trim() || null,
+    } as never)
+    .select('id, numero')
+    .single();
+
+  if (ePedido || !pedidoCriado) {
+    return {
+      pedido: null,
+      error: ePedido ?? new Error('Não foi possível criar o pedido.'),
+    };
+  }
+
+  const pedido = pedidoCriado as { id: string; numero: number };
+  const linhasInsert = itens.map((item) => {
+    const prod = porSku.get(item.sku)!;
+    const catOrdem =
+      prod.categorias_produto?.ordem_separacao ?? item.categoria_ordem;
+    return {
+      pedido_id: pedido.id,
+      produto_id: prod.id,
+      nome_snapshot: item.nome,
+      categoria_ordem: catOrdem,
+      qty_pedida: item.qty,
+      preco_unitario: item.preco_unitario,
+    };
+  });
+
+  const { error: eItens } = await supabase
+    .from('pedido_itens')
+    .insert(linhasInsert as never);
+
+  if (eItens) {
+    return { pedido: null, error: eItens };
+  }
+
+  await supabase.rpc('recalcular_totais_pedido', { p_pedido_id: pedido.id } as never);
+  await registrarEvento(pedido.id, 'criar_pedido', usuarioId, {
+    origem,
+    modalidade,
+    status,
+    itens: itens.length,
+  });
+
+  return { pedido, error: null };
+}
+
 export async function listarClientes() {
   const { data, error } = await supabase
     .from('clientes')
@@ -245,6 +396,69 @@ export async function listarEntregasPendentes() {
     ] as PedidoStatus[])
     .order('separado_em', { ascending: true });
   return { pedidos: (data ?? []) as Pedido[], error };
+}
+
+export async function criarCliente(input: {
+  nome: string;
+  nomeFantasia?: string | null;
+  tabelaPreco?: string | null;
+  diaVencimentoSemana?: number | null;
+  bloqueadoPedido?: boolean;
+  inadimplente?: boolean;
+  observacoes?: string | null;
+}) {
+  const nome = input.nome.trim();
+  if (!nome) return { cliente: null, error: new Error('Informe o nome.') };
+
+  const { data, error } = await supabase
+    .from('clientes')
+    .insert({
+      nome,
+      nome_fantasia: input.nomeFantasia?.trim() || null,
+      tabela_preco: input.tabelaPreco?.trim() || 'padrao',
+      dia_vencimento_semana: input.diaVencimentoSemana ?? null,
+      bloqueado_pedido: Boolean(input.bloqueadoPedido),
+      inadimplente: Boolean(input.inadimplente),
+      observacoes: input.observacoes?.trim() || null,
+      ativo: true,
+    } as never)
+    .select('*')
+    .single();
+
+  return { cliente: (data ?? null) as Cliente | null, error };
+}
+
+export async function importarClientes(
+  linhas: Array<{
+    nome: string;
+    nome_fantasia?: string;
+    tabela_preco?: string;
+    dia_vencimento_semana?: number | null;
+    bloqueado_pedido?: boolean;
+    inadimplente?: boolean;
+    observacoes?: string;
+  }>,
+) {
+  const payload = linhas
+    .map((l) => ({
+      nome: l.nome.trim(),
+      nome_fantasia: l.nome_fantasia?.trim() || null,
+      tabela_preco: l.tabela_preco?.trim() || 'padrao',
+      dia_vencimento_semana:
+        l.dia_vencimento_semana == null ? null : Number(l.dia_vencimento_semana),
+      bloqueado_pedido: Boolean(l.bloqueado_pedido),
+      inadimplente: Boolean(l.inadimplente),
+      observacoes: l.observacoes?.trim() || null,
+      ativo: true,
+    }))
+    .filter((l) => l.nome.length > 0);
+
+  if (payload.length === 0) {
+    return { inseridos: 0, error: new Error('Nenhum cliente válido para importar.') };
+  }
+
+  const { error } = await supabase.from('clientes').insert(payload as never);
+  return { inseridos: payload.length, error };
 }
 
 export async function criarOcorrencia(

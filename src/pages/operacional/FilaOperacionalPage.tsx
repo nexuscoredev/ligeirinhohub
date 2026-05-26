@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { AppPageHeader } from '@/components/AppPageHeader';
 import { appPorId, itemAppPorRota } from '@/lib/apps';
 import { listarFilaPedidos } from '@/lib/pedidos/api';
+import { CriarPedidoModal } from '@/pages/operacional/CriarPedidoModal';
+import { usePerfil } from '@/contexts/PerfilContext';
 import { formatarMoeda, ORIGEM_LABEL, STATUS_LABEL } from '@/lib/pedidos/constants';
 import { supabase } from '@/lib/supabase';
 import type { Pedido, PedidoOrigem } from '@/types/pedidos';
@@ -19,10 +21,13 @@ const FILTROS: { id: PedidoOrigem | 'todos'; label: string }[] = [
 
 export function FilaOperacionalPage() {
   const app = appPorId('operacional');
+  const { usuario } = usePerfil();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [filtro, setFiltro] = useState<PedidoOrigem | 'todos'>('todos');
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
+  const [criarAberto, setCriarAberto] = useState(false);
+  const [msgSucesso, setMsgSucesso] = useState<string | null>(null);
 
   const carregar = useCallback(async () => {
     setCarregando(true);
@@ -53,7 +58,7 @@ export function FilaOperacionalPage() {
     };
   }, [carregar]);
 
-  if (!app) return null;
+  if (!app || !usuario) return null;
 
   const item = itemAppPorRota(app, '/operacional');
   const proximo = pedidos[0];
@@ -65,6 +70,32 @@ export function FilaOperacionalPage() {
       titulo="Fila operacional"
       subtitulo="Ordem cronológica — refazer separação tem prioridade."
     >
+      <div className="ops-toolbar">
+        <button type="button" className="btn" onClick={() => setCriarAberto(true)}>
+          Criar pedido
+        </button>
+      </div>
+
+      {msgSucesso ? (
+        <p className="ops-resumo" role="status">
+          {msgSucesso}
+        </p>
+      ) : null}
+
+      <CriarPedidoModal
+        aberto={criarAberto}
+        usuarioId={usuario.id}
+        onFechar={() => setCriarAberto(false)}
+        onCriado={(numero, naFila) => {
+          setMsgSucesso(
+            naFila
+              ? `Pedido #${numero} criado e adicionado à fila.`
+              : `Orçamento #${numero} criado — aceite em Pedidos para entrar na fila.`,
+          );
+          void carregar();
+        }}
+      />
+
       <div className="ops-filtros" role="tablist" aria-label="Filtrar origem">
         {FILTROS.map((f) => (
           <button

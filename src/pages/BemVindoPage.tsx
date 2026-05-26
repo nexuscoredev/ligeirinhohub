@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppLauncherCard } from '@/components/AppLauncherCard';
+import { HubPerfilCard } from '@/components/HubPerfilCard';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { APPS_SISTEMA, appPermitido, itemHubPermitido } from '@/lib/apps';
@@ -43,15 +44,13 @@ export function BemVindoPage() {
         </Link>
       }
     >
-      <p className="hub-perfil-linha">
-        <span>
-          <strong>{usuario?.nome}</strong>
-        </span>
-        <span className="hub-perfil-sep" aria-hidden>
-          ·
-        </span>
-        <span className="hub-perfil-cargo">{usuario?.cargo}</span>
-      </p>
+      {usuario ? (
+        <HubPerfilCard
+          nome={usuario.nome}
+          cargo={usuario.cargo}
+          className="hub-perfil-card--pagina"
+        />
+      ) : null}
 
       {atalhosHub.length > 0 ? (
         <section
