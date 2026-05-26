@@ -33,7 +33,7 @@ export function BemVindoPage() {
 
   return (
     <PageShell
-      className="hub-page--denso"
+      className="hub-page--denso hub-page--bem-vindo"
       tag="Hub administrativo"
       titulo={<>Bem-vindo, {primeiroNome}</>}
       subtitulo="Apps do ecossistema Ligeirinho."

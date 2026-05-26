@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { AppMenuGroup } from '@/components/AppMenuGroup';
 import { HubLogo } from '@/components/HubLogo';
 import { usePerfil } from '@/contexts/PerfilContext';
@@ -34,8 +35,23 @@ function MenuLink({ item }: { item: ItemApp }) {
 
 export function MainLayout() {
   const { usuario, sair, session } = usePerfil();
+  const { pathname } = useLocation();
+  const [menuAberto, setMenuAberto] = useState(false);
 
   useSessionTimeout(Boolean(session && usuario));
+
+  useEffect(() => {
+    setMenuAberto(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuAberto) {
+      document.body.classList.remove('hub-menu-aberto');
+      return;
+    }
+    document.body.classList.add('hub-menu-aberto');
+    return () => document.body.classList.remove('hub-menu-aberto');
+  }, [menuAberto]);
 
   if (!usuario) return null;
 
@@ -57,10 +73,48 @@ export function MainLayout() {
     ),
   );
 
+  const layoutClass = menuAberto ? 'layout-hub menu-aberto' : 'layout-hub';
+
   return (
-    <div className="layout-hub">
-      <aside className="menu-lateral">
-        <NavLink to="/bem-vindo" className="menu-marca" title="Início">
+    <div className={layoutClass}>
+      <header className="menu-mobile-topbar">
+        <button
+          type="button"
+          className="menu-mobile-toggle"
+          aria-expanded={menuAberto}
+          aria-controls="menu-lateral-drawer"
+          onClick={() => setMenuAberto((v) => !v)}
+        >
+          <span className="menu-mobile-toggle-icone" aria-hidden>
+            {menuAberto ? '✕' : '☰'}
+          </span>
+          <span className="menu-mobile-toggle-texto">Menu</span>
+        </button>
+        <NavLink
+          to="/bem-vindo"
+          className="menu-mobile-marca"
+          onClick={() => setMenuAberto(false)}
+        >
+          <HubLogo size="sm" badgeHub />
+          <span className="menu-mobile-marca-titulo">{NOME_PLATAFORMA}</span>
+        </NavLink>
+      </header>
+
+      <button
+        type="button"
+        className="menu-overlay"
+        aria-label="Fechar menu"
+        onClick={() => setMenuAberto(false)}
+        tabIndex={menuAberto ? 0 : -1}
+      />
+
+      <aside id="menu-lateral-drawer" className="menu-lateral">
+        <NavLink
+          to="/bem-vindo"
+          className="menu-marca"
+          title="Início"
+          onClick={() => setMenuAberto(false)}
+        >
           <HubLogo size="sm" badgeHub />
           <div className="menu-marca-texto">
             <span className="menu-marca-titulo">{NOME_PLATAFORMA}</span>
@@ -111,6 +165,7 @@ export function MainLayout() {
           </button>
         </div>
       </aside>
+
       <main className="conteudo-principal">
         <Outlet />
       </main>
