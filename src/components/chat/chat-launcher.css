@@ -1,0 +1,38 @@
+.chat-ajuste-btn {
+  position: relative;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 40px;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--hub-raio);
+  border: 1px solid var(--hub-gold-soft);
+  background: var(--hub-surface);
+  color: var(--hub-text);
+  font-size: 0.82rem;
+  font-weight: 800;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.chat-ajuste-btn:hover {
+  background: var(--hub-surface-hover);
+  border-color: color-mix(in srgb, var(--hub-orange) 35%, var(--hub-gold-soft));
+}
+
+.chat-ajuste-icone {
+  font-size: 1rem;
+}
+
+.chat-ajuste-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--hub-orange);
+  box-shadow: 0 0 0 2px var(--hub-bg-elevated);
+}
+

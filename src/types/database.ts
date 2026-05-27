@@ -162,6 +162,54 @@ export interface Database {
           body: string;
         }>;
       };
+      suporte_tickets: {
+        Row: {
+          id: string;
+          criado_por: string;
+          titulo: string;
+          status: 'aberto' | 'resolvido';
+          resolvido_em: string | null;
+          resolvido_por: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          criado_por: string;
+          titulo: string;
+          status?: 'aberto' | 'resolvido';
+          resolvido_em?: string | null;
+          resolvido_por?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<{
+          titulo: string;
+          status: 'aberto' | 'resolvido';
+          resolvido_em: string | null;
+          resolvido_por: string | null;
+          updated_at: string;
+        }>;
+      };
+      suporte_mensagens: {
+        Row: {
+          id: string;
+          ticket_id: string;
+          sender_id: string;
+          body: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          ticket_id: string;
+          sender_id: string;
+          body: string;
+          created_at?: string;
+        };
+        Update: Partial<{
+          body: string;
+        }>;
+      };
     };
     Views: Record<string, never>;
     Functions: {
