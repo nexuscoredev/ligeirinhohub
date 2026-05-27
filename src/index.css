@@ -131,6 +131,23 @@ code {
   padding: 0.9rem 1rem;
 }
 
+/* Light: remove blur “acinzentado” e dar mais definição */
+[data-theme='light'] .card {
+  backdrop-filter: none;
+  box-shadow: var(--hub-sombra);
+}
+
+[data-theme='light'] input,
+[data-theme='light'] select,
+[data-theme='light'] textarea {
+  border-color: rgba(24, 19, 16, 0.14);
+}
+
+[data-theme='light'] code {
+  background: rgba(232, 98, 0, 0.12);
+  color: var(--hub-orange);
+}
+
 .erro {
   color: var(--hub-erro);
   font-size: 0.9rem;

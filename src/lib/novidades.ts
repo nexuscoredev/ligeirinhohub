@@ -75,6 +75,7 @@ export const NOVIDADES: Novidade[] = [
 ];
 
 export const NOVIDADES_LIDAS_KEY = 'ligeirinho-hub-novidades-lidas';
+export const NOVIDADES_PROMPT_KEY = 'ligeirinho-hub-novidades-prompt';
 
 export function idNovidadeMaisRecente(): string {
   return NOVIDADES[0]?.id ?? '';
@@ -95,6 +96,28 @@ export function marcarNovidadesComoLidas() {
   if (!recente) return;
   try {
     localStorage.setItem(NOVIDADES_LIDAS_KEY, recente);
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Garante que a notificação automática apareça só 1x por atualização neste navegador. */
+export function deveExibirPromptNovidades(): boolean {
+  const recente = idNovidadeMaisRecente();
+  if (!recente) return false;
+  if (!temNovidadesNaoLidas()) return false;
+  try {
+    return localStorage.getItem(NOVIDADES_PROMPT_KEY) !== recente;
+  } catch {
+    return false;
+  }
+}
+
+export function marcarPromptNovidadesExibido() {
+  const recente = idNovidadeMaisRecente();
+  if (!recente) return;
+  try {
+    localStorage.setItem(NOVIDADES_PROMPT_KEY, recente);
   } catch {
     /* ignore */
   }

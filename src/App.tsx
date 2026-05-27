@@ -12,6 +12,7 @@ import { UsuariosPage } from '@/pages/admin/UsuariosPage';
 import { BemVindoPage } from '@/pages/BemVindoPage';
 import { ClientesPage } from '@/pages/clientes/ClientesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
+import { ChatPage } from '@/pages/chat/ChatPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MotoristaPage } from '@/pages/motorista/MotoristaPage';
 import { MarketingPainelPage } from '@/pages/marketing/MarketingPainelPage';
@@ -49,6 +50,7 @@ export default function App() {
               <Route path="/admin/produtos" element={<ProdutosAdminPage />} />
               <Route path="/admin/dashboard" element={<DashboardPage />} />
               <Route path="/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
+              <Route path="/chat" element={<ChatPage />} />
               <Route path="/produtos" element={<Navigate to="/admin/produtos" replace />} />
               <Route path="/usuarios" element={<Navigate to="/admin/usuarios" replace />} />
 

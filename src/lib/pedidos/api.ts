@@ -169,6 +169,48 @@ export async function atualizarStatusItemSeparado(
   return { error };
 }
 
+export async function atualizarQtyItemSeparado(
+  item: Pick<PedidoItem, 'id' | 'qty_pedida'>,
+  qtySeparada: number,
+  pedidoId: string,
+) {
+  const qtyPedida = Number(item.qty_pedida);
+  const qty = Math.max(0, Math.min(qtyPedida, Number(qtySeparada)));
+  const status: ItemStatusSeparacao = qty === 0 ? 'indisponivel' : 'separado';
+  const separado_ok = qty === qtyPedida;
+
+  const { error } = await supabase
+    .from('pedido_itens')
+    .update({
+      status_separacao: status,
+      qty_separada: qty,
+      separado_ok,
+    } as never)
+    .eq('id', item.id);
+
+  if (!error) {
+    await supabase.rpc('recalcular_totais_pedido', { p_pedido_id: pedidoId } as never);
+  }
+  return { error };
+}
+
+export async function registrarObservacaoSeparacao(input: {
+  pedidoId: string;
+  usuarioId: string;
+  observacao: string;
+  itens?: Array<{ sku?: string | null; nome: string; pedida: number; separada: number; faltou: number }>;
+}) {
+  const texto = input.observacao.trim();
+  if (!texto) return { error: null as Error | null };
+
+  await registrarEvento(input.pedidoId, 'observacao_separacao', input.usuarioId, {
+    observacao: texto,
+    itens: input.itens ?? null,
+  });
+
+  return { error: null as Error | null };
+}
+
 export async function concluirSeparacao(pedidoId: string, usuarioId: string) {
   const { error } = await supabase.rpc(
     'concluir_separacao_pedido',

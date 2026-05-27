@@ -371,6 +371,49 @@
   color: var(--hub-gold);
 }
 
+.ops-qty-separada {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.ops-qty-separada input {
+  width: 72px;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  background: var(--hub-bg-elevated);
+  border: 1px solid var(--hub-gold-soft);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.ops-qty-faltou {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.14);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  padding: 0.15rem 0.4rem;
+  border-radius: 8px;
+}
+
+.ops-qty-ok {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  padding: 0.15rem 0.4rem;
+  border-radius: 8px;
+}
+
 .ops-status-picker {
   display: flex;
   flex-wrap: wrap;

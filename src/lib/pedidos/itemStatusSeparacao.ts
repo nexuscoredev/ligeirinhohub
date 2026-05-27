@@ -35,9 +35,9 @@ export function qtyParaStatus(
 }
 
 export function valorItemSeparado(item: PedidoItem): number {
-  const status = statusItemFromRow(item);
-  if (status !== 'separado') return 0;
-  return Number(item.qty_pedida) * Number(item.preco_unitario);
+  const qty = item.qty_separada;
+  if (qty === null || qty === undefined) return 0;
+  return Number(qty) * Number(item.preco_unitario);
 }
 
 export function todosItensComStatusDefinido(itens: PedidoItem[]): boolean {

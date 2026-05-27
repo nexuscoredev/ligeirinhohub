@@ -106,6 +106,62 @@ export interface Database {
         Insert: Record<string, unknown>;
         Update: Record<string, unknown>;
       };
+      chat_threads: {
+        Row: {
+          id: string;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<{
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        }>;
+      };
+      chat_participants: {
+        Row: {
+          thread_id: string;
+          user_id: string;
+          joined_at: string;
+          last_read_at: string | null;
+        };
+        Insert: {
+          thread_id: string;
+          user_id: string;
+          joined_at?: string;
+          last_read_at?: string | null;
+        };
+        Update: Partial<{
+          joined_at: string;
+          last_read_at: string | null;
+        }>;
+      };
+      chat_messages: {
+        Row: {
+          id: string;
+          thread_id: string;
+          sender_id: string;
+          body: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          thread_id: string;
+          sender_id: string;
+          body: string;
+          created_at?: string;
+        };
+        Update: Partial<{
+          body: string;
+        }>;
+      };
     };
     Views: Record<string, never>;
     Functions: {

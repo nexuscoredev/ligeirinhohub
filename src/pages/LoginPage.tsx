@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { HubLogo } from '@/components/HubLogo';
-import { NovidadesBotao } from '@/components/NovidadesBotao';
 import { TemaToggle } from '@/components/TemaToggle';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { emailParaLogin } from '@/lib/authLogin';
@@ -52,7 +51,6 @@ export function LoginPage() {
   return (
     <div className="login-pagina">
       <div className="login-acoes-topo">
-        <NovidadesBotao compacto />
         <TemaToggle compacto />
       </div>
       <div className="login-card card">

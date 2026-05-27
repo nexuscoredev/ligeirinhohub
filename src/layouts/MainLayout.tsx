@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { AppMenuGroup } from '@/components/AppMenuGroup';
 import { HubLogo } from '@/components/HubLogo';
 import { HubPerfilCard } from '@/components/HubPerfilCard';
+import { NovidadesAutoPrompt } from '@/components/NovidadesAutoPrompt';
 import { NovidadesBotao } from '@/components/NovidadesBotao';
 import { TemaToggle } from '@/components/TemaToggle';
 import { usePerfil } from '@/contexts/PerfilContext';
@@ -80,6 +81,7 @@ export function MainLayout() {
 
   return (
     <div className={layoutClass}>
+      <NovidadesAutoPrompt />
       <header className="menu-mobile-topbar">
         <button
           type="button"

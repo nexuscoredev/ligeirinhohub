@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AppPageHeader } from '@/components/AppPageHeader';
 import { PageShell } from '@/components/PageShell';
@@ -10,7 +10,9 @@ import {
   iniciarSeparacao,
   pausarSeparacao,
   retomarSeparacao,
+  atualizarQtyItemSeparado,
   atualizarStatusItemSeparado,
+  registrarObservacaoSeparacao,
 } from '@/lib/pedidos/api';
 import { formatarMoeda, STATUS_LABEL } from '@/lib/pedidos/constants';
 import {
@@ -34,6 +36,8 @@ export function SeparacaoPage() {
   const [itens, setItens] = useState<PedidoItem[]>([]);
   const [erro, setErro] = useState<string | null>(null);
   const [salvando, setSalvando] = useState(false);
+  const [observacao, setObservacao] = useState('');
+  const [qtyEdit, setQtyEdit] = useState<Record<string, string>>({});
 
   const carregar = useCallback(async () => {
     if (!id) return;
@@ -62,6 +66,34 @@ export function SeparacaoPage() {
   const grupos = agruparItensPorCategoria(itens);
 
   const totalSeparado = itens.reduce((s, i) => s + valorItemSeparado(i), 0);
+
+  const itensFaltantes = useMemo(() => {
+    return itens
+      .map((i) => {
+        const separada =
+          i.qty_separada === null || i.qty_separada === undefined
+            ? null
+            : Number(i.qty_separada);
+        if (separada === null) return null;
+        const pedida = Number(i.qty_pedida);
+        const faltou = Math.max(0, pedida - separada);
+        if (faltou <= 0) return null;
+        return {
+          sku: i.produtos?.sku ?? null,
+          nome: i.nome_snapshot,
+          pedida,
+          separada,
+          faltou,
+        };
+      })
+      .filter(Boolean) as Array<{
+      sku?: string | null;
+      nome: string;
+      pedida: number;
+      separada: number;
+      faltou: number;
+    }>;
+  }, [itens]);
 
   async function handleIniciar() {
     if (!id) return;
@@ -99,6 +131,44 @@ export function SeparacaoPage() {
     else void carregar();
   }
 
+  async function handleQtyBlur(item: PedidoItem) {
+    if (!id || !podeOperar) return;
+    const raw = qtyEdit[item.id];
+    if (raw == null || raw.trim() === '') return;
+    const n = Number(raw.replace(',', '.'));
+    if (Number.isNaN(n)) {
+      setErro('Quantidade separada inválida.');
+      return;
+    }
+    setSalvando(true);
+    const { error } = await atualizarQtyItemSeparado(
+      { id: item.id, qty_pedida: item.qty_pedida },
+      Math.trunc(n),
+      id,
+    );
+    setSalvando(false);
+    if (error) setErro(error.message);
+    else {
+      setErro(null);
+      void carregar();
+    }
+  }
+
+  async function handleSalvarObservacao() {
+    if (!id) return;
+    if (!observacao.trim()) return;
+    setSalvando(true);
+    const { error } = await registrarObservacaoSeparacao({
+      pedidoId: id,
+      usuarioId,
+      observacao,
+      itens: itensFaltantes.length ? itensFaltantes : undefined,
+    });
+    setSalvando(false);
+    if (error) setErro(error.message);
+    else setErro(null);
+  }
+
   async function handleConcluir() {
     if (!id) return;
     if (!todosItensComStatusDefinido(itens)) {
@@ -106,6 +176,14 @@ export function SeparacaoPage() {
       return;
     }
     setSalvando(true);
+    if (observacao.trim()) {
+      await registrarObservacaoSeparacao({
+        pedidoId: id,
+        usuarioId,
+        observacao,
+        itens: itensFaltantes.length ? itensFaltantes : undefined,
+      });
+    }
     const { error } = await concluirSeparacao(id, usuarioId);
     setSalvando(false);
     if (error) setErro(error.message);
@@ -186,6 +264,40 @@ export function SeparacaoPage() {
 
       {erro ? <p className="erro">{erro}</p> : null}
 
+      {emSeparacao ? (
+        <section className="card" style={{ marginBottom: '1rem' }}>
+          <h3 style={{ margin: '0 0 0.5rem', fontSize: '0.9rem' }}>
+            Observação da separação
+          </h3>
+          <p style={{ margin: '0 0 0.65rem', fontSize: '0.8rem', color: 'var(--hub-muted)' }}>
+            Registre o que aconteceu (faltas, substituições, divergências). Isso fica salvo no histórico do pedido.
+          </p>
+          <textarea
+            value={observacao}
+            onChange={(e) => setObservacao(e.target.value)}
+            rows={3}
+            placeholder="Ex.: Faltou 2x Brahma 350ml, não encontrado no estoque."
+            style={{ resize: 'vertical' }}
+            disabled={salvando || !podeSeparar(usuario.cargo)}
+          />
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              className="btn btn-secundario"
+              onClick={() => void handleSalvarObservacao()}
+              disabled={salvando || !observacao.trim()}
+            >
+              Salvar observação
+            </button>
+            {itensFaltantes.length ? (
+              <span style={{ fontSize: '0.8rem', color: 'var(--hub-muted)', alignSelf: 'center' }}>
+                {itensFaltantes.length} item(ns) com falta
+              </span>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
+
       {grupos.map((g) => (
         <section key={g.categoria} className="ops-grupo">
           <h3 className="ops-grupo-titulo">{g.categoria}</h3>
@@ -206,6 +318,32 @@ export function SeparacaoPage() {
               </div>
               <div className="ops-item-status">
                 <span className="ops-qty-pedida">Pedido: {item.qty_pedida}</span>
+                <label className="ops-qty-separada">
+                  <span>Separado</span>
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    max={item.qty_pedida}
+                    placeholder={String(item.qty_pedida)}
+                    value={qtyEdit[item.id] ?? ''}
+                    disabled={!podeOperar || salvando}
+                    onChange={(e) =>
+                      setQtyEdit((m) => ({ ...m, [item.id]: e.target.value }))
+                    }
+                    onBlur={() => void handleQtyBlur(item)}
+                  />
+                </label>
+                {item.qty_separada != null ? (
+                  (() => {
+                    const faltou = Math.max(0, Number(item.qty_pedida) - Number(item.qty_separada));
+                    return faltou > 0 ? (
+                      <span className="ops-qty-faltou">Faltou: {faltou}</span>
+                    ) : (
+                      <span className="ops-qty-ok">OK</span>
+                    );
+                  })()
+                ) : null}
                 <ItemStatusPicker
                   value={statusItemFromRow(item)}
                   disabled={!podeOperar || salvando}
