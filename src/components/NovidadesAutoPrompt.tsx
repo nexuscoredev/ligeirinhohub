@@ -16,6 +16,8 @@ export function NovidadesAutoPrompt() {
   useEffect(() => {
     if (!deveExibirPromptNovidades()) return;
     marcarPromptNovidadesExibido();
+    // Marca como lida assim que notificar (evita avisar de novo a cada abertura).
+    marcarNovidadesComoLidas();
 
     // Pequeno atraso para não competir com layout/carregamento inicial.
     const t = window.setTimeout(() => setAberto(true), 350);
@@ -24,7 +26,6 @@ export function NovidadesAutoPrompt() {
 
   function fechar() {
     setAberto(false);
-    marcarNovidadesComoLidas();
   }
 
   return aberto ? <NovidadesModal onFechar={fechar} /> : null;
