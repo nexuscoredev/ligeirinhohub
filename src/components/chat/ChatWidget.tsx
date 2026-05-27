@@ -21,6 +21,7 @@ import {
 } from '@/lib/suporte/api';
 import { supabase } from '@/lib/supabase';
 import type { Usuario } from '@/types/database';
+import { useChatWidgetSize } from '@/components/chat/useChatWidgetSize';
 import './chat-widget.css';
 
 type Aba = 'conversas' | 'pessoas' | 'solicitacoes';
@@ -45,6 +46,14 @@ export function ChatWidget({
   const isAdmin = isHubAdmin(usuario.cargo);
   const [aba, setAba] = useState<Aba>(inicial);
   const [erro, setErro] = useState<string | null>(null);
+  const {
+    tamanho,
+    mobile,
+    iniciarArraste,
+    moverArraste,
+    finalizarArraste,
+    resetarTamanho,
+  } = useChatWidgetSize();
 
   // Chat DM
   const [threads, setThreads] = useState<ChatThreadItem[]>([]);
@@ -212,7 +221,54 @@ export function ChatWidget({
 
   return (
     <div className="cw-backdrop" role="presentation" onClick={onFechar}>
-      <div className="cw-modal" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="cw-modal"
+        role="dialog"
+        aria-modal="true"
+        onClick={(e) => e.stopPropagation()}
+        style={
+          mobile
+            ? undefined
+            : { width: tamanho.w, height: tamanho.h, maxWidth: 'none', maxHeight: 'none' }
+        }
+      >
+        {!mobile ? (
+          <>
+            <button
+              type="button"
+              className="cw-resize cw-resize--n"
+              aria-label="Redimensionar altura do chat"
+              onPointerDown={(e) => iniciarArraste(e, 'n')}
+              onPointerMove={moverArraste}
+              onPointerUp={finalizarArraste}
+              onPointerCancel={finalizarArraste}
+            />
+            <button
+              type="button"
+              className="cw-resize cw-resize--w"
+              aria-label="Redimensionar largura do chat"
+              onPointerDown={(e) => iniciarArraste(e, 'w')}
+              onPointerMove={moverArraste}
+              onPointerUp={finalizarArraste}
+              onPointerCancel={finalizarArraste}
+            />
+            <button
+              type="button"
+              className="cw-resize cw-resize--nw"
+              aria-label="Redimensionar chat. Duplo clique para tamanho padrão."
+              onPointerDown={(e) => iniciarArraste(e, 'nw')}
+              onPointerMove={moverArraste}
+              onPointerUp={finalizarArraste}
+              onPointerCancel={finalizarArraste}
+              onDoubleClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                resetarTamanho();
+              }}
+            />
+          </>
+        ) : null}
+
         <header className="cw-header">
           <div className="cw-title">
             <strong>Chat interno</strong>
