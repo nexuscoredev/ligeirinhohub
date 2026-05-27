@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { HubLogo } from '@/components/HubLogo';
 import { ChatWidget } from '@/components/chat/ChatWidget';
 import { temNovidadesNaoLidas } from '@/lib/novidades';
 import type { Usuario } from '@/types/database';
@@ -32,14 +33,14 @@ export function ChatLauncher({ usuario }: { usuario: Pick<Usuario, 'id' | 'nome'
     <>
       <button
         type="button"
-        className="chat-ajuste-btn"
-        onClick={() => abrir('solicitacoes')}
+        className="chat-fab"
+        onClick={() => abrir('conversas')}
+        aria-haspopup="dialog"
+        aria-label="Abrir chat interno"
+        title="Chat interno"
       >
-        <span className="chat-ajuste-icone" aria-hidden>
-          🛠️
-        </span>
-        Solicitar ajuste no sistema
-        {hasDot ? <span className="chat-ajuste-dot" aria-hidden /> : null}
+        <HubLogo size="xs" alt="Ligeirinho" />
+        {hasDot ? <span className="chat-fab-dot" aria-hidden /> : null}
       </button>
 
       {aberto ? (

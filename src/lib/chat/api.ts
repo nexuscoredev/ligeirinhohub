@@ -92,12 +92,16 @@ export async function listarThreads(usuarioId: string) {
   return { threads, error: null };
 }
 
-export async function criarOuAbrirThreadDM(usuarioId: string, peerId: string) {
+export async function criarOuAbrirThreadDM(_usuarioId: string, peerId: string) {
+  const { data: auth } = await supabase.auth.getUser();
+  const authId = auth.user?.id ?? '';
+  if (!authId) return { threadId: null as string | null, error: new Error('Sessão inválida.') };
+
   // try find existing thread containing both users
   const { data: myParts, error } = await supabase
     .from('chat_participants')
     .select('thread_id')
-    .eq('user_id', usuarioId);
+    .eq('user_id', authId);
   if (error) return { threadId: null as string | null, error };
 
   const threadIds = (myParts ?? []).map((p) => (p as { thread_id: string }).thread_id);
@@ -114,14 +118,14 @@ export async function criarOuAbrirThreadDM(usuarioId: string, peerId: string) {
   // create new thread + participants
   const { data: thread, error: e1 } = await supabase
     .from('chat_threads')
-    .insert({ created_by: usuarioId } as never)
+    .insert({ created_by: authId } as never)
     .select('id')
     .single();
   if (e1 || !thread) return { threadId: null, error: e1 ?? new Error('Falha ao criar conversa') };
 
   const threadId = (thread as { id: string }).id;
   const { error: e2 } = await supabase.from('chat_participants').insert([
-    { thread_id: threadId, user_id: usuarioId },
+    { thread_id: threadId, user_id: authId },
     { thread_id: threadId, user_id: peerId },
   ] as never);
 

@@ -160,7 +160,6 @@ export function MainLayout() {
         </nav>
 
         <div className="menu-rodape">
-          <ChatLauncher usuario={usuario} />
           <NovidadesBotao />
           <TemaToggle />
           <HubPerfilCard nome={usuario.nome} cargo={usuario.cargo} />
@@ -177,6 +176,8 @@ export function MainLayout() {
       <main className="conteudo-principal">
         <Outlet />
       </main>
+
+      <ChatLauncher usuario={usuario} />
     </div>
   );
 }
