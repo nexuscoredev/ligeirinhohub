@@ -9,7 +9,9 @@ import {
 export const CHAT_WIDGET_SIZE_KEY = 'ligeirinho-hub-chat-widget-size';
 
 export const CHAT_WIDGET_PADRAO = { w: 460, h: 640 };
-const MIN = { w: 360, h: 520 };
+/** Mínimo compacto — alinhado ao CSS do modal (sem min fixo que impeça encolher). */
+export const CHAT_WIDGET_MIN = { w: 300, h: 380 };
+const MIN = CHAT_WIDGET_MIN;
 const VIEWPORT_PAD = 32;
 /** Espaço para o FAB no canto inferior */
 const FAB_CLEARANCE = 72;
@@ -87,24 +89,7 @@ export function useChatWidgetSize() {
     return () => window.removeEventListener('resize', aoRedimensionarJanela);
   }, []);
 
-  const iniciarArraste = useCallback(
-    (e: ReactPointerEvent<HTMLButtonElement>, modo: ResizeModo) => {
-      if (mobile) return;
-      e.preventDefault();
-      e.stopPropagation();
-      e.currentTarget.setPointerCapture(e.pointerId);
-      arrasteRef.current = {
-        modo,
-        startX: e.clientX,
-        startY: e.clientY,
-        startW: tamanhoRef.current.w,
-        startH: tamanhoRef.current.h,
-      };
-    },
-    [mobile],
-  );
-
-  const moverArraste = useCallback((e: ReactPointerEvent<HTMLButtonElement>) => {
+  const aplicarArraste = useCallback((clientX: number, clientY: number) => {
     const arraste = arrasteRef.current;
     if (!arraste) return;
 
@@ -112,23 +97,59 @@ export function useChatWidgetSize() {
     let h = arraste.startH;
 
     if (arraste.modo === 'w' || arraste.modo === 'nw') {
-      w = arraste.startW + (arraste.startX - e.clientX);
+      w = arraste.startW + (arraste.startX - clientX);
     }
     if (arraste.modo === 'n' || arraste.modo === 'nw') {
-      h = arraste.startH + (arraste.startY - e.clientY);
+      h = arraste.startH + (arraste.startY - clientY);
     }
 
     setTamanho(limitarTamanhoChat(w, h));
   }, []);
 
-  const finalizarArraste = useCallback((e: ReactPointerEvent<HTMLButtonElement>) => {
+  const pararArraste = useCallback(() => {
     if (!arrasteRef.current) return;
     arrasteRef.current = null;
-    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-      e.currentTarget.releasePointerCapture(e.pointerId);
-    }
+    document.body.classList.remove('cw-redimensionando');
     salvarTamanhoChat(tamanhoRef.current);
   }, []);
+
+  useEffect(() => {
+    function onMove(ev: PointerEvent) {
+      if (!arrasteRef.current) return;
+      ev.preventDefault();
+      aplicarArraste(ev.clientX, ev.clientY);
+    }
+
+    function onUp() {
+      pararArraste();
+    }
+
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+    };
+  }, [aplicarArraste, pararArraste]);
+
+  const iniciarArraste = useCallback(
+    (e: ReactPointerEvent<HTMLButtonElement>, modo: ResizeModo) => {
+      if (mobile) return;
+      e.preventDefault();
+      e.stopPropagation();
+      arrasteRef.current = {
+        modo,
+        startX: e.clientX,
+        startY: e.clientY,
+        startW: tamanhoRef.current.w,
+        startH: tamanhoRef.current.h,
+      };
+      document.body.classList.add('cw-redimensionando');
+    },
+    [mobile],
+  );
 
   const resetarTamanho = useCallback(() => {
     const padrao = limitarTamanhoChat(CHAT_WIDGET_PADRAO.w, CHAT_WIDGET_PADRAO.h);
@@ -136,12 +157,20 @@ export function useChatWidgetSize() {
     salvarTamanhoChat(padrao);
   }, []);
 
+  const limites = limitesViewport();
+
   return {
     tamanho,
     mobile,
     iniciarArraste,
-    moverArraste,
-    finalizarArraste,
     resetarTamanho,
+    estiloModal: {
+      width: tamanho.w,
+      height: tamanho.h,
+      minWidth: MIN.w,
+      minHeight: MIN.h,
+      maxWidth: limites.maxW,
+      maxHeight: limites.maxH,
+    },
   };
 }

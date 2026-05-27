@@ -46,14 +46,7 @@ export function ChatWidget({
   const isAdmin = isHubAdmin(usuario.cargo);
   const [aba, setAba] = useState<Aba>(inicial);
   const [erro, setErro] = useState<string | null>(null);
-  const {
-    tamanho,
-    mobile,
-    iniciarArraste,
-    moverArraste,
-    finalizarArraste,
-    resetarTamanho,
-  } = useChatWidgetSize();
+  const { mobile, iniciarArraste, resetarTamanho, estiloModal } = useChatWidgetSize();
 
   // Chat DM
   const [threads, setThreads] = useState<ChatThreadItem[]>([]);
@@ -226,11 +219,7 @@ export function ChatWidget({
         role="dialog"
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
-        style={
-          mobile
-            ? undefined
-            : { width: tamanho.w, height: tamanho.h, maxWidth: 'none', maxHeight: 'none' }
-        }
+        style={mobile ? undefined : estiloModal}
       >
         {!mobile ? (
           <>
@@ -239,27 +228,18 @@ export function ChatWidget({
               className="cw-resize cw-resize--n"
               aria-label="Redimensionar altura do chat"
               onPointerDown={(e) => iniciarArraste(e, 'n')}
-              onPointerMove={moverArraste}
-              onPointerUp={finalizarArraste}
-              onPointerCancel={finalizarArraste}
             />
             <button
               type="button"
               className="cw-resize cw-resize--w"
               aria-label="Redimensionar largura do chat"
               onPointerDown={(e) => iniciarArraste(e, 'w')}
-              onPointerMove={moverArraste}
-              onPointerUp={finalizarArraste}
-              onPointerCancel={finalizarArraste}
             />
             <button
               type="button"
               className="cw-resize cw-resize--nw"
               aria-label="Redimensionar chat. Duplo clique para tamanho padrão."
               onPointerDown={(e) => iniciarArraste(e, 'nw')}
-              onPointerMove={moverArraste}
-              onPointerUp={finalizarArraste}
-              onPointerCancel={finalizarArraste}
               onDoubleClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
