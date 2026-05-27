@@ -38,11 +38,6 @@ export function BemVindoPage() {
       tag="Hub administrativo"
       titulo={<>Bem-vindo, {primeiroNome}</>}
       subtitulo="Apps do ecossistema Ligeirinho."
-      acoes={
-        <Link to="/admin/dashboard" className="btn">
-          Dashboard
-        </Link>
-      }
     >
       {usuario ? (
         <HubPerfilCard
