@@ -9,6 +9,7 @@ import { PainelAdminPage } from '@/pages/admin/PainelAdminPage';
 import { ProdutosAdminPage } from '@/pages/admin/ProdutosAdminPage';
 import { SistemasPage } from '@/pages/admin/SistemasPage';
 import { UsuariosPage } from '@/pages/admin/UsuariosPage';
+import { VisaoEstrategicaPage } from '@/pages/admin/VisaoEstrategicaPage';
 import { BemVindoPage } from '@/pages/BemVindoPage';
 import { ClientesPage } from '@/pages/clientes/ClientesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
@@ -45,6 +46,7 @@ export default function App() {
               <Route path="/" element={<Navigate to="/bem-vindo" replace />} />
               <Route path="/bem-vindo" element={<BemVindoPage />} />
               <Route path="/admin" element={<PainelAdminPage />} />
+              <Route path="/admin/estrategico" element={<VisaoEstrategicaPage />} />
               <Route path="/admin/usuarios" element={<UsuariosPage />} />
               <Route path="/admin/sistemas" element={<SistemasPage />} />
               <Route path="/admin/produtos" element={<ProdutosAdminPage />} />

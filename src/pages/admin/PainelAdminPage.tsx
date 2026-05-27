@@ -12,6 +12,7 @@ import './admin.css';
 
 const MODULO_DESC: Record<string, string> = {
   '/admin': 'Central do painel e atalhos',
+  '/admin/estrategico': 'KPIs executivos e visão do negócio',
   '/admin/dashboard': 'KPIs e indicadores do dia',
   '/admin/produtos': 'Catálogo, preços e categorias',
   '/admin/usuarios': 'Cargos, acesso e permissões',
