@@ -340,6 +340,7 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
 export const ROTAS_PUBLICAS_AUTENTICADAS = ['/bem-vindo'];
 
 export function rotaPermitidaParaCargo(rota: string, cargo: CargoHub): boolean {
+  if (cargo === 'CEO') return true;
   const chave = Object.keys(HUB_CARGOS_POR_ROTA)
     .filter(
       (prefixo) => rota === prefixo || rota.startsWith(`${prefixo}/`),

@@ -35,6 +35,14 @@
   background: rgba(212, 175, 55, 0.06);
 }
 
+[data-theme='light'] .hub-page::before {
+  background: rgba(232, 98, 0, 0.08);
+}
+
+[data-theme='light'] .hub-page::after {
+  background: rgba(24, 19, 16, 0.05);
+}
+
 .hub-page > * {
   position: relative;
   z-index: 1;

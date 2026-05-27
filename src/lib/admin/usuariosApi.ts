@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase';
 import type { CargoHub, Usuario } from '@/types/database';
 
 export function isHubAdmin(cargo: CargoHub): boolean {
-  return cargo === 'Desenvolvedor' || cargo === 'Administrador';
+  return cargo === 'Desenvolvedor' || cargo === 'Administrador' || cargo === 'CEO';
 }
 
 export async function listarUsuarios() {

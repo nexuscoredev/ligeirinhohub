@@ -3,6 +3,7 @@ import type { Promocao, PromocaoUpdate } from '@/types/marketing';
 export type CargoHub =
   | 'Desenvolvedor'
   | 'Administrador'
+  | 'CEO'
   | 'Gerente'
   | 'Caixa'
   | 'Estoquista'
