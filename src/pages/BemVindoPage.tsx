@@ -43,6 +43,8 @@ export function BemVindoPage() {
         <HubPerfilCard
           nome={usuario.nome}
           cargo={usuario.cargo}
+          avatarUrl={usuario.avatar_url}
+          linkTo="/perfil"
           className="hub-perfil-card--pagina"
         />
       ) : null}

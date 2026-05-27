@@ -162,7 +162,12 @@ export function MainLayout() {
         <div className="menu-rodape">
           <NovidadesBotao />
           <TemaToggle />
-          <HubPerfilCard nome={usuario.nome} cargo={usuario.cargo} />
+          <HubPerfilCard
+            nome={usuario.nome}
+            cargo={usuario.cargo}
+            avatarUrl={usuario.avatar_url}
+            linkTo="/perfil"
+          />
           <button
             type="button"
             className="btn btn-secundario menu-perfil-sair"

@@ -20,26 +20,6 @@
   margin-bottom: 0.85rem;
 }
 
-.hub-perfil-card__avatar {
-  flex-shrink: 0;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(160deg, #222 0%, #101010 100%);
-  box-shadow:
-    0 0 0 2px rgba(255, 107, 0, 0.45),
-    0 0 12px rgba(255, 107, 0, 0.15);
-}
-
-.hub-perfil-card__iniciais {
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  color: var(--hub-orange);
-}
-
 .hub-perfil-card__info {
   min-width: 0;
   flex: 1;

@@ -52,6 +52,7 @@ export function temaApp(app: AppSistema): Record<string, string> {
 /** Páginas do painel administrativo (fora dos apps de operação) */
 export const HUB_ADMIN_ITENS: ItemApp[] = [
   { rota: '/bem-vindo', titulo: 'Bem-vindo', icone: '👋', prefixo: '/bem-vindo' },
+  { rota: '/perfil', titulo: 'Meu perfil', icone: '👤', prefixo: '/perfil' },
   { rota: '/admin', titulo: 'Visão geral', icone: '⚙️', prefixo: '/admin' },
   { rota: '/admin/produtos', titulo: 'Produtos', icone: '🍺', prefixo: '/admin/produtos' },
   { rota: '/admin/usuarios', titulo: 'Usuários', icone: '🔐', prefixo: '/admin/usuarios' },
@@ -336,7 +337,7 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
   ],
 };
 
-export const ROTAS_PUBLICAS_AUTENTICADAS = ['/bem-vindo'];
+export const ROTAS_PUBLICAS_AUTENTICADAS = ['/bem-vindo', '/perfil'];
 
 export function rotaPermitidaParaCargo(rota: string, cargo: CargoHub): boolean {
   if (cargo === 'CEO') return true;

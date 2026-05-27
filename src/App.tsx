@@ -11,6 +11,7 @@ import { SistemasPage } from '@/pages/admin/SistemasPage';
 import { UsuariosPage } from '@/pages/admin/UsuariosPage';
 import { VisaoEstrategicaPage } from '@/pages/admin/VisaoEstrategicaPage';
 import { BemVindoPage } from '@/pages/BemVindoPage';
+import { PerfilPage } from '@/pages/perfil/PerfilPage';
 import { ClientesPage } from '@/pages/clientes/ClientesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -44,6 +45,7 @@ export default function App() {
             >
               <Route path="/" element={<Navigate to="/bem-vindo" replace />} />
               <Route path="/bem-vindo" element={<BemVindoPage />} />
+              <Route path="/perfil" element={<PerfilPage />} />
               <Route path="/admin" element={<PainelAdminPage />} />
               <Route path="/admin/estrategico" element={<VisaoEstrategicaPage />} />
               <Route path="/admin/usuarios" element={<UsuariosPage />} />

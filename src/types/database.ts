@@ -21,6 +21,9 @@ export interface Usuario {
   cargo: CargoHub;
   ativo: boolean;
   paginas_permitidas: string[] | null;
+  avatar_url?: string | null;
+  bio?: string | null;
+  telefone?: string | null;
   created_at: string;
   updated_at: string;
 }
