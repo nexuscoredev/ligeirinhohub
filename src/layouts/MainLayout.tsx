@@ -3,6 +3,8 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { AppMenuGroup } from '@/components/AppMenuGroup';
 import { HubLogo } from '@/components/HubLogo';
 import { HubPerfilCard } from '@/components/HubPerfilCard';
+import { NovidadesBotao } from '@/components/NovidadesBotao';
+import { TemaToggle } from '@/components/TemaToggle';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { useSessionTimeout } from '@/hooks/useSessionTimeout';
 import {
@@ -99,6 +101,8 @@ export function MainLayout() {
           <HubLogo size="sm" badgeHub />
           <span className="menu-mobile-marca-titulo">{NOME_PLATAFORMA}</span>
         </NavLink>
+        <NovidadesBotao compacto className="menu-mobile-novidades" />
+        <TemaToggle compacto className="menu-mobile-tema" />
       </header>
 
       <button
@@ -153,6 +157,8 @@ export function MainLayout() {
         </nav>
 
         <div className="menu-rodape">
+          <NovidadesBotao />
+          <TemaToggle />
           <HubPerfilCard nome={usuario.nome} cargo={usuario.cargo} />
           <button
             type="button"

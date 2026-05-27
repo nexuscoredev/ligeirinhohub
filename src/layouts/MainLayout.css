@@ -259,6 +259,11 @@ body.hub-menu-aberto {
     text-overflow: ellipsis;
   }
 
+  .menu-mobile-tema,
+  .menu-mobile-novidades {
+    flex-shrink: 0;
+  }
+
   .layout-hub.menu-aberto .menu-overlay {
     display: block;
     position: fixed;
@@ -266,7 +271,7 @@ body.hub-menu-aberto {
     z-index: 45;
     border: none;
     padding: 0;
-    background: rgba(0, 0, 0, 0.55);
+    background: var(--hub-overlay);
     cursor: pointer;
     backdrop-filter: blur(2px);
   }

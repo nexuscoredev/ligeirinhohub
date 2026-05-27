@@ -216,3 +216,19 @@
   font-size: 0.78rem;
   word-break: break-all;
 }
+
+.admin-produtos-contagem {
+  font-size: 0.8rem;
+  color: var(--hub-muted);
+  margin: 0 0 0.75rem;
+}
+
+.admin-produtos-mais {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.admin-produtos-mais .btn {
+  min-width: min(100%, 280px);
+}

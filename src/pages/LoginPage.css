@@ -10,6 +10,16 @@
   overflow: hidden;
 }
 
+.login-acoes-topo {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top, 0px));
+  right: max(1rem, env(safe-area-inset-right, 0px));
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
 .login-pagina::before,
 .login-pagina::after {
   content: '';

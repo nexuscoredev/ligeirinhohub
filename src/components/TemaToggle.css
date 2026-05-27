@@ -1,0 +1,61 @@
+.tema-toggle--segmentado {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--hub-raio);
+  background: var(--hub-surface);
+  border: 1px solid var(--hub-gold-soft);
+}
+
+.tema-toggle__opcao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 36px;
+  padding: 0.4rem 0.55rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--hub-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.tema-toggle__opcao:hover {
+  color: var(--hub-text);
+  background: var(--hub-surface-hover);
+}
+
+.tema-toggle__opcao.ativo {
+  color: var(--hub-text);
+  background: var(--hub-bg-elevated);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.tema-toggle__icone {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.tema-toggle--compacto {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: var(--hub-raio);
+  border: 1px solid var(--hub-gold-soft);
+  background: var(--hub-surface);
+  color: var(--hub-text);
+  font-size: 1.05rem;
+  line-height: 1;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.tema-toggle--compacto:hover {
+  background: var(--hub-surface-hover);
+  border-color: color-mix(in srgb, var(--hub-orange) 35%, var(--hub-gold-soft));
+}

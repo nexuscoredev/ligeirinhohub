@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { RotaProtegida } from '@/components/RotaProtegida';
 import { PerfilProvider } from '@/contexts/PerfilContext';
+import { TemaProvider } from '@/contexts/TemaContext';
 import { MainLayout } from '@/layouts/MainLayout';
 import '@/layouts/MainLayout.css';
 import { PainelAdminPage } from '@/pages/admin/PainelAdminPage';
@@ -28,8 +29,9 @@ import { VeiculosPage } from '@/pages/veiculos/VeiculosPage';
 export default function App() {
   return (
     <ErrorBoundary>
-      <PerfilProvider>
-        <BrowserRouter>
+      <TemaProvider>
+        <PerfilProvider>
+          <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route
@@ -68,7 +70,8 @@ export default function App() {
             <Route path="*" element={<Navigate to="/bem-vindo" replace />} />
           </Routes>
         </BrowserRouter>
-      </PerfilProvider>
+        </PerfilProvider>
+      </TemaProvider>
     </ErrorBoundary>
   );
 }

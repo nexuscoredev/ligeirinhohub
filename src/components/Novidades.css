@@ -1,0 +1,205 @@
+.novidades-botao {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  min-height: 38px;
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--hub-raio);
+  border: 1px solid var(--hub-gold-soft);
+  background: var(--hub-surface);
+  color: var(--hub-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.novidades-botao:hover {
+  background: var(--hub-surface-hover);
+  border-color: color-mix(in srgb, var(--hub-orange) 35%, var(--hub-gold-soft));
+}
+
+.novidades-botao--compacto {
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+}
+
+.novidades-botao__icone {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.novidades-botao__badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--hub-orange);
+  box-shadow: 0 0 0 2px var(--hub-bg-elevated);
+}
+
+.novidades-botao--compacto .novidades-botao__badge {
+  top: 4px;
+  right: 4px;
+}
+
+.novidades-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(1rem, env(safe-area-inset-top, 0px))
+    max(1rem, env(safe-area-inset-right, 0px))
+    max(1rem, env(safe-area-inset-bottom, 0px))
+    max(1rem, env(safe-area-inset-left, 0px));
+  background: var(--hub-overlay);
+  backdrop-filter: blur(3px);
+}
+
+.novidades-modal {
+  width: min(100%, 480px);
+  max-height: min(88vh, 640px);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.novidades-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.1rem 1.15rem 0.85rem;
+  border-bottom: 1px solid var(--hub-gold-soft);
+  background: color-mix(in srgb, var(--hub-orange) 6%, var(--hub-surface));
+}
+
+.novidades-modal__eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--hub-orange);
+}
+
+.novidades-modal__titulo {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.novidades-modal__versao {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: var(--hub-muted);
+  font-weight: 600;
+}
+
+.novidades-modal__fechar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--hub-muted);
+  font-size: 1rem;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+}
+
+.novidades-modal__fechar:hover {
+  background: var(--hub-surface-hover);
+  color: var(--hub-text);
+}
+
+.novidades-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 1rem 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.novidades-item {
+  padding: 0.85rem 0.9rem;
+  border-radius: var(--hub-raio-lg);
+  background: var(--hub-bg-elevated);
+  border: 1px solid var(--hub-gold-soft);
+}
+
+.novidades-item--recente {
+  border-color: color-mix(in srgb, var(--hub-orange) 45%, var(--hub-gold-soft));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--hub-orange) 12%, transparent);
+}
+
+.novidades-item__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.novidades-item__topo time {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--hub-muted);
+}
+
+.novidades-item__area {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  background: var(--hub-orange-soft);
+  color: var(--hub-orange);
+}
+
+.novidades-item__novo {
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  background: rgba(48, 209, 88, 0.14);
+  color: var(--hub-sucesso);
+}
+
+.novidades-item__titulo {
+  margin: 0 0 0.45rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.novidades-item__itens {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  color: var(--hub-muted);
+  line-height: 1.35;
+}
+
+.novidades-item__itens li::marker {
+  color: var(--hub-orange);
+}

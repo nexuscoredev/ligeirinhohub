@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-:root {
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
   --hub-bg: #080808;
   --hub-bg-elevated: #0d0d0d;
   --hub-surface: rgba(30, 30, 30, 0.72);
@@ -16,6 +19,8 @@
   --hub-erro: #f87171;
   --hub-sucesso: #4ade80;
   --hub-whatsapp: #075e54;
+  --hub-on-accent: #0a0a0a;
+  --hub-overlay: rgba(0, 0, 0, 0.55);
   --hub-raio: 10px;
   --hub-raio-lg: 16px;
   --hub-sombra: 0 8px 32px rgba(0, 0, 0, 0.45);
@@ -38,4 +43,47 @@
   --cor-sucesso: var(--hub-sucesso);
   --raio: var(--hub-raio);
   --sombra: var(--hub-sombra);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --hub-bg: #f5f2ee;
+  --hub-bg-elevated: #ffffff;
+  --hub-surface: rgba(255, 255, 255, 0.92);
+  --hub-surface-solid: #ffffff;
+  --hub-surface-hover: #ece6dc;
+  --hub-orange: #e86200;
+  --hub-orange-hover: #ff6b00;
+  --hub-orange-soft: rgba(232, 98, 0, 0.12);
+  --hub-gold: #9a7b1a;
+  --hub-gold-soft: rgba(154, 123, 26, 0.18);
+  --hub-text: #1a1512;
+  --hub-muted: rgba(26, 21, 18, 0.58);
+  --hub-erro: #dc2626;
+  --hub-sucesso: #15803d;
+  --hub-whatsapp: #075e54;
+  --hub-on-accent: #ffffff;
+  --hub-overlay: rgba(26, 21, 18, 0.35);
+  --hub-sombra: 0 8px 28px rgba(26, 21, 18, 0.08);
+}
+
+[data-theme='light'] .admin-subnav {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .menu-secao-apps {
+  background: linear-gradient(180deg, rgba(255, 107, 0, 0.07) 0%, transparent 100%);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='light'] .mkt-thumb {
+  box-shadow:
+    0 4px 14px rgba(26, 21, 18, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+[data-theme='light'] .tema-toggle__opcao.ativo {
+  box-shadow: 0 1px 4px rgba(26, 21, 18, 0.1);
 }

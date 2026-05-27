@@ -95,7 +95,7 @@ code {
   font-weight: 700;
   font-size: 0.9rem;
   background: var(--hub-orange);
-  color: var(--hub-bg);
+  color: var(--hub-on-accent);
   transition: background 0.15s, transform 0.15s;
 }
 

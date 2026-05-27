@@ -10,6 +10,8 @@ import type { ProdutoCatalogoView } from '@/lib/catalogo/types';
 import { AdminSubnav } from '@/pages/admin/AdminSubnav';
 import './admin.css';
 
+const PRODUTOS_POR_LOTE = 30;
+
 export function ProdutosAdminPage() {
   const { usuario } = usePerfil();
   const [produtos, setProdutos] = useState<ProdutoCatalogoView[]>([]);
@@ -20,6 +22,7 @@ export function ProdutosAdminPage() {
   const [carregando, setCarregando] = useState(true);
   const [syncMsg, setSyncMsg] = useState<string | null>(null);
   const [sincronizando, setSincronizando] = useState(false);
+  const [visiveis, setVisiveis] = useState(PRODUTOS_POR_LOTE);
 
   const podeSync = usuario ? isHubAdmin(usuario.cargo) : false;
 
@@ -46,16 +49,25 @@ export function ProdutosAdminPage() {
     return [...map.entries()].sort((a, b) => a[1].localeCompare(b[1], 'pt-BR'));
   }, [produtos]);
 
-  const filtrados = produtos.filter((p) => {
-    if (categoria && p.categoria_slug !== categoria) return false;
+  const filtrados = useMemo(() => {
     const q = busca.trim().toLowerCase();
-    if (!q) return true;
-    return (
-      p.nome.toLowerCase().includes(q) ||
-      p.sku.toLowerCase().includes(q) ||
-      p.categoria_nome.toLowerCase().includes(q)
-    );
-  });
+    return produtos.filter((p) => {
+      if (categoria && p.categoria_slug !== categoria) return false;
+      if (!q) return true;
+      return (
+        p.nome.toLowerCase().includes(q) ||
+        p.sku.toLowerCase().includes(q) ||
+        p.categoria_nome.toLowerCase().includes(q)
+      );
+    });
+  }, [produtos, busca, categoria]);
+
+  const filtradosVisiveis = filtrados.slice(0, visiveis);
+  const restantes = filtrados.length - filtradosVisiveis.length;
+
+  useEffect(() => {
+    setVisiveis(PRODUTOS_POR_LOTE);
+  }, [busca, categoria]);
 
   async function sincronizar() {
     if (!podeSync || sincronizando) return;
@@ -126,8 +138,11 @@ export function ProdutosAdminPage() {
         <p style={{ color: 'var(--hub-muted)' }}>Carregando catálogo…</p>
       ) : (
         <>
-          <p style={{ fontSize: '0.8rem', color: 'var(--hub-muted)', marginBottom: '0.75rem' }}>
-            Mostrando {filtrados.length} de {produtos.length} produtos
+          <p className="admin-produtos-contagem">
+            Exibindo {filtradosVisiveis.length} de {filtrados.length} produtos
+            {filtrados.length !== produtos.length
+              ? ` (${produtos.length} no catálogo)`
+              : ''}
           </p>
           <div className="admin-tabela-wrap">
             <table className="admin-tabela">
@@ -140,35 +155,45 @@ export function ProdutosAdminPage() {
                 </tr>
               </thead>
               <tbody>
-                {filtrados.slice(0, 200).map((p) => (
-                  <tr key={p.sku}>
-                    <td>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        {imagemCatalogoUrl(p.imagem_url) ? (
-                          <img
-                            src={imagemCatalogoUrl(p.imagem_url)!}
-                            alt=""
-                            width={36}
-                            height={36}
-                            style={{ objectFit: 'contain', borderRadius: 6 }}
-                            loading="lazy"
-                          />
-                        ) : null}
-                        {p.nome}
-                      </div>
-                    </td>
-                    <td>{p.categoria_nome}</td>
-                    <td style={{ fontSize: '0.75rem', color: 'var(--hub-muted)' }}>{p.sku}</td>
-                    <td>{formatarMoeda(p.preco_base)}</td>
-                  </tr>
-                ))}
+                {filtradosVisiveis.map((p) => {
+                  const img = imagemCatalogoUrl(p.imagem_url);
+                  return (
+                    <tr key={p.sku}>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          {img ? (
+                            <img
+                              src={img}
+                              alt=""
+                              width={36}
+                              height={36}
+                              style={{ objectFit: 'contain', borderRadius: 6 }}
+                              loading="lazy"
+                            />
+                          ) : null}
+                          {p.nome}
+                        </div>
+                      </td>
+                      <td>{p.categoria_nome}</td>
+                      <td style={{ fontSize: '0.75rem', color: 'var(--hub-muted)' }}>{p.sku}</td>
+                      <td>{formatarMoeda(p.preco_base)}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
-          {filtrados.length > 200 ? (
-            <p style={{ marginTop: '0.75rem', fontSize: '0.8rem', color: 'var(--hub-muted)' }}>
-              Refine a busca para ver mais — exibindo os primeiros 200 resultados.
-            </p>
+          {restantes > 0 ? (
+            <div className="admin-produtos-mais">
+              <button
+                type="button"
+                className="btn btn-secundario"
+                onClick={() => setVisiveis((n) => n + PRODUTOS_POR_LOTE)}
+              >
+                Mostrar mais itens ({Math.min(restantes, PRODUTOS_POR_LOTE)}
+                {restantes > PRODUTOS_POR_LOTE ? ` de ${restantes}` : ''})
+              </button>
+            </div>
           ) : null}
         </>
       )}
