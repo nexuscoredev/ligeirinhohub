@@ -118,9 +118,9 @@ export function MainLayout() {
 
       <aside id="menu-lateral-drawer" className="menu-lateral">
         <NavLink
-          to="/bem-vindo"
+          to="/sobre"
           className="menu-marca"
-          title="Início"
+          title="Sobre o Ligeirinho Hub"
           onClick={() => setMenuAberto(false)}
         >
           <HubLogo size="sm" badgeHub />

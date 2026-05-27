@@ -140,7 +140,7 @@ code {
 [data-theme='light'] input,
 [data-theme='light'] select,
 [data-theme='light'] textarea {
-  border-color: rgba(24, 19, 16, 0.14);
+  border-color: var(--hub-border-strong);
 }
 
 [data-theme='light'] code {

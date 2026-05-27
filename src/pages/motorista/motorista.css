@@ -1,7 +1,6 @@
 .ops-motor-toolbar {
-  display: flex;
+  /* mantido por compatibilidade; layout agora vem de .app-toolbar */
   justify-content: flex-end;
-  margin-bottom: 1rem;
 }
 
 .ops-motor-secao {

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { HubLogo } from '@/components/HubLogo';
 import { ChatWidget } from '@/components/chat/ChatWidget';
+import { HUB_EVENTO_ABRIR_CHAT } from '@/lib/admin/visaoEstrategica';
 import { temNovidadesNaoLidas } from '@/lib/novidades';
 import type { Usuario } from '@/types/database';
 import './chat-launcher.css';
@@ -22,6 +23,16 @@ export function ChatLauncher({ usuario }: { usuario: Pick<Usuario, 'id' | 'nome'
     }
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
+  useEffect(() => {
+    function onAbrirChat(e: Event) {
+      const detail = (e as CustomEvent<{ aba?: Aba }>).detail;
+      setAbaInicial(detail?.aba ?? 'solicitacoes');
+      setAberto(true);
+    }
+    window.addEventListener(HUB_EVENTO_ABRIR_CHAT, onAbrirChat);
+    return () => window.removeEventListener(HUB_EVENTO_ABRIR_CHAT, onAbrirChat);
   }, []);
 
   function abrir(aba: Aba) {

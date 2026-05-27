@@ -1,0 +1,50 @@
+.sobre-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.75rem;
+}
+
+.sobre-card {
+  padding: 1rem 1.05rem;
+}
+
+.sobre-card--full {
+  grid-column: 1 / -1;
+}
+
+.sobre-h2 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.sobre-p {
+  margin: 0;
+  color: var(--hub-muted);
+  line-height: 1.45;
+  font-size: 0.92rem;
+}
+
+.sobre-p strong {
+  color: var(--hub-text);
+}
+
+.sobre-lista {
+  margin: 0.25rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--hub-muted);
+  line-height: 1.45;
+  font-size: 0.92rem;
+}
+
+.sobre-versao {
+  margin: 0.75rem 0 0;
+  font-size: 0.88rem;
+  color: var(--hub-muted);
+}
+
+.sobre-versao strong {
+  color: var(--hub-text);
+}
+

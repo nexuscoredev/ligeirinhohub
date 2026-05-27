@@ -27,6 +27,7 @@ import { PedidosPage } from '@/pages/pedidos/PedidosPage';
 import { PdvPage } from '@/pages/pdv/PdvPage';
 import { TotemPage } from '@/pages/totem/TotemPage';
 import { VeiculosPage } from '@/pages/veiculos/VeiculosPage';
+import { SobrePage } from '@/pages/SobrePage';
 
 export default function App() {
   return (
@@ -70,6 +71,7 @@ export default function App() {
               <Route path="/marketing/galeria" element={<GaleriaPage />} />
               <Route path="/marketing/promocoes" element={<PromocoesPage />} />
               <Route path="/marketing/tv" element={<TvPreviewPage />} />
+              <Route path="/sobre" element={<SobrePage />} />
             </Route>
             <Route path="*" element={<Navigate to="/bem-vindo" replace />} />
           </Routes>

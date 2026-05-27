@@ -65,6 +65,20 @@ describe('rotaPermitidaParaCargo', () => {
     );
   });
 
+  it('permite Desenvolvedor na visão estratégica', () => {
+    expect(rotaPermitidaParaCargo('/admin/estrategico', 'Desenvolvedor')).toBe(
+      true,
+    );
+  });
+
+  it('permite CEO na visão estratégica', () => {
+    expect(rotaPermitidaParaCargo('/admin/estrategico', 'CEO')).toBe(true);
+  });
+
+  it('nega Gerente na visão estratégica', () => {
+    expect(rotaPermitidaParaCargo('/admin/estrategico', 'Gerente')).toBe(false);
+  });
+
   it('nega Gerente em admin/sistemas', () => {
     expect(rotaPermitidaParaCargo('/admin/sistemas', 'Gerente')).toBe(false);
   });

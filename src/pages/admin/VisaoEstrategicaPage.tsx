@@ -1,9 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { fetchCatalogoLegado } from '@/lib/catalogo/fetchCatalogo';
+import {
+  indicadoresDestaque,
+  indicadoresPorBudget,
+  type KpiEstrategicoValores,
+} from '@/lib/admin/visaoEstrategica';
+import { paginaPermitida } from '@/lib/apps';
 import { formatarMoeda } from '@/lib/pedidos/constants';
 import { supabase } from '@/lib/supabase';
+import { AdminSubnav } from '@/pages/admin/AdminSubnav';
+import { EstrategicoKpiCard } from '@/pages/admin/EstrategicoKpiCard';
 import './admin.css';
 
 type PedidoRow = {
@@ -24,23 +33,28 @@ function diasAtras(n: number): Date {
   return d;
 }
 
+const KPI_INICIAL: KpiEstrategicoValores = {
+  produtos: '—',
+  clientes: '—',
+  pedidosHoje: '—',
+  receita30d: '—',
+  emSeparacao: '—',
+  orcamentos: '—',
+  suporteAberto: '—',
+  promocoesAtivas: '—',
+};
+
 export function VisaoEstrategicaPage() {
   const { usuario } = usePerfil();
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
-
-  const [kpi, setKpi] = useState({
-    produtos: '—',
-    clientes: '—',
-    pedidosHoje: '—',
-    receita30d: '—',
-    emSeparacao: '—',
-    suporteAberto: '—',
-    promocoesAtivas: '—',
-  });
+  const [kpi, setKpi] = useState<KpiEstrategicoValores>(KPI_INICIAL);
 
   const hoje = useMemo(() => inicioDoDia().toISOString(), []);
   const ult30 = useMemo(() => diasAtras(30).toISOString(), []);
+
+  const grupos = useMemo(() => indicadoresPorBudget(), []);
+  const destaques = useMemo(() => indicadoresDestaque(), []);
 
   const carregar = useCallback(async () => {
     setCarregando(true);
@@ -51,6 +65,7 @@ export function VisaoEstrategicaPage() {
         clientesRes,
         pedidosHojeRes,
         pedidos30dRes,
+        orcamentosRes,
         filaRes,
         suporteRes,
         promoRes,
@@ -66,6 +81,10 @@ export function VisaoEstrategicaPage() {
           .select('status, valor_pedido, created_at')
           .gte('created_at', ult30)
           .limit(800),
+        supabase
+          .from('pedidos')
+          .select('id', { count: 'exact', head: true })
+          .eq('status', 'orcamento'),
         supabase
           .from('pedidos')
           .select('id', { count: 'exact', head: true })
@@ -89,6 +108,7 @@ export function VisaoEstrategicaPage() {
         pedidosHoje: String(pedidosHojeRes.count ?? 0),
         receita30d: formatarMoeda(receita30),
         emSeparacao: String(filaRes.count ?? 0),
+        orcamentos: String(orcamentosRes.count ?? 0),
         suporteAberto: String(suporteRes.count ?? 0),
         promocoesAtivas: String(promoRes.count ?? 0),
       });
@@ -103,83 +123,74 @@ export function VisaoEstrategicaPage() {
   }, [carregar]);
 
   if (!usuario) return null;
-  if (usuario.cargo !== 'CEO') {
-    return (
-      <PageShell
-        className="hub-page--denso"
-        tag="Painel administrativo"
-        titulo="Visão Estratégica"
-        subtitulo="Acesso restrito ao CEO."
-      >
-        <p className="card">Sem permissão para acessar esta página.</p>
-      </PageShell>
-    );
+
+  const permitido = paginaPermitida(
+    '/admin/estrategico',
+    usuario.cargo,
+    usuario.paginas_permitidas,
+    usuario.email,
+  );
+
+  if (!permitido) {
+    return <Navigate to="/bem-vindo" replace />;
   }
 
   return (
     <PageShell
-      className="hub-page--denso"
+      className="hub-page--denso hub-page--estrategico"
       tag="Painel administrativo"
       titulo={
         <>
           Visão <span>Estratégica</span>
         </>
       }
-      subtitulo="KPIs executivos e status do ecossistema (pedidos, receita, operação e suporte)."
+      subtitulo="Indicadores por área do negócio. Clique em um card para ir direto ao módulo correspondente."
       acoes={
-        <button type="button" className="btn btn-secundario" onClick={() => void carregar()} disabled={carregando}>
+        <button
+          type="button"
+          className="btn btn-secundario"
+          onClick={() => void carregar()}
+          disabled={carregando}
+        >
           {carregando ? 'Atualizando…' : 'Atualizar'}
         </button>
       }
     >
+      <AdminSubnav />
+
       {erro ? <p className="erro">{erro}</p> : null}
 
-      <div className="dashboard-topo" style={{ marginBottom: '1.25rem' }} aria-busy={carregando}>
-        <div className="hub-stat-card">
-          <strong>{kpi.receita30d}</strong>
-          <span>receita (30 dias)</span>
+      <section className="estrategico-destaques" aria-label="Indicadores principais" aria-busy={carregando}>
+        <div className="estrategico-destaques-grid">
+          {destaques.map((ind) => (
+            <EstrategicoKpiCard key={ind.id} indicador={ind} valor={kpi[ind.id]} compacto />
+          ))}
         </div>
-        <div className="hub-stat-card">
-          <strong>{kpi.pedidosHoje}</strong>
-          <span>pedidos hoje</span>
-        </div>
-        <div className="hub-stat-card">
-          <strong>{kpi.emSeparacao}</strong>
-          <span>em separação</span>
-        </div>
-      </div>
+      </section>
 
-      <div className="admin-modulos-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' }}>
-        <div className="card">
-          <strong style={{ display: 'block', fontSize: '1.1rem' }}>{kpi.produtos}</strong>
-          <span style={{ color: 'var(--hub-muted)', fontSize: '0.85rem', fontWeight: 700 }}>
-            produtos no catálogo
-          </span>
-        </div>
-        <div className="card">
-          <strong style={{ display: 'block', fontSize: '1.1rem' }}>{kpi.clientes}</strong>
-          <span style={{ color: 'var(--hub-muted)', fontSize: '0.85rem', fontWeight: 700 }}>
-            clientes ativos
-          </span>
-        </div>
-        <div className="card">
-          <strong style={{ display: 'block', fontSize: '1.1rem' }}>{kpi.promocoesAtivas}</strong>
-          <span style={{ color: 'var(--hub-muted)', fontSize: '0.85rem', fontWeight: 700 }}>
-            promoções ativas
-          </span>
-        </div>
-        <div className="card">
-          <strong style={{ display: 'block', fontSize: '1.1rem' }}>{kpi.suporteAberto}</strong>
-          <span style={{ color: 'var(--hub-muted)', fontSize: '0.85rem', fontWeight: 700 }}>
-            solicitações em aberto
-          </span>
-        </div>
-      </div>
+      {grupos.map((grupo) => (
+        <section
+          key={grupo.id}
+          className="estrategico-budget"
+          aria-labelledby={`budget-${grupo.id}`}
+        >
+          <header className="estrategico-budget-header">
+            <h2 id={`budget-${grupo.id}`} className="hub-secao-titulo">
+              {grupo.titulo}
+            </h2>
+            <p className="estrategico-budget-sub">{grupo.subtitulo}</p>
+          </header>
+          <div className="estrategico-budget-grid">
+            {grupo.itens.map((ind) => (
+              <EstrategicoKpiCard key={ind.id} indicador={ind} valor={kpi[ind.id]} />
+            ))}
+          </div>
+        </section>
+      ))}
 
-      <p style={{ marginTop: '1rem', color: 'var(--hub-muted)', fontSize: '0.82rem' }}>
-        Dica: use o Chat interno → “Solicitações” para acompanhar ajustes e suporte.
+      <p className="estrategico-nota">
+        Orçamentos aguardam aceite em <strong>Pedidos</strong> antes de entrar na fila operacional.
       </p>
     </PageShell>
   );
 }
-

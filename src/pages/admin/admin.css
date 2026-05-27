@@ -51,6 +51,112 @@
   gap: 0.75rem;
 }
 
+/* Resumo compacto (substitui os 3 cards grandes do topo) */
+.admin-resumo {
+  margin-bottom: 1.1rem;
+}
+
+.admin-resumo-card {
+  padding: 0.85rem 0.95rem;
+}
+
+.admin-resumo-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.admin-resumo-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-resumo-kpi {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  min-width: 0;
+  padding: 0.35rem 0.45rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.admin-resumo-kpi strong {
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--hub-text);
+  line-height: 1.1;
+}
+
+.admin-resumo-kpi span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--hub-muted);
+  white-space: nowrap;
+}
+
+.admin-resumo-atualizar {
+  padding: 0.5rem 0.8rem;
+  font-size: 0.82rem;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.admin-resumo-rodape {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.65rem;
+  margin-top: 0.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-resumo-meta {
+  font-size: 0.78rem;
+  color: var(--hub-muted);
+}
+
+.admin-resumo-meta--dica {
+  color: color-mix(in srgb, var(--hub-gold) 70%, var(--hub-muted));
+}
+
+[data-theme='light'] .admin-resumo-kpi {
+  border-color: var(--hub-border);
+  background: rgba(26, 21, 18, 0.03);
+}
+
+[data-theme='light'] .admin-resumo-rodape {
+  border-top-color: var(--hub-border);
+}
+
+@media (max-width: 900px) {
+  .admin-resumo-topo {
+    align-items: stretch;
+  }
+
+  .admin-resumo-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-resumo-atualizar {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-resumo-kpis {
+    grid-template-columns: 1fr;
+  }
+}
+
 .admin-modulo-card {
   display: flex;
   flex-direction: column;
@@ -64,13 +170,22 @@
   transition: border-color 0.15s, transform 0.15s;
 }
 
+.admin-modulo-card__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.admin-modulo-card__icone {
+  font-size: 1.25rem;
+  line-height: 1;
+  opacity: 0.95;
+}
+
 .admin-modulo-card:hover {
   border-color: var(--hub-gold);
   transform: translateY(-1px);
-}
-
-.admin-modulo-card span:first-child {
-  font-size: 1.5rem;
 }
 
 .admin-modulo-card strong {
@@ -231,4 +346,124 @@
 
 .admin-produtos-mais .btn {
   min-width: min(100%, 280px);
+}
+
+/* ——— Visão Estratégica (CEO / Desenvolvedor) ——— */
+.estrategico-destaques {
+  margin-bottom: 1.25rem;
+}
+
+.estrategico-destaques-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.estrategico-budget {
+  margin-bottom: 1.35rem;
+}
+
+.estrategico-budget-header {
+  margin-bottom: 0.65rem;
+}
+
+.estrategico-budget-sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  color: var(--hub-muted);
+}
+
+.estrategico-budget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.65rem;
+}
+
+.estrategico-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 0.95rem;
+  text-decoration: none;
+  color: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+
+button.estrategico-card {
+  font: inherit;
+  appearance: none;
+}
+
+.estrategico-card:hover {
+  border-color: color-mix(in srgb, var(--hub-orange) 45%, var(--hub-gold-soft));
+  transform: translateY(-2px);
+  box-shadow: var(--hub-sombra);
+}
+
+.estrategico-card:focus-visible {
+  outline: 2px solid var(--hub-orange);
+  outline-offset: 2px;
+}
+
+.estrategico-card__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.estrategico-card__topo strong {
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.estrategico-card--compacto .estrategico-card__topo strong {
+  font-size: 1.05rem;
+}
+
+.estrategico-card__icone {
+  font-size: 1.2rem;
+  line-height: 1;
+  opacity: 0.95;
+}
+
+.estrategico-card__titulo {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--hub-text);
+}
+
+.estrategico-card__desc {
+  font-size: 0.75rem;
+  color: var(--hub-muted);
+  line-height: 1.35;
+}
+
+.estrategico-card__cta {
+  margin-top: 0.15rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-orange);
+}
+
+.estrategico-nota {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--hub-muted);
+}
+
+@media (max-width: 900px) {
+  .estrategico-destaques-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -252,7 +252,7 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Financeiro',
     'Comercial',
   ],
-  '/admin/estrategico': ['CEO'],
+  '/admin/estrategico': ['CEO', 'Desenvolvedor'],
   '/produtos': [
     'Desenvolvedor',
     'Administrador',

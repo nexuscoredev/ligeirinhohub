@@ -22,6 +22,8 @@ const MODULO_DESC: Record<string, string> = {
 export function PainelAdminPage() {
   const { usuario } = usePerfil();
   const [stats, setStats] = useState({ usuarios: '—', produtos: '—', clientes: '—' });
+  const [atualizando, setAtualizando] = useState(false);
+  const [ultimaAtualizacao, setUltimaAtualizacao] = useState<Date | null>(null);
 
   const modulos = usuario
     ? HUB_ADMIN_MODULOS.filter(
@@ -31,7 +33,8 @@ export function PainelAdminPage() {
       )
     : [];
 
-  useEffect(() => {
+  const carregarResumo = () => {
+    setAtualizando(true);
     void Promise.all([
       listarUsuarios(),
       fetchCatalogoLegado().catch(() => null),
@@ -42,7 +45,13 @@ export function PainelAdminPage() {
         produtos: catalogo ? String(catalogo.totalProducts) : '—',
         clientes: String(c.clientes.length),
       });
+      setUltimaAtualizacao(new Date());
+      setAtualizando(false);
     });
+  };
+
+  useEffect(() => {
+    carregarResumo();
   }, []);
 
   return (
@@ -58,20 +67,48 @@ export function PainelAdminPage() {
     >
       <AdminSubnav />
 
-      <div className="dashboard-topo" style={{ marginBottom: '1.25rem' }}>
-        <div className="hub-stat-card">
-          <strong>{stats.usuarios}</strong>
-          <span>usuários</span>
+      <section className="admin-resumo" aria-label="Resumo rápido">
+        <div className="card admin-resumo-card">
+          <div className="admin-resumo-topo">
+            <div className="admin-resumo-kpis" aria-label="Indicadores principais">
+              <div className="admin-resumo-kpi">
+                <strong>{stats.usuarios}</strong>
+                <span>usuários</span>
+              </div>
+              <div className="admin-resumo-kpi">
+                <strong>{stats.produtos}</strong>
+                <span>produtos</span>
+              </div>
+              <div className="admin-resumo-kpi">
+                <strong>{stats.clientes}</strong>
+                <span>clientes</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="btn btn-secundario admin-resumo-atualizar"
+              onClick={() => carregarResumo()}
+              disabled={atualizando}
+              aria-label="Atualizar resumo"
+              title="Atualizar números"
+            >
+              {atualizando ? 'Atualizando…' : 'Atualizar'}
+            </button>
+          </div>
+
+          <div className="admin-resumo-rodape">
+            <span className="admin-resumo-meta">
+              {ultimaAtualizacao
+                ? `Atualizado às ${ultimaAtualizacao.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                : 'Carregando…'}
+            </span>
+            <span className="admin-resumo-meta admin-resumo-meta--dica">
+              Dica: use os módulos abaixo para ir direto ao que precisa.
+            </span>
+          </div>
         </div>
-        <div className="hub-stat-card">
-          <strong>{stats.produtos}</strong>
-          <span>produtos</span>
-        </div>
-        <div className="hub-stat-card">
-          <strong>{stats.clientes}</strong>
-          <span>clientes</span>
-        </div>
-      </div>
+      </section>
 
       <section aria-labelledby="admin-modulos-titulo">
         <div className="hub-secao-header">
@@ -82,8 +119,12 @@ export function PainelAdminPage() {
         <div className="admin-modulos-grid">
           {modulos.map((m) => (
             <Link key={m.rota} to={m.rota} className="admin-modulo-card">
-              <span aria-hidden>{m.icone}</span>
-              <strong>{m.titulo}</strong>
+              <div className="admin-modulo-card__topo">
+                <strong>{m.titulo}</strong>
+                <span aria-hidden className="admin-modulo-card__icone">
+                  {m.icone}
+                </span>
+              </div>
               <em>{MODULO_DESC[m.rota] ?? 'Abrir módulo'}</em>
             </Link>
           ))}

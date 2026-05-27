@@ -96,7 +96,7 @@ export function MotoristaPage() {
       titulo="Motoristas"
       subtitulo="Entregas pendentes e equipe de rota."
     >
-      <div className="ops-motor-toolbar">
+      <div className="app-toolbar ops-motor-toolbar">
         {podeEditar ? (
           <>
             <button type="button" className="btn btn-secundario" onClick={() => setImportAberto(true)}>

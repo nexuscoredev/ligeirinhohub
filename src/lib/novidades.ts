@@ -9,6 +9,54 @@ export interface Novidade {
 /** Mais recente primeiro — atualize ao lançar mudanças visíveis ao usuário. */
 export const NOVIDADES: Novidade[] = [
   {
+    id: '2026-05-27-visao-estrategica',
+    data: '2026-05-27',
+    titulo: 'Visão Estratégica reorganizada',
+    area: 'Admin',
+    itens: [
+      'Indicadores agrupados por área: financeiro, comercial, operação, cadastros e marketing',
+      'Cards clicáveis levam direto ao módulo (pedidos, fila, clientes, produtos, promoções)',
+      'Orçamentos abertos no painel; solicitações abrem o chat em “Solicitações”',
+      'Desenvolvedores (usuários mestres) também acessam esta visão, além do CEO',
+    ],
+  },
+  {
+    id: '2026-05-27-hub-ux',
+    data: '2026-05-27',
+    titulo: 'Hub mais claro e organizado',
+    area: 'Hub',
+    itens: [
+      'Tema claro padronizado (laranja Hub, preços e alertas com melhor contraste)',
+      'Página “Sobre o Ligeirinho Hub” ao clicar no logo no menu',
+      'Meu perfil: foto, bio, telefone, tema e alteração de senha',
+      'Resumo compacto na visão geral do admin (usuários, produtos, clientes)',
+      'Cards do painel admin com título e ícone na mesma linha',
+    ],
+  },
+  {
+    id: '2026-05-27-chat',
+    data: '2026-05-27',
+    titulo: 'Chat interno em widget',
+    area: 'Hub',
+    itens: [
+      'Chat flutuante no canto da tela (sem página dedicada)',
+      'Redimensionável; tamanho lembrado no navegador',
+      'Abas: conversas, pessoas e solicitações de suporte',
+      'Aviso de novidades aparece só uma vez por atualização',
+    ],
+  },
+  {
+    id: '2026-05-27-apps',
+    data: '2026-05-27',
+    titulo: 'Identidade visual por app',
+    area: 'Apps',
+    itens: [
+      'Botões dentro de cada app seguem a cor do app (ex.: roxo no Operacional)',
+      'Toolbars mais compactas nas telas de motoristas e similares',
+      'Totem e PDV no tema claro usam laranja Hub para preços e destaques',
+    ],
+  },
+  {
     id: '2026-05-26-temas',
     data: '2026-05-26',
     titulo: 'Tema claro e escuro',
