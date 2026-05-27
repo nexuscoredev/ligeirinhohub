@@ -15,10 +15,13 @@
 .cw-modal {
   width: min(460px, calc(100vw - 32px));
   height: min(640px, calc(100vh - 32px));
+  min-width: 360px;
+  min-height: 520px;
   background: var(--hub-bg-elevated);
   border: 1px solid var(--hub-gold-soft);
   border-radius: 18px;
   overflow: hidden;
+  resize: both;
   box-shadow:
     0 18px 60px rgba(0, 0, 0, 0.55),
     var(--hub-sombra);
@@ -87,9 +90,12 @@
   .cw-modal {
     width: 100vw;
     height: 100vh;
+    min-width: 0;
+    min-height: 0;
     border-radius: 0;
     border-left: none;
     border-right: none;
+    resize: none;
   }
 
   .cw-body {
