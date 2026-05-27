@@ -4,7 +4,7 @@
   overflow: hidden;
   display: grid;
   place-items: center;
-  background: linear-gradient(160deg, #222 0%, #101010 100%);
+  background: var(--hub-avatar-bg);
   box-shadow:
     0 0 0 2px rgba(255, 107, 0, 0.45),
     0 0 12px rgba(255, 107, 0, 0.15);
