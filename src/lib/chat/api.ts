@@ -94,42 +94,19 @@ export async function listarThreads(usuarioId: string) {
 
 export async function criarOuAbrirThreadDM(_usuarioId: string, peerId: string) {
   const { data: auth } = await supabase.auth.getUser();
-  const authId = auth.user?.id ?? '';
-  if (!authId) return { threadId: null as string | null, error: new Error('Sessão inválida.') };
-
-  // try find existing thread containing both users
-  const { data: myParts, error } = await supabase
-    .from('chat_participants')
-    .select('thread_id')
-    .eq('user_id', authId);
-  if (error) return { threadId: null as string | null, error };
-
-  const threadIds = (myParts ?? []).map((p) => (p as { thread_id: string }).thread_id);
-  if (threadIds.length) {
-    const { data: peerParts } = await supabase
-      .from('chat_participants')
-      .select('thread_id')
-      .eq('user_id', peerId)
-      .in('thread_id', threadIds);
-    const existente = (peerParts ?? [])[0] as { thread_id: string } | undefined;
-    if (existente?.thread_id) return { threadId: existente.thread_id, error: null };
+  if (!auth.user?.id) {
+    return { threadId: null as string | null, error: new Error('Sessão inválida.') };
   }
 
-  // create new thread + participants
-  const { data: thread, error: e1 } = await supabase
-    .from('chat_threads')
-    .insert({ created_by: authId } as never)
-    .select('id')
-    .single();
-  if (e1 || !thread) return { threadId: null, error: e1 ?? new Error('Falha ao criar conversa') };
+  const { data, error } = await supabase.rpc('create_or_get_chat_dm', {
+    p_peer_id: peerId,
+  } as never);
 
-  const threadId = (thread as { id: string }).id;
-  const { error: e2 } = await supabase.from('chat_participants').insert([
-    { thread_id: threadId, user_id: authId },
-    { thread_id: threadId, user_id: peerId },
-  ] as never);
-
-  if (e2) return { threadId: null, error: e2 };
+  if (error) return { threadId: null, error };
+  const threadId = typeof data === 'string' ? data : null;
+  if (!threadId) {
+    return { threadId: null, error: new Error('Não foi possível abrir a conversa.') };
+  }
   return { threadId, error: null };
 }
 
