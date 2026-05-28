@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HubLogo } from '@/components/HubLogo';
 import { ChatWidget } from '@/components/chat/ChatWidget';
 import { HUB_EVENTO_ABRIR_CHAT } from '@/lib/admin/visaoEstrategica';
+import { resumoInboxChat } from '@/lib/chat/api';
 import { temNovidadesNaoLidas } from '@/lib/novidades';
 import type { Usuario } from '@/types/database';
 import './chat-launcher.css';
@@ -11,19 +12,25 @@ type Aba = 'conversas' | 'pessoas' | 'solicitacoes';
 export function ChatLauncher({ usuario }: { usuario: Pick<Usuario, 'id' | 'nome' | 'cargo'> }) {
   const [aberto, setAberto] = useState(false);
   const [abaInicial, setAbaInicial] = useState<Aba>('conversas');
-  const [badge, setBadge] = useState(false);
+  const [inbox, setInbox] = useState({ conversasNaoLidas: 0, ticketsAbertos: 0 });
 
-  // Reaproveita o “dot” pra sinalizar algo novo (hoje: novidades não lidas).
-  // (No futuro: unread messages/tickets)
-  const hasDot = useMemo(() => badge || temNovidadesNaoLidas(), [badge]);
+  const totalInbox = inbox.conversasNaoLidas + inbox.ticketsAbertos;
+  const dotNovidades = temNovidadesNaoLidas();
 
   useEffect(() => {
-    function onStorage() {
-      setBadge(false);
-    }
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, []);
+    let ativo = true;
+    const atualizar = () => {
+      void resumoInboxChat(usuario.id).then((r) => {
+        if (ativo) setInbox(r);
+      });
+    };
+    atualizar();
+    const timer = window.setInterval(atualizar, 45_000);
+    return () => {
+      ativo = false;
+      window.clearInterval(timer);
+    };
+  }, [usuario.id]);
 
   useEffect(() => {
     function onAbrirChat(e: Event) {
@@ -51,7 +58,13 @@ export function ChatLauncher({ usuario }: { usuario: Pick<Usuario, 'id' | 'nome'
         title="Chat interno"
       >
         <HubLogo size="xs" alt="Ligeirinho" />
-        {hasDot ? <span className="chat-fab-dot" aria-hidden /> : null}
+        {totalInbox > 0 ? (
+          <span className="chat-fab-badge" aria-label={`${totalInbox} pendências`}>
+            {totalInbox > 9 ? '9+' : totalInbox}
+          </span>
+        ) : dotNovidades ? (
+          <span className="chat-fab-dot" aria-hidden />
+        ) : null}
       </button>
 
       {aberto ? (
@@ -59,6 +72,7 @@ export function ChatLauncher({ usuario }: { usuario: Pick<Usuario, 'id' | 'nome'
           usuario={usuario}
           inicial={abaInicial}
           onFechar={() => setAberto(false)}
+          onInboxChange={setInbox}
         />
       ) : null}
     </>

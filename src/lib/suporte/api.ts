@@ -21,6 +21,7 @@ export interface SuporteMensagem {
   sender_id: string;
   body: string;
   created_at: string;
+  usuarios?: Pick<Usuario, 'nome' | 'avatar_url'> | null;
 }
 
 export async function listarTickets() {
@@ -60,7 +61,7 @@ export async function criarTicket(input: { criadoPor: string; titulo: string; bo
 export async function listarMensagensTicket(ticketId: string) {
   const { data, error } = await supabase
     .from('suporte_mensagens')
-    .select('id, ticket_id, sender_id, body, created_at')
+    .select('id, ticket_id, sender_id, body, created_at, usuarios:sender_id ( nome, avatar_url )')
     .eq('ticket_id', ticketId)
     .order('created_at', { ascending: true })
     .limit(200);

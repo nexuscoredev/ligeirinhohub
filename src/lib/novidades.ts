@@ -9,6 +9,19 @@ export interface Novidade {
 /** Mais recente primeiro — atualize ao lançar mudanças visíveis ao usuário. */
 export const NOVIDADES: Novidade[] = [
   {
+    id: '2026-05-27-chat-melhorias',
+    data: '2026-05-27',
+    titulo: 'Chat interno aprimorado',
+    area: 'Hub',
+    itens: [
+      'Avatares nas conversas e na lista de pessoas',
+      'Busca em conversas, pessoas e solicitações',
+      'Badge de não lidas no botão flutuante e nas abas',
+      'Mobile: tela cheia com voltar à lista; Enter envia mensagem',
+      'Separadores por dia e formulário de solicitação recolhível',
+    ],
+  },
+  {
     id: '2026-05-27-visao-estrategica',
     data: '2026-05-27',
     titulo: 'Visão Estratégica reorganizada',

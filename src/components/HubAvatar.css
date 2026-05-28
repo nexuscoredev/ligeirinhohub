@@ -22,6 +22,15 @@
   color: var(--hub-orange);
 }
 
+.hub-avatar--xs {
+  width: 32px;
+  height: 32px;
+}
+
+.hub-avatar--xs .hub-avatar__iniciais {
+  font-size: 0.65rem;
+}
+
 .hub-avatar--sm {
   width: 42px;
   height: 42px;

@@ -1,12 +1,22 @@
 import { supabase } from '@/lib/supabase';
 import type { Usuario } from '@/types/database';
 
+export type UsuarioChatResumo = Pick<
+  Usuario,
+  'id' | 'nome' | 'cargo' | 'email' | 'avatar_url'
+>;
+
 export interface ChatThreadItem {
   thread_id: string;
   updated_at: string;
-  peer?: Pick<Usuario, 'id' | 'nome' | 'cargo' | 'email'> | null;
+  peer?: UsuarioChatResumo | null;
   last_message?: { body: string; created_at: string; sender_id: string } | null;
   unread?: boolean;
+}
+
+export interface ResumoInboxChat {
+  conversasNaoLidas: number;
+  ticketsAbertos: number;
 }
 
 export interface ChatMessage {
@@ -20,10 +30,24 @@ export interface ChatMessage {
 export async function listarUsuariosChat() {
   const { data, error } = await supabase
     .from('usuarios')
-    .select('id, nome, cargo, email')
+    .select('id, nome, cargo, email, avatar_url')
     .eq('ativo', true)
     .order('nome');
-  return { usuarios: (data ?? []) as Pick<Usuario, 'id' | 'nome' | 'cargo' | 'email'>[], error };
+  return { usuarios: (data ?? []) as UsuarioChatResumo[], error };
+}
+
+export async function resumoInboxChat(usuarioId: string): Promise<ResumoInboxChat> {
+  const [threadsRes, ticketsRes] = await Promise.all([
+    listarThreads(usuarioId),
+    supabase
+      .from('suporte_tickets')
+      .select('id', { count: 'exact', head: true })
+      .eq('status', 'aberto'),
+  ]);
+  return {
+    conversasNaoLidas: threadsRes.threads.filter((t) => t.unread).length,
+    ticketsAbertos: ticketsRes.count ?? 0,
+  };
 }
 
 export async function listarThreads(usuarioId: string) {
@@ -41,15 +65,15 @@ export async function listarThreads(usuarioId: string) {
   // peers
   const { data: peers, error: ePeers } = await supabase
     .from('chat_participants')
-    .select('thread_id, usuarios:user_id ( id, nome, cargo, email )')
+    .select('thread_id, usuarios:user_id ( id, nome, cargo, email, avatar_url )')
     .in('thread_id', threadIds)
     .neq('user_id', usuarioId);
 
   if (ePeers) return { threads: [] as ChatThreadItem[], error: ePeers };
 
-  const peerPorThread = new Map<string, Pick<Usuario, 'id' | 'nome' | 'cargo' | 'email'> | null>();
+  const peerPorThread = new Map<string, UsuarioChatResumo | null>();
   (peers ?? []).forEach((row) => {
-    const r = row as { thread_id: string; usuarios?: Pick<Usuario, 'id' | 'nome' | 'cargo' | 'email'> | null };
+    const r = row as { thread_id: string; usuarios?: UsuarioChatResumo | null };
     peerPorThread.set(r.thread_id, r.usuarios ?? null);
   });
 

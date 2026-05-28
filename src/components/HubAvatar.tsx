@@ -1,7 +1,7 @@
 import { iniciaisNome } from '@/lib/iniciaisNome';
 import './HubAvatar.css';
 
-export type HubAvatarSize = 'sm' | 'md' | 'lg' | 'xl';
+export type HubAvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 interface HubAvatarProps {
   nome: string;
