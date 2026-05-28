@@ -188,7 +188,7 @@
 
 .hub-modulo-card__topo {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 0.5rem;
   position: relative;
@@ -207,6 +207,13 @@
   color: var(--hub-text);
   line-height: 1.25;
   min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Mantém altura proporcional entre títulos 1 vs 2 linhas */
+  min-height: calc(2 * 1.25em);
 }
 
 .hub-modulo-card em {
