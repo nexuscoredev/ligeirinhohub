@@ -36,7 +36,7 @@ describe('apps do sistema', () => {
     const mkt = APPS_SISTEMA.find((a) => a.id === 'marketing');
     const rotas = mkt?.itens.map((i) => i.rota) ?? [];
     expect(mkt?.nome).toBe('Ligeirinho Marketing');
-    expect(mkt?.iconeLabel).toBe('Marketing');
+    expect(mkt?.iconeLabel).toBe('MKT');
     expect(rotas).toEqual([
       '/marketing',
       '/marketing/criar',
