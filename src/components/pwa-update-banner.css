@@ -1,0 +1,67 @@
+.pwa-update {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  z-index: 120;
+  display: flex;
+  justify-content: center;
+  padding: 0 12px;
+  pointer-events: none;
+}
+
+.pwa-update__card {
+  pointer-events: auto;
+  width: min(720px, 100%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--hub-bg-elevated) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--hub-orange) 18%, var(--hub-gold-soft));
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.pwa-update__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.pwa-update__texto strong {
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--hub-text);
+}
+
+.pwa-update__texto span {
+  font-size: 0.8rem;
+  color: var(--hub-muted);
+}
+
+.pwa-update__acoes {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 520px) {
+  .pwa-update__card {
+    padding: 0.8rem 0.85rem;
+  }
+
+  .pwa-update__acoes .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+

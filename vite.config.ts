@@ -35,8 +35,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        skipWaiting: false,
-        clientsClaim: false,
+        skipWaiting: true,
+        clientsClaim: true,
         runtimeCaching: [
           {
             urlPattern: supabaseHostPattern,

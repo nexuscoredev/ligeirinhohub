@@ -28,6 +28,7 @@ import { PdvPage } from '@/pages/pdv/PdvPage';
 import { TotemPage } from '@/pages/totem/TotemPage';
 import { VeiculosPage } from '@/pages/veiculos/VeiculosPage';
 import { SobrePage } from '@/pages/SobrePage';
+import { PwaUpdateBanner } from '@/components/PwaUpdateBanner';
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
       <TemaProvider>
         <PerfilProvider>
           <BrowserRouter>
+          <PwaUpdateBanner />
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route

@@ -5,6 +5,7 @@ import './styles/theme.css';
 import './styles/theme-light.css';
 import './styles/hub-pages.css';
 import './index.css';
+import { initPwaUpdatePrompt } from '@/lib/pwa';
 
 if (import.meta.env.DEV && 'serviceWorker' in navigator) {
   void navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -13,6 +14,8 @@ if (import.meta.env.DEV && 'serviceWorker' in navigator) {
     }
   });
 }
+
+initPwaUpdatePrompt();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
