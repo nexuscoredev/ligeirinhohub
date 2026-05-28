@@ -7,6 +7,8 @@ interface AppLauncherCardProps {
   app: AppSistema;
   /** Layout mais compacto (ex.: dashboard) */
   compact?: boolean;
+  /** Esconde o nome visualmente (mantém aria-label) */
+  hideName?: boolean;
   /** Índice para animação escalonada */
   staggerIndex?: number;
 }
@@ -19,14 +21,16 @@ function nomeCurtoApp(nome: string): string {
 export function AppLauncherCard({
   app,
   compact = false,
+  hideName = false,
   staggerIndex = 0,
 }: AppLauncherCardProps) {
   return (
     <Link
       to={app.rotaEntrada}
-      className={`app-launcher-tile${compact ? ' app-launcher-tile--compact' : ''}`}
+      className={`app-launcher-tile${compact ? ' app-launcher-tile--compact' : ''}${hideName ? ' app-launcher-tile--icon-only' : ''}`}
       data-app-id={app.id}
       aria-label={`Abrir ${app.nome}`}
+      title={hideName ? app.nome : undefined}
       style={
         {
           ...temaApp(app),
