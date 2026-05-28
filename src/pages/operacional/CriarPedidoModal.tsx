@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
+import { ensureProdutosPorSkus } from '@/lib/catalogo/ensureProdutos';
+import { listarProdutosLoja } from '@/lib/catalogo/listarProdutosLoja';
+import type { ProdutoCatalogoView } from '@/lib/catalogo/types';
 import {
   criarPedido,
   listarClientes,
-  listarProdutos,
   type LinhaNovoPedido,
 } from '@/lib/pedidos/api';
 import { formatarMoeda, ORIGEM_LABEL } from '@/lib/pedidos/constants';
-import type { Cliente, PedidoOrigem, PedidoModalidade, Produto } from '@/types/pedidos';
+import type { Cliente, PedidoOrigem, PedidoModalidade } from '@/types/pedidos';
 
 const ORIGENS_CRIAR: PedidoOrigem[] = [
   'whatsapp',
@@ -30,7 +32,8 @@ export function CriarPedidoModal({
   onCriado,
 }: CriarPedidoModalProps) {
   const [clientes, setClientes] = useState<Cliente[]>([]);
-  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [produtos, setProdutos] = useState<ProdutoCatalogoView[]>([]);
+  const [carregandoProdutos, setCarregandoProdutos] = useState(false);
   const [clienteId, setClienteId] = useState('');
   const [buscaCliente, setBuscaCliente] = useState('');
   const [origem, setOrigem] = useState<PedidoOrigem>('whatsapp');
@@ -45,7 +48,12 @@ export function CriarPedidoModal({
   useEffect(() => {
     if (!aberto) return;
     void listarClientes().then(({ clientes: lista }) => setClientes(lista));
-    void listarProdutos().then(({ produtos: lista }) => setProdutos(lista));
+    setCarregandoProdutos(true);
+    void listarProdutosLoja().then(({ produtos: lista, error: eCat }) => {
+      setProdutos(lista);
+      setCarregandoProdutos(false);
+      if (eCat) setErro(eCat.message);
+    });
   }, [aberto]);
 
   useEffect(() => {
@@ -91,13 +99,8 @@ export function CriarPedidoModal({
     [carrinho],
   );
 
-  function adicionarProduto(prod: Produto) {
-    if (!prod.sku) {
-      setErro(`"${prod.nome}" não tem SKU — sincronize o catálogo em Admin → Produtos.`);
-      return;
-    }
+  function adicionarProduto(prod: ProdutoCatalogoView) {
     setErro(null);
-    const ordem = prod.categorias_produto?.ordem_separacao ?? 0;
     setCarrinho((prev) => {
       const idx = prev.findIndex((i) => i.sku === prod.sku);
       if (idx >= 0) {
@@ -106,10 +109,10 @@ export function CriarPedidoModal({
       return [
         ...prev,
         {
-          sku: prod.sku!,
+          sku: prod.sku,
           nome: prod.nome,
           preco_unitario: Number(prod.preco_base),
-          categoria_ordem: ordem,
+          categoria_ordem: prod.categoria_ordem,
           qty: 1,
         },
       ];
@@ -135,6 +138,14 @@ export function CriarPedidoModal({
     }
     setEnviando(true);
     setErro(null);
+
+    const { error: eSync } = await ensureProdutosPorSkus(carrinho.map((i) => i.sku));
+    if (eSync) {
+      setEnviando(false);
+      setErro(eSync.message);
+      return;
+    }
+
     const { pedido, error } = await criarPedido({
       clienteId,
       origem,
@@ -169,10 +180,16 @@ export function CriarPedidoModal({
         aria-labelledby="ops-criar-pedido-titulo"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 id="ops-criar-pedido-titulo" className="ops-modal-titulo">
-          Criar pedido
-        </h3>
+        <header className="ops-modal-header">
+          <h3 id="ops-criar-pedido-titulo" className="ops-modal-titulo">
+            Criar pedido
+          </h3>
+          <p className="ops-modal-subtitulo">
+            Produtos do catálogo da loja (mesma base do Totem).
+          </p>
+        </header>
 
+        <div className="ops-modal-corpo">
         <div className="ops-criar-pedido-grid">
           <div className="ops-criar-pedido-col">
             <label className="ops-field">
@@ -247,7 +264,7 @@ export function CriarPedidoModal({
             </label>
           </div>
 
-          <div className="ops-criar-pedido-col">
+          <div className="ops-criar-pedido-col ops-criar-pedido-col--produtos">
             <label className="ops-field">
               Produtos
               <input
@@ -257,19 +274,29 @@ export function CriarPedidoModal({
                 onChange={(e) => setBuscaProduto(e.target.value)}
               />
             </label>
-            <ul className="ops-criar-produtos-lista">
-              {produtosFiltrados.map((p) => (
-                <li key={p.id}>
-                  <button
-                    type="button"
-                    className="ops-criar-produto-btn"
-                    onClick={() => adicionarProduto(p)}
-                  >
-                    <span>{p.nome}</span>
-                    <span>{formatarMoeda(Number(p.preco_base))}</span>
-                  </button>
+            <ul className="ops-criar-produtos-lista" aria-live="polite">
+              {carregandoProdutos ? (
+                <li className="ops-criar-produtos-vazio">Carregando catálogo…</li>
+              ) : produtosFiltrados.length === 0 ? (
+                <li className="ops-criar-produtos-vazio">
+                  Nenhum produto encontrado.
                 </li>
-              ))}
+              ) : (
+                produtosFiltrados.map((p) => (
+                  <li key={p.sku}>
+                    <button
+                      type="button"
+                      className="ops-criar-produto-btn"
+                      onClick={() => adicionarProduto(p)}
+                    >
+                      <span className="ops-criar-produto-nome">{p.nome}</span>
+                      <span className="ops-criar-produto-preco">
+                        {formatarMoeda(Number(p.preco_base))}
+                      </span>
+                    </button>
+                  </li>
+                ))
+              )}
             </ul>
 
             <div className="ops-criar-carrinho">
@@ -315,10 +342,11 @@ export function CriarPedidoModal({
         </div>
 
         {erro ? (
-          <p className="erro" role="alert">
+          <p className="erro ops-modal-erro" role="alert">
             {erro}
           </p>
         ) : null}
+        </div>
 
         <div className="ops-modal-acoes">
           <button

@@ -25,19 +25,61 @@
 }
 
 .ops-modal--pedido {
-  max-width: min(920px, 96vw);
+  max-width: min(960px, 96vw);
+  max-height: min(92vh, 900px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.15rem 1.35rem 1.1rem;
+}
+
+.ops-modal-header {
+  flex-shrink: 0;
+  margin-bottom: 0.85rem;
 }
 
 .ops-modal-titulo {
-  margin: 0 0 1rem;
-  font-size: 1.1rem;
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.ops-modal-subtitulo {
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  color: var(--hub-muted);
+  font-weight: 500;
+}
+
+.ops-modal-corpo {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 0.15rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hub-border-strong) transparent;
+}
+
+.ops-modal-corpo::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ops-modal-corpo::-webkit-scrollbar-thumb {
+  background: var(--hub-border-strong);
+  border-radius: 6px;
+}
+
+.ops-modal-erro {
+  margin: 0.75rem 0 0;
 }
 
 .ops-modal-acoes {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--hub-gold-soft);
 }
 
 .ops-field {
@@ -86,48 +128,107 @@
 
 .ops-criar-pedido-grid {
   display: grid;
-  gap: 1rem;
+  gap: 1.1rem;
+  align-items: stretch;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 768px) {
   .ops-criar-pedido-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 1.25rem;
   }
+}
+
+.ops-criar-pedido-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
 }
 
 .ops-criar-pedido-meta {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.65rem;
+}
+
+.ops-criar-pedido-meta .ops-field {
+  margin-bottom: 0;
+}
+
+.ops-criar-pedido-meta select {
+  width: 100%;
+  min-width: 0;
 }
 
 .ops-criar-produtos-lista {
   list-style: none;
   margin: 0 0 0.75rem;
   padding: 0;
-  max-height: 140px;
+  flex: 1;
+  min-height: 10rem;
+  max-height: min(260px, 36vh);
   overflow-y: auto;
   border: 1px solid var(--hub-gold-soft);
   border-radius: var(--hub-raio);
+  background: var(--hub-bg-elevated);
+  scrollbar-width: thin;
+  scrollbar-color: var(--hub-border-strong) transparent;
+}
+
+.ops-criar-produtos-lista::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ops-criar-produtos-lista::-webkit-scrollbar-thumb {
+  background: var(--hub-border-strong);
+  border-radius: 6px;
+}
+
+.ops-criar-produtos-vazio {
+  padding: 0.75rem 0.85rem;
+  font-size: 0.82rem;
+  color: var(--hub-muted);
 }
 
 .ops-criar-produto-btn {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.75rem;
   width: 100%;
-  padding: 0.45rem 0.65rem;
+  padding: 0.55rem 0.75rem;
   border: none;
   border-bottom: 1px solid var(--hub-gold-soft);
   background: transparent;
   color: inherit;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   text-align: left;
   cursor: pointer;
 }
 
+.ops-criar-produto-nome {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.ops-criar-produto-preco {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--hub-orange);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .ops-criar-produto-btn:hover {
   background: var(--hub-orange-soft);
+}
+
+.ops-criar-pedido-col--produtos {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .ops-criar-carrinho {
@@ -135,6 +236,7 @@
   border-radius: var(--hub-raio-lg);
   padding: 0.65rem 0.75rem;
   background: var(--hub-surface);
+  flex-shrink: 0;
 }
 
 .ops-criar-carrinho-titulo {
@@ -483,6 +585,22 @@
   background: var(--hub-orange-soft);
   border: 1px solid rgba(255, 107, 0, 0.3);
   font-size: 0.85rem;
+}
+
+@media (max-width: 767px) {
+  .ops-modal--pedido {
+    max-height: 94vh;
+    padding: 1rem;
+  }
+
+  .ops-criar-produtos-lista {
+    min-height: 8rem;
+    max-height: 200px;
+  }
+
+  .ops-criar-pedido-meta {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 520px) {
