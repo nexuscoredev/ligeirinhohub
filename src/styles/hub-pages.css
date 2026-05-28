@@ -35,13 +35,7 @@
   background: rgba(212, 175, 55, 0.06);
 }
 
-[data-theme='light'] .hub-page::before {
-  background: rgba(232, 98, 0, 0.08);
-}
-
-[data-theme='light'] .hub-page::after {
-  background: rgba(24, 19, 16, 0.05);
-}
+/* Light: blobs e módulos — ver theme-light.css */
 
 .hub-page > * {
   position: relative;
@@ -177,7 +171,7 @@
 .hub-modulo-card {
   position: relative;
   padding: 0.85rem 1rem;
-  min-height: 72px;
+  min-height: auto;
   border-radius: var(--hub-raio-lg);
   background: var(--hub-modulo-card-bg);
   border: 1px solid var(--hub-gold-soft);
@@ -185,11 +179,20 @@
   color: inherit;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   transition:
     border-color 0.2s,
     transform 0.2s,
     box-shadow 0.2s;
+}
+
+.hub-modulo-card__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hub-modulo-card:hover {
@@ -202,6 +205,8 @@
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--hub-text);
+  line-height: 1.25;
+  min-width: 0;
 }
 
 .hub-modulo-card em {
@@ -212,10 +217,10 @@
 }
 
 .hub-modulo-icone {
-  position: absolute;
-  top: 0.65rem;
-  right: 0.65rem;
-  font-size: 1.15rem;
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+  opacity: 0.95;
 }
 
 .hub-banner {

@@ -62,10 +62,12 @@ export function BemVindoPage() {
           <div className="hub-grid-4">
             {atalhosHub.map((item) => (
               <Link key={item.rota} to={item.rota} className="hub-modulo-card">
-                <span className="hub-modulo-icone" aria-hidden>
-                  {item.icone}
-                </span>
-                <strong>{item.titulo}</strong>
+                <div className="hub-modulo-card__topo">
+                  <strong>{item.titulo}</strong>
+                  <span className="hub-modulo-icone" aria-hidden>
+                    {item.icone}
+                  </span>
+                </div>
               </Link>
             ))}
           </div>

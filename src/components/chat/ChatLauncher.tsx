@@ -47,12 +47,20 @@ export function ChatLauncher({ usuario }: { usuario: Pick<Usuario, 'id' | 'nome'
     setAberto(true);
   }
 
+  useEffect(() => {
+    if (!aberto) return;
+    document.body.classList.add('chat-widget-aberto');
+    return () => document.body.classList.remove('chat-widget-aberto');
+  }, [aberto]);
+
   return (
     <>
       <button
         type="button"
-        className="chat-fab"
+        className={`chat-fab${aberto ? ' chat-fab--oculto' : ''}`}
         onClick={() => abrir('conversas')}
+        aria-hidden={aberto}
+        tabIndex={aberto ? -1 : 0}
         aria-haspopup="dialog"
         aria-label="Abrir chat interno"
         title="Chat interno"

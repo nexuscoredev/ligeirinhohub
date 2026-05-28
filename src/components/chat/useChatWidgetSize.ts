@@ -14,13 +14,18 @@ export const CHAT_WIDGET_MIN = { w: 300, h: 380 };
 const MIN = CHAT_WIDGET_MIN;
 const VIEWPORT_PAD = 32;
 /** Espaço para o FAB no canto inferior */
-const FAB_CLEARANCE = 72;
+/** Reserva inferior quando o FAB está visível (com chat fechado). */
+const FAB_CLEARANCE = 80;
 
 export type ResizeModo = 'n' | 'w' | 'nw';
 
 function limitesViewport() {
+  const fabLivre = document.body.classList.contains('chat-widget-aberto');
   const maxW = Math.max(MIN.w, window.innerWidth - VIEWPORT_PAD * 2);
-  const maxH = Math.max(MIN.h, window.innerHeight - VIEWPORT_PAD * 2 - FAB_CLEARANCE);
+  const maxH = Math.max(
+    MIN.h,
+    window.innerHeight - VIEWPORT_PAD * 2 - (fabLivre ? 0 : FAB_CLEARANCE),
+  );
   return { maxW, maxH };
 }
 

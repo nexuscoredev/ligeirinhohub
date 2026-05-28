@@ -1,41 +1,48 @@
 /**
- * Ligeirinho Hub — Light mode (design system)
- *
- * Paleta: fundo quente (#f6f3ef), superfícies brancas, texto #181310,
- * destaque laranja Hub (#e86200), preços #c2410c, alertas vermelho contido.
- * No light, todos os apps usam o mesmo accent (inline temaApp é sobrescrito).
- * Dark: não alterar — ver theme.css :root / [data-theme='dark'].
+ * Ligeirinho Hub — Light mode
+ * Tema diurno com papel quente e superfícies brancas (não inversão do dark).
+ * Tokens em theme.css [data-theme='light']; aqui só refinamentos de componentes.
  */
 
-/* Accent contido só onde precisava (Totem/PDV) — demais apps mantêm sua identidade */
+/* Accent Hub só onde o app não traz identidade forte (Totem/PDV) */
 [data-theme='light'] .app-page[data-app-id='totem'],
 [data-theme='light'] .app-page[data-app-id='pdv'] {
   --app-accent: var(--hub-orange) !important;
   --app-accent-soft: var(--hub-orange-soft) !important;
-  --app-accent-border: color-mix(in srgb, var(--hub-orange) 28%, var(--hub-border)) !important;
-  --app-accent-glow: color-mix(in srgb, var(--hub-orange) 22%, transparent) !important;
+  --app-accent-border: color-mix(in srgb, var(--hub-orange) 22%, var(--hub-border)) !important;
+  --app-accent-glow: color-mix(in srgb, var(--hub-orange) 18%, transparent) !important;
 }
 
-/* ——— Shell / menu ——— */
-[data-theme='light'] .admin-subnav {
-  background: var(--hub-admin-subnav-bg);
-  border-color: var(--hub-admin-subnav-border);
+/* ——— Shell ——— */
+[data-theme='light'] .layout-hub,
+[data-theme='light'] .login-pagina,
+[data-theme='light'] .estado-central {
+  background: var(--hub-bg);
+}
+
+[data-theme='light'] .login-pagina::before {
+  background: color-mix(in srgb, var(--hub-orange) 14%, transparent);
+  opacity: 0.5;
+}
+
+[data-theme='light'] .login-pagina::after {
+  background: color-mix(in srgb, var(--hub-gold) 10%, transparent);
+  opacity: 0.4;
 }
 
 [data-theme='light'] .menu-lateral {
+  background: var(--hub-bg-elevated);
   border-right-color: var(--hub-border);
+  box-shadow: 1px 0 0 rgba(42, 38, 34, 0.04);
 }
 
-[data-theme='light'] .menu-marca {
-  border-bottom-color: var(--hub-border);
-}
-
+[data-theme='light'] .menu-marca,
 [data-theme='light'] .menu-rodape {
-  border-top-color: var(--hub-border);
+  border-color: var(--hub-border);
 }
 
 [data-theme='light'] .menu-secao-apps {
-  background: linear-gradient(180deg, var(--hub-orange-soft) 0%, transparent 100%);
+  background: var(--hub-orange-soft);
   border-color: var(--hub-menu-secao-apps-border);
 }
 
@@ -43,86 +50,87 @@
   color: var(--hub-muted);
 }
 
-[data-theme='light'] .menu-link-icone {
-  opacity: 0.92;
-}
-
 [data-theme='light'] .menu-link:hover {
-  background: rgba(26, 21, 18, 0.05);
+  background: var(--hub-surface-hover);
   color: var(--hub-text);
 }
 
 [data-theme='light'] .menu-link.ativo {
   background: var(--hub-orange-soft);
   color: var(--hub-orange);
-  border-color: color-mix(in srgb, var(--hub-orange) 28%, var(--hub-border));
+  border-color: color-mix(in srgb, var(--hub-orange) 25%, var(--hub-border));
 }
 
 [data-theme='light'] .menu-secao-titulo {
-  color: color-mix(in srgb, var(--hub-text) 55%, transparent);
+  color: var(--hub-muted);
 }
 
 [data-theme='light'] .conteudo-principal {
+  background: var(--hub-bg);
   background-image: linear-gradient(
     180deg,
-    var(--hub-orange-soft) 0%,
-    transparent 140px
+    color-mix(in srgb, var(--hub-orange-soft) 65%, transparent) 0%,
+    transparent 100px
   );
 }
 
-/* ——— Componentes Hub ——— */
-[data-theme='light'] .hub-stat-card,
-[data-theme='light'] .admin-modulo-card {
-  backdrop-filter: none;
-  background: var(--hub-surface-solid);
-  box-shadow: var(--hub-shadow-sm);
+[data-theme='light'] .hub-acoes-topo {
+  background: color-mix(in srgb, var(--hub-surface-solid) 94%, transparent);
+  border-color: var(--hub-border);
+  box-shadow: var(--hub-shadow-md);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[data-theme='light'] .menu-mobile-topbar {
+  background: var(--hub-bg-elevated);
+  border-bottom-color: var(--hub-border);
+}
+
+[data-theme='light'] .menu-overlay {
+  background: var(--hub-overlay);
+}
+
+[data-theme='light'] .admin-subnav {
+  background: var(--hub-admin-subnav-bg);
+  border-color: var(--hub-admin-subnav-border);
+}
+
+/* ——— Páginas Hub ——— */
+[data-theme='light'] .hub-page::before {
+  background: color-mix(in srgb, var(--hub-orange) 12%, transparent);
+  opacity: 0.55;
+}
+
+[data-theme='light'] .hub-page::after {
+  background: color-mix(in srgb, var(--hub-gold) 10%, transparent);
+  opacity: 0.45;
 }
 
 [data-theme='light'] .hub-tag {
-  border-color: color-mix(in srgb, var(--hub-orange) 35%, var(--hub-border));
+  background: var(--hub-orange-soft);
+  border-color: color-mix(in srgb, var(--hub-orange) 28%, var(--hub-border));
+  color: var(--hub-orange);
 }
 
-[data-theme='light'] .btn-secundario:hover:not(:disabled) {
-  background: rgba(26, 21, 18, 0.04);
-  border-color: color-mix(in srgb, var(--hub-orange) 35%, var(--hub-border));
-}
-
-[data-theme='light'] .hub-perfil-card {
-  box-shadow:
-    inset 0 1px 0 var(--hub-perfil-card-inset),
-    var(--hub-shadow-sm);
-  border-color: var(--hub-border);
-}
-
-[data-theme='light'] .hub-perfil-card__badge {
-  background: rgba(124, 100, 29, 0.1);
-  border-color: rgba(124, 100, 29, 0.22);
+[data-theme='light'] .hub-page--dashboard .hub-tag {
+  background: color-mix(in srgb, var(--hub-gold) 12%, #ffffff);
+  border-color: color-mix(in srgb, var(--hub-gold) 30%, var(--hub-border));
   color: var(--hub-gold);
 }
 
-[data-theme='light'] .hub-avatar {
-  box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--hub-orange) 35%, transparent),
-    var(--hub-shadow-sm);
-}
-
-[data-theme='light'] .hub-logo img {
-  filter: drop-shadow(0 4px 12px rgba(26, 21, 18, 0.12));
-}
-
-[data-theme='light'] .hub-logo-glow {
-  box-shadow:
-    0 0 0 1px var(--hub-orange-soft),
-    var(--hub-shadow-md);
-}
-
 [data-theme='light'] .hub-modulo-card {
+  background: var(--hub-modulo-card-bg);
   border-color: var(--hub-border);
   box-shadow: var(--hub-shadow-sm);
 }
 
+[data-theme='light'] .hub-modulo-card::before {
+  display: none;
+}
+
 [data-theme='light'] .hub-modulo-card:hover {
-  border-color: color-mix(in srgb, var(--hub-orange) 40%, var(--hub-border));
+  border-color: color-mix(in srgb, var(--hub-orange) 35%, var(--hub-border));
   box-shadow: var(--hub-shadow-md);
 }
 
@@ -130,39 +138,138 @@
   border-bottom-color: var(--hub-border);
 }
 
-[data-theme='light'] .hub-apps-hero {
-  border-color: color-mix(in srgb, var(--hub-orange) 22%, var(--hub-border));
+[data-theme='light'] .hub-stat-card,
+[data-theme='light'] .admin-modulo-card,
+[data-theme='light'] .card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--hub-surface-solid);
+  border-color: var(--hub-border);
+  box-shadow: var(--hub-shadow-sm);
 }
 
+[data-theme='light'] .hub-apps-hero,
 [data-theme='light'] .perfil-hero {
+  background: var(--hub-apps-hero-bg);
   border-color: var(--hub-border);
 }
 
 [data-theme='light'] .perfil-card--muted {
-  background: rgba(26, 21, 18, 0.03);
+  background: var(--hub-surface-hover);
+  border-color: var(--hub-border);
+}
+
+[data-theme='light'] .btn-secundario {
+  border-color: var(--hub-border-strong);
+}
+
+[data-theme='light'] .btn-secundario:hover:not(:disabled) {
+  background: var(--hub-surface-hover);
+  border-color: color-mix(in srgb, var(--hub-orange) 30%, var(--hub-border));
+}
+
+[data-theme='light'] .hub-perfil-card {
+  box-shadow: var(--hub-shadow-sm);
+  border-color: var(--hub-border);
+}
+
+[data-theme='light'] .hub-perfil-card__badge {
+  background: color-mix(in srgb, var(--hub-gold) 12%, #ffffff);
+  border-color: color-mix(in srgb, var(--hub-gold) 28%, var(--hub-border));
+  color: var(--hub-gold);
+}
+
+[data-theme='light'] .hub-avatar {
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--hub-orange) 22%, transparent),
+    var(--hub-shadow-sm);
+}
+
+[data-theme='light'] .hub-logo img {
+  filter: none;
+}
+
+[data-theme='light'] .hub-logo-glow {
+  box-shadow: var(--hub-shadow-sm);
 }
 
 [data-theme='light'] .novidades-botao,
 [data-theme='light'] .tema-toggle--segmentado,
 [data-theme='light'] .chat-fab {
+  background: var(--hub-surface-solid);
   border-color: var(--hub-border-strong);
-}
-
-[data-theme='light'] .mkt-thumb {
-  box-shadow:
-    var(--hub-shadow-sm),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  box-shadow: var(--hub-shadow-sm);
 }
 
 [data-theme='light'] .tema-toggle__opcao.ativo {
-  box-shadow: var(--hub-shadow-sm);
+  background: var(--hub-orange-soft);
+  box-shadow: none;
 }
 
 [data-theme='light'] .novidades-botao__badge {
   box-shadow: 0 0 0 2px var(--hub-surface-solid);
 }
 
-/* ——— Totem / PDV (catálogo e checkout) ——— */
+[data-theme='light'] .admin-resumo-kpi {
+  background: var(--hub-surface-solid);
+  border-color: var(--hub-border);
+}
+
+[data-theme='light'] .admin-resumo-rodape {
+  border-top-color: var(--hub-border);
+}
+
+[data-theme='light'] .admin-tabela-wrap {
+  border-color: var(--hub-border);
+}
+
+[data-theme='light'] code {
+  background: var(--hub-orange-soft);
+  color: var(--hub-orange);
+}
+
+/* ——— App menu / launcher ——— */
+[data-theme='light'] .app-menu-pill {
+  background: var(--hub-surface-solid);
+  border-color: var(--hub-border);
+  box-shadow: none;
+}
+
+[data-theme='light'] .app-menu-pill:hover {
+  background: var(--hub-surface-hover);
+  border-color: color-mix(in srgb, var(--app-accent, var(--hub-orange)) 22%, var(--hub-border));
+}
+
+[data-theme='light'] .app-menu-pill.ativo {
+  background: color-mix(
+    in srgb,
+    var(--app-accent-soft, var(--hub-orange-soft)) 70%,
+    var(--hub-surface-solid)
+  );
+  border-color: color-mix(in srgb, var(--app-accent, var(--hub-orange)) 28%, var(--hub-border));
+  box-shadow: var(--hub-shadow-sm);
+}
+
+[data-theme='light'] .app-menu-chevron {
+  background: var(--hub-surface-hover);
+  border-color: var(--hub-border);
+}
+
+[data-theme='light'] .app-menu-details[open] .app-menu-chevron {
+  background: var(--app-accent-soft, var(--hub-orange-soft));
+  border-color: color-mix(in srgb, var(--app-accent, var(--hub-orange)) 25%, var(--hub-border));
+}
+
+[data-theme='light'] .app-menu-pill-icone {
+  background: var(--launcher-icon-bg);
+  border-color: color-mix(in srgb, var(--app-accent, var(--hub-orange)) 22%, var(--hub-border));
+}
+
+[data-theme='light'] .app-menu-filho:hover {
+  background: var(--hub-surface-hover);
+}
+
+/* ——— Totem / PDV ——— */
 [data-theme='light'] .totem-prod-preco,
 [data-theme='light'] .mkt-preco-promo {
   color: var(--hub-price);
@@ -171,7 +278,7 @@
 [data-theme='light'] .totem-badge-18 {
   background: var(--hub-badge-restrict-bg);
   color: var(--hub-badge-restrict-text);
-  border: 1px solid var(--hub-danger-border);
+  border-color: var(--hub-danger-border);
 }
 
 [data-theme='light'] .totem-prod-img {
@@ -182,9 +289,8 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    color-mix(in srgb, var(--hub-bg-elevated) 96%, transparent) 12%
+    color-mix(in srgb, var(--hub-bg-elevated) 96%, transparent) 14%
   );
-  backdrop-filter: blur(10px);
 }
 
 [data-theme='light'] .totem-btn-primario {
@@ -212,10 +318,33 @@
 
 [data-theme='light'] .totem-sucesso-numero {
   color: var(--hub-orange);
-  text-shadow: 0 0 32px color-mix(in srgb, var(--hub-orange) 35%, transparent);
+  text-shadow: none;
 }
 
-/* Scrollbar horizontal das categorias — menos “pesada” no claro */
 [data-theme='light'] .totem-cats {
   scrollbar-color: var(--hub-border-strong) transparent;
+}
+
+[data-theme='light'] .mkt-thumb {
+  box-shadow: var(--hub-shadow-sm);
+}
+
+/* ——— Chat ——— */
+[data-theme='light'] .cw-modal {
+  background: var(--hub-bg-elevated);
+  border-color: var(--hub-border);
+  box-shadow: var(--hub-shadow-md);
+}
+
+[data-theme='light'] .cw-modal::before {
+  opacity: 0.4;
+}
+
+[data-theme='light'] .cw-composer,
+[data-theme='light'] .cw-bolha--out {
+  background: var(--hub-surface-solid);
+}
+
+[data-theme='light'] .cw-bolha--in {
+  background: var(--hub-orange-soft);
 }

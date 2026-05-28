@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { HubAvatar } from '@/components/HubAvatar';
+import { HubLogo } from '@/components/HubLogo';
 import { isHubAdmin } from '@/lib/admin/usuariosApi';
 import {
   criarOuAbrirThreadDM,
@@ -361,6 +362,7 @@ export function ChatWidget({
         ) : null}
 
         <header className="cw-header">
+          <HubLogo size="xs" badgeHub className="cw-header-logo" alt="" />
           <div className="cw-title">
             <strong>Chat interno</strong>
             <span>{usuario.nome}</span>
@@ -648,31 +650,38 @@ export function ChatWidget({
                       <div ref={fimRef} />
                     </div>
 
-                    <form
-                      className="cw-composer"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        void enviarDM();
-                      }}
-                    >
-                      <textarea
-                        ref={inputDmRef}
-                        rows={1}
-                        value={texto}
-                        onChange={(e) => setTexto(e.target.value)}
-                        placeholder="Escreva uma mensagem…"
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault();
-                            void enviarDM();
-                          }
+                    <div className="cw-composer-wrap">
+                      <form
+                        className="cw-composer"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          void enviarDM();
                         }}
-                      />
-                      <button type="submit" className="btn" disabled={!texto.trim() || enviandoDm}>
-                        {enviandoDm ? '…' : 'Enviar'}
-                      </button>
-                    </form>
-                    <p className="cw-composer-dica">Enter envia · Shift+Enter quebra linha</p>
+                      >
+                        <textarea
+                          ref={inputDmRef}
+                          rows={1}
+                          value={texto}
+                          onChange={(e) => setTexto(e.target.value)}
+                          placeholder="Escreva uma mensagem…"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              void enviarDM();
+                            }
+                          }}
+                        />
+                        <button
+                          type="submit"
+                          className="cw-enviar"
+                          disabled={!texto.trim() || enviandoDm}
+                          aria-label="Enviar mensagem"
+                        >
+                          {enviandoDm ? '…' : '↑'}
+                        </button>
+                      </form>
+                      <p className="cw-composer-dica">Enter envia · Shift+Enter quebra linha</p>
+                    </div>
                   </>
                 )
               ) : !ticketId ? (
@@ -728,40 +737,47 @@ export function ChatWidget({
                     <div ref={fimTicketRef} />
                   </div>
 
-                  <form
-                    className="cw-composer"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      void enviarMsgTicket();
-                    }}
-                  >
-                    <textarea
-                      ref={inputTicketRef}
-                      rows={1}
-                      value={textoTicket}
-                      onChange={(e) => setTextoTicket(e.target.value)}
-                      placeholder="Responder…"
-                      disabled={ticketAtual?.status === 'resolvido'}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                          e.preventDefault();
-                          void enviarMsgTicket();
-                        }
+                  <div className="cw-composer-wrap">
+                    <form
+                      className="cw-composer"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        void enviarMsgTicket();
                       }}
-                    />
-                    <button
-                      type="submit"
-                      className="btn"
-                      disabled={!textoTicket.trim() || enviandoTicket || ticketAtual?.status === 'resolvido'}
                     >
-                      {enviandoTicket ? '…' : 'Enviar'}
-                    </button>
-                  </form>
-                  {ticketAtual?.status === 'resolvido' ? (
-                    <p className="cw-composer-dica">Esta solicitação já foi resolvida.</p>
-                  ) : (
-                    <p className="cw-composer-dica">Enter envia · Shift+Enter quebra linha</p>
-                  )}
+                      <textarea
+                        ref={inputTicketRef}
+                        rows={1}
+                        value={textoTicket}
+                        onChange={(e) => setTextoTicket(e.target.value)}
+                        placeholder="Responder…"
+                        disabled={ticketAtual?.status === 'resolvido'}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            void enviarMsgTicket();
+                          }
+                        }}
+                      />
+                      <button
+                        type="submit"
+                        className="cw-enviar"
+                        disabled={
+                          !textoTicket.trim() ||
+                          enviandoTicket ||
+                          ticketAtual?.status === 'resolvido'
+                        }
+                        aria-label="Enviar resposta"
+                      >
+                        {enviandoTicket ? '…' : '↑'}
+                      </button>
+                    </form>
+                    {ticketAtual?.status === 'resolvido' ? (
+                      <p className="cw-composer-dica">Esta solicitação já foi resolvida.</p>
+                    ) : (
+                      <p className="cw-composer-dica">Enter envia · Shift+Enter quebra linha</p>
+                    )}
+                  </div>
                 </>
               )}
             </section>

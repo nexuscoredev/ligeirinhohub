@@ -128,14 +128,7 @@
   color: color-mix(in srgb, var(--hub-gold) 70%, var(--hub-muted));
 }
 
-[data-theme='light'] .admin-resumo-kpi {
-  border-color: var(--hub-border);
-  background: rgba(26, 21, 18, 0.03);
-}
-
-[data-theme='light'] .admin-resumo-rodape {
-  border-top-color: var(--hub-border);
-}
+/* Light: admin-resumo — ver theme-light.css */
 
 @media (max-width: 900px) {
   .admin-resumo-topo {

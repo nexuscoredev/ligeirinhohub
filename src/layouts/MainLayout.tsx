@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { AppMenuGroup } from '@/components/AppMenuGroup';
 import { HubLogo } from '@/components/HubLogo';
-import { HubPerfilCard } from '@/components/HubPerfilCard';
+import { HubPerfilButton } from '@/components/HubPerfilButton';
 import { NovidadesAutoPrompt } from '@/components/NovidadesAutoPrompt';
 import { NovidadesBotao } from '@/components/NovidadesBotao';
 import { ChatLauncher } from '@/components/chat/ChatLauncher';
@@ -60,13 +60,15 @@ export function MainLayout() {
 
   if (!usuario) return null;
 
-  const hubVisivel = HUB_ADMIN_ITENS.filter((item) =>
-    itemHubPermitido(
-      item,
-      usuario.cargo,
-      usuario.paginas_permitidas,
-      usuario.email,
-    ),
+  const hubVisivel = HUB_ADMIN_ITENS.filter(
+    (item) =>
+      item.rota !== '/perfil' &&
+      itemHubPermitido(
+        item,
+        usuario.cargo,
+        usuario.paginas_permitidas,
+        usuario.email,
+      ),
   );
 
   const appsVisiveis = APPS_SISTEMA.filter((app) =>
@@ -106,7 +108,25 @@ export function MainLayout() {
         </NavLink>
         <NovidadesBotao compacto className="menu-mobile-novidades" />
         <TemaToggle compacto className="menu-mobile-tema" />
+        <HubPerfilButton
+          nome={usuario.nome}
+          cargo={usuario.cargo}
+          avatarUrl={usuario.avatar_url}
+          size="sm"
+          className="menu-mobile-perfil"
+        />
       </header>
+
+      <div className="hub-acoes-topo" aria-label="Ações rápidas">
+        <NovidadesBotao compacto className="hub-acoes-topo__item" />
+        <TemaToggle compacto className="hub-acoes-topo__item" />
+        <HubPerfilButton
+          nome={usuario.nome}
+          cargo={usuario.cargo}
+          avatarUrl={usuario.avatar_url}
+          size="md"
+        />
+      </div>
 
       <button
         type="button"
@@ -160,14 +180,8 @@ export function MainLayout() {
         </nav>
 
         <div className="menu-rodape">
-          <NovidadesBotao />
-          <TemaToggle />
-          <HubPerfilCard
-            nome={usuario.nome}
-            cargo={usuario.cargo}
-            avatarUrl={usuario.avatar_url}
-            linkTo="/perfil"
-          />
+          <NovidadesBotao className="menu-rodape-novidades" />
+          <TemaToggle className="menu-rodape-tema" />
           <button
             type="button"
             className="btn btn-secundario menu-perfil-sair"

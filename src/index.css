@@ -131,21 +131,17 @@ code {
   padding: 0.9rem 1rem;
 }
 
-/* Light: remove blur “acinzentado” e dar mais definição */
-[data-theme='light'] .card {
-  backdrop-filter: none;
-  box-shadow: var(--hub-sombra);
-}
-
 [data-theme='light'] input,
 [data-theme='light'] select,
 [data-theme='light'] textarea {
+  background: var(--hub-surface-solid);
   border-color: var(--hub-border-strong);
 }
 
-[data-theme='light'] code {
-  background: rgba(232, 98, 0, 0.12);
-  color: var(--hub-orange);
+[data-theme='light'] input:focus,
+[data-theme='light'] select:focus,
+[data-theme='light'] textarea:focus {
+  border-color: color-mix(in srgb, var(--hub-orange) 45%, var(--hub-border));
 }
 
 .erro {
