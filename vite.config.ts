@@ -35,8 +35,10 @@ export default defineConfig({
         ],
       },
       workbox: {
-        skipWaiting: true,
-        clientsClaim: true,
+        // Mantém o SW novo em "waiting" para disparar o banner de atualização
+        // (o app então chama update(true) com 1 clique).
+        skipWaiting: false,
+        clientsClaim: false,
         runtimeCaching: [
           {
             urlPattern: supabaseHostPattern,
