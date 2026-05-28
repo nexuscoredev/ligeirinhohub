@@ -106,10 +106,20 @@ export function ClientesPage() {
 
       {novoAberto ? (
         <div className="ops-modal-backdrop" role="presentation" onClick={() => setNovoAberto(false)}>
-          <div className="ops-modal card" role="dialog" aria-labelledby="cli-novo" onClick={(e) => e.stopPropagation()}>
-            <h3 id="cli-novo" style={{ margin: '0 0 0.75rem', fontSize: '1rem' }}>
-              Novo cliente
-            </h3>
+          <div
+            className="ops-modal ops-modal--cliente card"
+            role="dialog"
+            aria-labelledby="cli-novo"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <header className="ops-modal-header">
+              <h3 id="cli-novo" className="ops-modal-titulo">
+                Novo cliente
+              </h3>
+              <p className="ops-modal-subtitulo">
+                Tabela, vencimento e bloqueios para novos pedidos.
+              </p>
+            </header>
             <NovoClienteForm
               onCancelar={() => setNovoAberto(false)}
               onSalvar={async (payload) => {
@@ -131,10 +141,20 @@ export function ClientesPage() {
 
       {importAberto ? (
         <div className="ops-modal-backdrop" role="presentation" onClick={() => setImportAberto(false)}>
-          <div className="ops-modal card" role="dialog" aria-labelledby="cli-import" onClick={(e) => e.stopPropagation()}>
-            <h3 id="cli-import" style={{ margin: '0 0 0.75rem', fontSize: '1rem' }}>
-              Importar base de clientes
-            </h3>
+          <div
+            className="ops-modal ops-modal--cliente card"
+            role="dialog"
+            aria-labelledby="cli-import"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <header className="ops-modal-header">
+              <h3 id="cli-import" className="ops-modal-titulo">
+                Importar base de clientes
+              </h3>
+              <p className="ops-modal-subtitulo">
+                Cole linhas e importe em lote para acelerar o cadastro.
+              </p>
+            </header>
             <ImportClientesForm
               onCancelar={() => setImportAberto(false)}
               onImportar={async (raw) => {
@@ -207,63 +227,63 @@ function NovoClienteForm({
 
   return (
     <>
-      <label style={{ display: 'block', marginBottom: '0.65rem' }}>
-        Nome
-        <input value={nome} onChange={(e) => setNome(e.target.value)} style={{ marginTop: '0.25rem' }} />
-      </label>
-      <label style={{ display: 'block', marginBottom: '0.65rem' }}>
-        Nome fantasia
-        <input
-          value={nomeFantasia}
-          onChange={(e) => setNomeFantasia(e.target.value)}
-          style={{ marginTop: '0.25rem' }}
-        />
-      </label>
-      <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
-        <label style={{ display: 'block', marginBottom: '0.65rem', flex: 1, minWidth: 160 }}>
-          Tabela
+      <div className="ops-modal-corpo">
+        <label className="ops-field">
+          Nome
+          <input value={nome} onChange={(e) => setNome(e.target.value)} />
+        </label>
+        <label className="ops-field">
+          Nome fantasia
           <input
-            value={tabelaPreco}
-            onChange={(e) => setTabelaPreco(e.target.value)}
-            style={{ marginTop: '0.25rem' }}
+            value={nomeFantasia}
+            onChange={(e) => setNomeFantasia(e.target.value)}
           />
         </label>
-        <label style={{ display: 'block', marginBottom: '0.65rem', flex: 1, minWidth: 160 }}>
-          Dia venc. (0–6)
+        <div className="ops-criar-pedido-meta">
+          <label className="ops-field">
+            Tabela
+            <input
+              value={tabelaPreco}
+              onChange={(e) => setTabelaPreco(e.target.value)}
+            />
+          </label>
+          <label className="ops-field">
+            Dia venc. (0–6)
+            <input
+              value={dia}
+              onChange={(e) => setDia(e.target.value)}
+              placeholder="Ex.: 1 (Seg)"
+              inputMode="numeric"
+            />
+          </label>
+        </div>
+        <label className="ops-field ops-field--check" style={{ marginTop: '0.25rem' }}>
           <input
-            value={dia}
-            onChange={(e) => setDia(e.target.value)}
-            placeholder="Ex.: 1 (Seg)"
-            style={{ marginTop: '0.25rem' }}
+            type="checkbox"
+            checked={bloqueado}
+            onChange={(e) => setBloqueado(e.target.checked)}
+          />
+          Bloqueado para novos pedidos
+        </label>
+        <label className="ops-field ops-field--check" style={{ marginTop: '-0.25rem' }}>
+          <input
+            type="checkbox"
+            checked={inadimplente}
+            onChange={(e) => setInadimplente(e.target.checked)}
+          />
+          Inadimplente
+        </label>
+        <label className="ops-field">
+          Observações
+          <textarea
+            rows={3}
+            value={observacoes}
+            onChange={(e) => setObservacoes(e.target.value)}
+            placeholder="Opcional"
           />
         </label>
       </div>
-      <label className="ops-field ops-field--check" style={{ marginBottom: '0.5rem' }}>
-        <input
-          type="checkbox"
-          checked={bloqueado}
-          onChange={(e) => setBloqueado(e.target.checked)}
-        />
-        Bloqueado para novos pedidos
-      </label>
-      <label className="ops-field ops-field--check" style={{ marginBottom: '0.65rem' }}>
-        <input
-          type="checkbox"
-          checked={inadimplente}
-          onChange={(e) => setInadimplente(e.target.checked)}
-        />
-        Inadimplente
-      </label>
-      <label style={{ display: 'block', marginBottom: '0.75rem' }}>
-        Observações
-        <textarea
-          rows={2}
-          value={observacoes}
-          onChange={(e) => setObservacoes(e.target.value)}
-          style={{ marginTop: '0.25rem' }}
-        />
-      </label>
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+      <div className="ops-modal-acoes">
         <button
           type="button"
           className="btn"
@@ -301,20 +321,28 @@ function ImportClientesForm({
 
   return (
     <>
-      <p style={{ margin: '0 0 0.65rem', color: 'var(--hub-muted)', fontSize: '0.85rem' }}>
-        Cole linhas no formato: <code>nome;nome_fantasia;tabela_preco;dia_vencimento(0-6)</code>
-      </p>
-      <textarea
-        rows={7}
-        value={raw}
-        onChange={(e) => setRaw(e.target.value)}
-        placeholder="Ex.:\nMercado Central;Mercado Central LTDA;padrao;2\nPadaria da Esquina;;;5"
-      />
-      <p style={{ margin: '0.6rem 0 0', color: 'var(--hub-muted)', fontSize: '0.85rem' }}>
-        Prévia: <strong>{preview.length}</strong> cliente(s)
-      </p>
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.75rem' }}>
-        <button type="button" className="btn" onClick={() => onImportar(raw)} disabled={preview.length === 0}>
+      <div className="ops-modal-corpo">
+        <p style={{ margin: '0 0 0.65rem', color: 'var(--hub-muted)', fontSize: '0.85rem' }}>
+          Cole linhas no formato:{' '}
+          <code>nome;nome_fantasia;tabela_preco;dia_vencimento(0-6)</code>
+        </p>
+        <textarea
+          rows={9}
+          value={raw}
+          onChange={(e) => setRaw(e.target.value)}
+          placeholder="Ex.:\nMercado Central;Mercado Central LTDA;padrao;2\nPadaria da Esquina;;;5"
+        />
+        <p style={{ margin: '0.6rem 0 0', color: 'var(--hub-muted)', fontSize: '0.85rem' }}>
+          Prévia: <strong>{preview.length}</strong> cliente(s)
+        </p>
+      </div>
+      <div className="ops-modal-acoes">
+        <button
+          type="button"
+          className="btn"
+          onClick={() => onImportar(raw)}
+          disabled={preview.length === 0}
+        >
           Importar
         </button>
         <button type="button" className="btn btn-secundario" onClick={onCancelar}>
