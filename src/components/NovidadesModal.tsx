@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { appDisplayVersion } from '@/lib/appDisplayVersion';
 import {
   NOVIDADES,
@@ -27,7 +28,7 @@ export function NovidadesModal({ onFechar }: NovidadesModalProps) {
     return () => window.removeEventListener('keydown', onKey);
   }, [onFechar]);
 
-  return (
+  const content = (
     <div
       className="novidades-backdrop"
       role="presentation"
@@ -83,4 +84,6 @@ export function NovidadesModal({ onFechar }: NovidadesModalProps) {
       </div>
     </div>
   );
+
+  return createPortal(content, document.body);
 }
