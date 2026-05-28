@@ -133,6 +133,31 @@
   padding: 0.95rem 0.75rem;
 }
 
+.app-launcher-tile--icon-only .app-launcher-tile__icon {
+  width: auto;
+  height: auto;
+  min-width: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  font-size: 2.05rem;
+}
+
+.app-launcher-tile--icon-only:hover .app-launcher-tile__icon {
+  transform: scale(1.08);
+}
+
+.app-launcher-tile--icon-only .app-launcher-tile__badge {
+  bottom: -0.2rem;
+  right: -0.2rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 7px;
+  font-size: 0.62rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
 .app-launcher-tile--icon-only .app-launcher-tile__nome {
   position: absolute;
   width: 1px;
@@ -150,6 +175,28 @@
   .hub-apps-launcher-grid--home .app-launcher-tile--icon-only {
     gap: 0.5rem;
     padding: 0.6rem 0.55rem;
+  }
+
+  .hub-apps-launcher-grid--home .app-launcher-tile--icon-only .app-launcher-tile__icon {
+    width: 2.35rem;
+    height: 2.35rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    background: var(--launcher-icon-bg);
+    border: 1px solid var(--app-accent-border);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 6px 16px var(--app-accent-soft);
+    transform: none;
+  }
+
+  .hub-apps-launcher-grid--home .app-launcher-tile--icon-only .app-launcher-tile__badge {
+    font-size: 0.42rem;
+    padding: 0.08rem 0.28rem;
+    bottom: -0.15rem;
+    right: -0.2rem;
+    border-radius: 5px;
+    letter-spacing: 0.05em;
   }
 
   .hub-apps-launcher-grid--home .app-launcher-tile--icon-only .app-launcher-tile__nome {
