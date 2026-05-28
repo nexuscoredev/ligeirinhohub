@@ -1,25 +1,35 @@
 .admin-subnav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-bottom: 1.25rem;
-  padding: 0.35rem;
+  flex-wrap: nowrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+  padding: 0.3rem;
   border-radius: var(--hub-raio);
   background: var(--hub-admin-subnav-bg);
   border: 1px solid var(--hub-admin-subnav-border);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.admin-subnav::-webkit-scrollbar {
+  display: none;
 }
 
 .admin-subnav-link {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.45rem 0.75rem;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: 0.38rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
   color: var(--hub-muted);
   text-decoration: none;
   transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  min-height: 36px;
 }
 
 .admin-subnav-link:hover {
@@ -31,6 +41,12 @@
   color: var(--hub-gold);
   background: var(--hub-orange-soft);
   border: 1px solid rgba(255, 107, 0, 0.25);
+}
+
+.admin-subnav-link span[aria-hidden] {
+  font-size: 0.95rem;
+  line-height: 1;
+  opacity: 0.95;
 }
 
 .admin-sistemas-lista {
