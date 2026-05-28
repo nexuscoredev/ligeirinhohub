@@ -5,6 +5,7 @@ import { PageShell } from '@/components/PageShell';
 import { usePerfil } from '@/contexts/PerfilContext';
 import { APPS_SISTEMA, appPermitido, itemHubPermitido } from '@/lib/apps';
 import { HUB_ADMIN_MODULOS } from '@/lib/admin/modulos';
+import '@/pages/admin/admin.css';
 
 export function BemVindoPage() {
   const { usuario } = usePerfil();
@@ -59,18 +60,14 @@ export function BemVindoPage() {
               Hub <span>administrativo</span>
             </h2>
           </div>
-          <div className="hub-grid-4">
+          <nav className="admin-subnav admin-subnav--home" aria-label="Atalhos do hub administrativo">
             {atalhosHub.map((item) => (
-              <Link key={item.rota} to={item.rota} className="hub-modulo-card">
-                <div className="hub-modulo-card__topo">
-                  <strong>{item.titulo}</strong>
-                  <span className="hub-modulo-icone" aria-hidden>
-                    {item.icone}
-                  </span>
-                </div>
+              <Link key={item.rota} to={item.rota} className="admin-subnav-link">
+                <span aria-hidden>{item.icone}</span>
+                {item.titulo}
               </Link>
             ))}
-          </div>
+          </nav>
         </section>
       ) : null}
 

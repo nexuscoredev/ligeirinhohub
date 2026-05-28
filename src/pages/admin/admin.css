@@ -49,6 +49,15 @@
   opacity: 0.95;
 }
 
+/* Bem-vindo: mesma linguagem da visão geral, sem “ativo” */
+.admin-subnav--home .admin-subnav-link {
+  border: 1px solid transparent;
+}
+
+.admin-subnav--home .admin-subnav-link:hover {
+  border-color: color-mix(in srgb, var(--hub-orange) 22%, transparent);
+}
+
 .admin-sistemas-lista {
   display: flex;
   flex-wrap: wrap;
