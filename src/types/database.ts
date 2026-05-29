@@ -100,6 +100,16 @@ export interface Database {
         Insert: Record<string, unknown>;
         Update: Record<string, unknown>;
       };
+      caixa_turnos: {
+        Row: Record<string, unknown>;
+        Insert: Record<string, unknown>;
+        Update: Record<string, unknown>;
+      };
+      caixa_movimentos: {
+        Row: Record<string, unknown>;
+        Insert: Record<string, unknown>;
+        Update: Record<string, unknown>;
+      };
       motoristas: {
         Row: Record<string, unknown>;
         Insert: Record<string, unknown>;

@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { ordenarItensSeparacao } from '@/lib/pedidos/ordenarItens';
 import { registrarEvento } from '@/lib/pedidos/api';
+import type { ProdutoPdv } from '@/lib/pdv/types';
 import type {
   FormaPagamento,
   PagamentoSplit,
@@ -275,4 +276,172 @@ export async function criarVendaBalcao(
     itens: itensPedido,
     error: eBusca,
   };
+}
+
+/** Produtos ativos para o PDV, com código de barras, unidade e preço de atacado. */
+export async function listarProdutosPdv(): Promise<{
+  produtos: ProdutoPdv[];
+  error: Error | null;
+}> {
+  const { data, error } = await supabase
+    .from('produtos')
+    .select(
+      'id, sku, codigo_barras, nome, unidade, preco_base, preco_atacado, categorias_produto ( ordem_separacao )',
+    )
+    .eq('ativo', true)
+    .order('nome');
+
+  if (error) return { produtos: [], error };
+
+  const produtos: ProdutoPdv[] = (data ?? [])
+    .map((row) => {
+      const r = row as {
+        id: string;
+        sku: string | null;
+        codigo_barras: string | null;
+        nome: string;
+        unidade: string | null;
+        preco_base: number;
+        preco_atacado: number | null;
+        categorias_produto?: { ordem_separacao: number } | null;
+      };
+      if (!r.sku) return null;
+      return {
+        id: r.id,
+        sku: r.sku,
+        codigo_barras: r.codigo_barras,
+        nome: r.nome,
+        unidade: r.unidade ?? 'UN',
+        preco_base: Number(r.preco_base) || 0,
+        preco_atacado: r.preco_atacado != null ? Number(r.preco_atacado) : null,
+        categoria_ordem: r.categorias_produto?.ordem_separacao ?? 0,
+      } satisfies ProdutoPdv;
+    })
+    .filter((p): p is ProdutoPdv => p !== null);
+
+  return { produtos, error: null };
+}
+
+export interface VendaPdvParams {
+  itens: LinhaCarrinhoBalcao[];
+  pagamento: PagamentoSplitLinha[];
+  usuarioId: string;
+  caixaTurnoId: string | null;
+  cpfConsumidor?: string | null;
+}
+
+/**
+ * Registra uma venda de PDV (varejo balcão). Diferente de `criarVendaBalcao`,
+ * vincula o turno de caixa, grava CPF do consumidor e marca o pedido como
+ * concluído (entrega imediata no balcão). A NF-e é emitida em seguida via
+ * `src/lib/pdv/fiscal.ts`.
+ */
+export async function registrarVendaPdv(params: VendaPdvParams) {
+  const { itens, pagamento, usuarioId, caixaTurnoId, cpfConsumidor } = params;
+
+  if (itens.length === 0) {
+    return { pedido: null, error: new Error('Adicione itens à venda.') };
+  }
+
+  const total = itens.reduce((acc, i) => acc + i.preco_unitario * i.qty, 0);
+  const validacao = validarPagamentoSplit(pagamento, total);
+  if (!validacao.ok) {
+    return { pedido: null, error: new Error(validacao.mensagem) };
+  }
+
+  const { clienteId, error: eCliente } = await buscarClientePorNome(CLIENTE_BALCAO_NOME);
+  if (eCliente) return { pedido: null, error: eCliente };
+  if (!clienteId) {
+    return {
+      pedido: null,
+      error: new Error(`Cliente "${CLIENTE_BALCAO_NOME}" não encontrado. Execute a migration PDV.`),
+    };
+  }
+
+  const skus = [...new Set(itens.map((i) => i.sku))];
+  const { data: produtosDb, error: eProd } = await supabase
+    .from('produtos')
+    .select('id, sku, nome, categoria_id, categorias_produto ( ordem_separacao )')
+    .in('sku', skus)
+    .eq('ativo', true);
+
+  if (eProd) return { pedido: null, error: eProd };
+
+  const porSku = new Map(
+    (produtosDb ?? []).map((p) => {
+      const row = p as {
+        id: string;
+        sku: string;
+        nome: string;
+        categorias_produto?: { ordem_separacao: number };
+      };
+      return [row.sku, row];
+    }),
+  );
+
+  for (const item of itens) {
+    if (!porSku.has(item.sku)) {
+      return {
+        pedido: null,
+        error: new Error(`Produto SKU "${item.sku}" (${item.nome}) não cadastrado no sistema.`),
+      };
+    }
+  }
+
+  const agora = new Date().toISOString();
+  const splitLimpo = pagamento.filter((l) => Number(l.valor) > 0);
+
+  const { data: pedidoCriado, error: ePedido } = await supabase
+    .from('pedidos')
+    .insert({
+      cliente_id: clienteId,
+      status: 'concluido',
+      origem: 'balcao',
+      modalidade: 'retirada',
+      valor_pedido: total,
+      aceito_em: agora,
+      separado_em: agora,
+      pagamento_split: splitLimpo,
+      pagamento_recebido_em: agora,
+      caixa_turno_id: caixaTurnoId,
+      cpf_consumidor: cpfConsumidor ?? null,
+      documento_modelo: '65',
+      nfce_status: 'nao_emitida',
+    } as never)
+    .select(PEDIDO_SELECT)
+    .single();
+
+  if (ePedido || !pedidoCriado) {
+    return { pedido: null, error: ePedido ?? new Error('Falha ao criar venda.') };
+  }
+
+  const pedido = pedidoCriado as Pedido;
+  const linhasInsert = itens.map((item) => {
+    const prod = porSku.get(item.sku)!;
+    const catOrdem =
+      (prod as { categorias_produto?: { ordem_separacao: number } }).categorias_produto
+        ?.ordem_separacao ?? item.categoria_ordem;
+    return {
+      pedido_id: pedido.id,
+      produto_id: prod.id,
+      nome_snapshot: item.nome,
+      categoria_ordem: catOrdem,
+      qty_pedida: item.qty,
+      qty_separada: item.qty,
+      separado_ok: true,
+      preco_unitario: item.preco_unitario,
+    };
+  });
+
+  const { error: eItens } = await supabase.from('pedido_itens').insert(linhasInsert as never);
+  if (eItens) return { pedido: null, error: eItens };
+
+  await supabase.rpc('recalcular_totais_pedido', { p_pedido_id: pedido.id } as never);
+  await registrarEvento(pedido.id, 'venda_pdv', usuarioId, {
+    itens: itens.length,
+    total,
+    caixa_turno_id: caixaTurnoId,
+  });
+
+  return { pedido, error: null };
 }
