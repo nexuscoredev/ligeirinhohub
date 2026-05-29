@@ -165,7 +165,7 @@ export function MainLayout() {
           {appsVisiveis.length > 0 ? (
             <div className="menu-secao menu-secao-apps">
               <span className="menu-secao-titulo">
-                Apps instalados
+                Aplicativos
                 <span className="menu-secao-badge" aria-label={`${appsVisiveis.length} apps`}>
                   {appsVisiveis.length}
                 </span>
