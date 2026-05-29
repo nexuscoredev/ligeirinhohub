@@ -9,6 +9,33 @@ export interface Novidade {
 /** Mais recente primeiro — atualize ao lançar mudanças visíveis ao usuário. */
 export const NOVIDADES: Novidade[] = [
   {
+    id: '2026-05-28-pdv-operador',
+    data: '2026-05-28',
+    titulo: 'Novo PDV — frente de caixa de operador',
+    area: 'PDV',
+    itens: [
+      'Tela de venda com grid de itens, leitor de código e atalhos F1–F11',
+      'Abertura e fechamento de caixa, sangria e suprimento',
+      'Consulta de produtos (F2), menu de operações (F5) e notas emitidas (F11)',
+      'Resumo diário e Leitura X por turno de caixa',
+      'Mesma base de produtos do Admin → Produtos (catálogo da loja)',
+      'Finalização em dinheiro ou outras formas, com comprovante para impressão',
+    ],
+  },
+  {
+    id: '2026-05-28-hub-melhorias',
+    data: '2026-05-28',
+    titulo: 'Hub e experiência geral',
+    area: 'Hub',
+    itens: [
+      'Foto de perfil no canto superior direito (desktop e mobile)',
+      'Aviso de nova versão do app — atualize sem limpar cache do navegador',
+      'Tema claro mais natural, sem efeito de “negativo”',
+      'Modais de criar pedido e criar cliente otimizados no desktop',
+      'Painel de usuários do admin redesenhado',
+    ],
+  },
+  {
     id: '2026-05-27-chat-melhorias',
     data: '2026-05-27',
     titulo: 'Chat interno aprimorado',
