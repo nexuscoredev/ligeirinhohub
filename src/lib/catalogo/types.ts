@@ -32,3 +32,12 @@ export interface ProdutoCatalogoView {
   categoria_nome: string;
   categoria_ordem: number;
 }
+
+/** Produto unificado: catálogo da loja + metadados operacionais do Supabase. */
+export interface ProdutoSistema extends ProdutoCatalogoView {
+  /** UUID em `produtos` — null se ainda não sincronizado no banco. */
+  produto_id: string | null;
+  codigo_barras: string | null;
+  unidade: string;
+  preco_atacado: number | null;
+}

@@ -1,15 +1,20 @@
 import type { FormaPagamento } from '@/types/pedidos';
 
-/** Produto disponível para venda no PDV (carregado do Supabase). */
+/** Produto no PDV — mesma base do Admin → Produtos (`catalogo.json`). */
 export interface ProdutoPdv {
+  /** Identificador de catálogo (SKU Anota) — usado na UI antes do sync no banco. */
   id: string;
   sku: string;
-  codigo_barras: string | null;
   nome: string;
-  unidade: string;
   preco_base: number;
-  preco_atacado: number | null;
+  imagem_url: string | null;
+  categoria_slug: string;
+  categoria_nome: string;
   categoria_ordem: number;
+  /** Código para leitor/busca (SKU do catálogo). */
+  codigo_barras: string | null;
+  unidade: string;
+  preco_atacado: number | null;
 }
 
 /** Linha do cupom de venda em construção. */

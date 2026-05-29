@@ -1,3 +1,6 @@
+import { ensureProdutosPorSkus } from '@/lib/catalogo/ensureProdutos';
+import { listarProdutosLoja } from '@/lib/catalogo/listarProdutosLoja';
+import type { ProdutoCatalogoView } from '@/lib/catalogo/types';
 import { supabase } from '@/lib/supabase';
 import { ordenarItensSeparacao } from '@/lib/pedidos/ordenarItens';
 import { registrarEvento } from '@/lib/pedidos/api';
@@ -278,48 +281,30 @@ export async function criarVendaBalcao(
   };
 }
 
-/** Produtos ativos para o PDV, com código de barras, unidade e preço de atacado. */
+function catalogoParaPdv(p: ProdutoCatalogoView): ProdutoPdv {
+  return {
+    id: p.sku,
+    sku: p.sku,
+    nome: p.nome,
+    preco_base: p.preco_base,
+    imagem_url: p.imagem_url,
+    categoria_slug: p.categoria_slug,
+    categoria_nome: p.categoria_nome,
+    categoria_ordem: p.categoria_ordem,
+    codigo_barras: p.sku,
+    unidade: 'UN',
+    preco_atacado: null,
+  };
+}
+
+/** Produtos do catálogo publicado — mesma base do Admin → Produtos. */
 export async function listarProdutosPdv(): Promise<{
   produtos: ProdutoPdv[];
   error: Error | null;
 }> {
-  const { data, error } = await supabase
-    .from('produtos')
-    .select(
-      'id, sku, codigo_barras, nome, unidade, preco_base, preco_atacado, categorias_produto ( ordem_separacao )',
-    )
-    .eq('ativo', true)
-    .order('nome');
-
+  const { produtos, error } = await listarProdutosLoja();
   if (error) return { produtos: [], error };
-
-  const produtos: ProdutoPdv[] = (data ?? [])
-    .map((row) => {
-      const r = row as {
-        id: string;
-        sku: string | null;
-        codigo_barras: string | null;
-        nome: string;
-        unidade: string | null;
-        preco_base: number;
-        preco_atacado: number | null;
-        categorias_produto?: { ordem_separacao: number } | null;
-      };
-      if (!r.sku) return null;
-      return {
-        id: r.id,
-        sku: r.sku,
-        codigo_barras: r.codigo_barras,
-        nome: r.nome,
-        unidade: r.unidade ?? 'UN',
-        preco_base: Number(r.preco_base) || 0,
-        preco_atacado: r.preco_atacado != null ? Number(r.preco_atacado) : null,
-        categoria_ordem: r.categorias_produto?.ordem_separacao ?? 0,
-      } satisfies ProdutoPdv;
-    })
-    .filter((p): p is ProdutoPdv => p !== null);
-
-  return { produtos, error: null };
+  return { produtos: produtos.map(catalogoParaPdv), error: null };
 }
 
 export interface VendaPdvParams {
@@ -359,6 +344,9 @@ export async function registrarVendaPdv(params: VendaPdvParams) {
   }
 
   const skus = [...new Set(itens.map((i) => i.sku))];
+  const { error: eEnsure } = await ensureProdutosPorSkus(skus);
+  if (eEnsure) return { pedido: null, error: eEnsure };
+
   const { data: produtosDb, error: eProd } = await supabase
     .from('produtos')
     .select('id, sku, nome, categoria_id, categorias_produto ( ordem_separacao )')
