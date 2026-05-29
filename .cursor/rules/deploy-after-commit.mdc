@@ -1,0 +1,22 @@
+---
+description: Após todo git commit, fazer push e confirmar deploy na Vercel
+alwaysApply: true
+---
+
+# Deploy na Vercel após commit
+
+Sempre que criar um commit neste repositório (`ligeirinhohub`):
+
+1. **Imediatamente após o commit**, na mesma tarefa:
+   - `git pull --rebase origin <branch-atual>`
+   - `git push origin <branch-atual>`
+
+2. O **push dispara deploy na Vercel** (integração GitHub → projeto `ligeirinhohub`).
+
+3. **Confirme o deploy** com MCP Vercel (`list_deployments`, team `team_aG8FDWoWNvFVeiWnKllgfi8T`, project `prj_eofr907mv2wPyLO6IWEhE93PnZI5`) ou informe a URL:
+   - Produção (`main`): https://ligeirinhohub.vercel.app
+   - Preview: outras branches
+
+4. Se o push falhar, reporte o erro — não considere a tarefa concluída.
+
+**Nunca** encerre uma tarefa que incluiu commit sem tentar push + verificação de deploy.

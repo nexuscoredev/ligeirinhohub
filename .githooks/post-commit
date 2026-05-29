@@ -1,0 +1,14 @@
+#!/bin/sh
+# Push após commit local → dispara deploy automático na Vercel (integração GitHub).
+
+branch=$(git symbolic-ref --short HEAD 2>/dev/null) || exit 0
+
+printf '\n[ligeirinhohub] Enviando %s para GitHub (deploy Vercel)...\n' "$branch"
+
+if git push origin "$branch"; then
+  printf '[ligeirinhohub] Push OK — deploy iniciado na Vercel.\n\n'
+else
+  printf '[ligeirinhohub] Push falhou. Rode: git pull --rebase origin %s && git push origin %s\n\n' "$branch" "$branch"
+fi
+
+exit 0
