@@ -109,6 +109,23 @@ describe('rotaPermitidaParaCargo', () => {
     expect(rotaPermitidaParaCargo('/admin', 'Gerente')).toBe(true);
   });
 
+  it('permite cargo Vendedor em negociação e catálogo', () => {
+    expect(rotaPermitidaParaCargo('/negociacao', 'Vendedor')).toBe(true);
+    expect(rotaPermitidaParaCargo('/catalogo', 'Vendedor')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/config', 'Vendedor')).toBe(false);
+  });
+
+  it('permite cargo Fiscal no app fiscal', () => {
+    expect(rotaPermitidaParaCargo('/fiscal', 'Fiscal')).toBe(true);
+    expect(rotaPermitidaParaCargo('/fiscal/emitir', 'Fiscal')).toBe(true);
+    expect(rotaPermitidaParaCargo('/financeiro', 'Fiscal')).toBe(false);
+  });
+
+  it('permite Gerente na configuração avançada', () => {
+    expect(rotaPermitidaParaCargo('/admin/config/empresa', 'Gerente')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/config/fiscal', 'Comercial')).toBe(false);
+  });
+
   it('permite Comercial no catálogo digital', () => {
     expect(rotaPermitidaParaCargo('/catalogo', 'Comercial')).toBe(true);
     expect(rotaPermitidaParaCargo('/admin/catalogo', 'Comercial')).toBe(true);

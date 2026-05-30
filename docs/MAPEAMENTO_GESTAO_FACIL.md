@@ -43,7 +43,7 @@ Esta implantação **não substitui** PDV, Totem, Operacional ou Marketing. Segu
 | 5 — Controle Estoque | ✅ Concluída | `cursor/gf-fase5-estoque-fdca` | App Estoque, depósitos, saldos, movimentos, lotes |
 | 6 — Relatórios + Dashboard | ✅ Concluída | `cursor/gf-fase6-relatorios-fdca` | Painel `/admin/relatorios`, RPCs vendas por hora e mensal fiscal |
 | 7 — Catálogo Digital | ✅ Concluída | `cursor/gf-fase7-catalogo-fdca` | Portal B2B `/catalogo`, config `/admin/catalogo`, RPC `gf_catalogo_produtos` |
-| 8 — Configuração avançada | ⚪ Pendente | — | |
+| 8 — Configuração avançada | ✅ Concluída | `cursor/gf-fase8-config-seguranca-fdca` | Cargos Vendedor/Fiscal, `/admin/config/*`, caixas e envio XML |
 | 9 — Migração dados GF | ⚪ Pendente | — | |
 | 10 — Go-live | ⚪ Pendente | — | |
 
@@ -318,7 +318,18 @@ API: `src/lib/catalogoDigital/api.ts`
 
 Segurança ~80% coberta. Estender cargos: Vendedor, Fiscal, Estoquista dedicados.
 
-Configuração GF → `/admin/config/*` (caixas, empresas, envio XML)
+Configuração GF → `/admin/config/*`
+
+| Rota | Conteúdo |
+|------|----------|
+| `/admin/config` | Painel de configuração |
+| `/admin/config/empresa` | `empresa_config` (CNPJ, regime) |
+| `/admin/config/caixas` | `caixas_config` (terminais PDV) |
+| `/admin/config/fiscal` | Ambiente, certificado, envio XML |
+
+Cargos novos: `Vendedor`, `Fiscal` (enum `cargo_hub`)
+
+API: `src/lib/config/api.ts`
 
 ---
 

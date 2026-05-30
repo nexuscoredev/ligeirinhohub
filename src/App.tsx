@@ -17,6 +17,10 @@ import { RelatoriosPainelPage } from '@/pages/admin/relatorios/RelatoriosPainelP
 import { RelatoriosVendasPage } from '@/pages/admin/relatorios/RelatoriosVendasPage';
 import { CatalogoConfigPage } from '@/pages/admin/CatalogoConfigPage';
 import { CatalogoPortalPage } from '@/pages/catalogo/CatalogoPortalPage';
+import { ConfigCaixasPage } from '@/pages/admin/config/ConfigCaixasPage';
+import { ConfigEmpresaPage } from '@/pages/admin/config/ConfigEmpresaPage';
+import { ConfigFiscalPage } from '@/pages/admin/config/ConfigFiscalPage';
+import { ConfigPainelPage } from '@/pages/admin/config/ConfigPainelPage';
 import { BemVindoPage } from '@/pages/BemVindoPage';
 import { PerfilPage } from '@/pages/perfil/PerfilPage';
 import { ClientesPage } from '@/pages/clientes/ClientesPage';
@@ -86,6 +90,10 @@ export default function App() {
               <Route path="/admin/relatorios/vendas" element={<RelatoriosVendasPage />} />
               <Route path="/admin/relatorios/fiscal" element={<RelatoriosFiscalPage />} />
               <Route path="/admin/catalogo" element={<CatalogoConfigPage />} />
+              <Route path="/admin/config" element={<ConfigPainelPage />} />
+              <Route path="/admin/config/empresa" element={<ConfigEmpresaPage />} />
+              <Route path="/admin/config/caixas" element={<ConfigCaixasPage />} />
+              <Route path="/admin/config/fiscal" element={<ConfigFiscalPage />} />
               <Route path="/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
               <Route path="/produtos" element={<Navigate to="/admin/produtos" replace />} />
               <Route path="/usuarios" element={<Navigate to="/admin/usuarios" replace />} />

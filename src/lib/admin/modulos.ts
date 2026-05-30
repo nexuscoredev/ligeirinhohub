@@ -11,6 +11,7 @@ export const HUB_ADMIN_MODULOS: ItemApp[] = [
   { rota: '/admin/cadastros-base', titulo: 'Cadastros base', icone: '📋', prefixo: '/admin/cadastros-base' },
   { rota: '/admin/pessoas', titulo: 'Pessoas', icone: '👥', prefixo: '/admin/pessoas' },
   { rota: '/admin/usuarios', titulo: 'Usuários', icone: '🔐', prefixo: '/admin/usuarios' },
+  { rota: '/admin/config', titulo: 'Configuração', icone: '⚙️', prefixo: '/admin/config' },
   { rota: '/admin/sistemas', titulo: 'Sistemas', icone: '🔌', prefixo: '/admin/sistemas' },
 ];
 

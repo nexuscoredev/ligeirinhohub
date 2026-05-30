@@ -21,6 +21,8 @@ function tomCargo(cargo: CargoHub): string {
     Logistica: 'ops',
     Financeiro: 'financeiro',
     Comercial: 'comercial',
+    Vendedor: 'comercial',
+    Fiscal: 'financeiro',
     Visualizador: 'muted',
   };
   return map[cargo] ?? 'muted';

@@ -16,6 +16,7 @@ const MODULO_DESC: Record<string, string> = {
   '/admin/dashboard': 'KPIs e indicadores do dia',
   '/admin/relatorios': 'Painel gerencial, vendas e fiscal',
   '/admin/catalogo': 'Produtos visíveis e preços por tabela',
+  '/admin/config': 'Empresa, caixas PDV e envio XML',
   '/admin/produtos': 'Catálogo, preços e categorias',
   '/admin/usuarios': 'Cargos, acesso e permissões',
   '/admin/sistemas': 'Status de conexões e integrações',
