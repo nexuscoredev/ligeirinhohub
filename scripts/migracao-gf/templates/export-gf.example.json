@@ -1,0 +1,35 @@
+{
+  "versao": "1.0",
+  "exportado_em": "2026-05-30",
+  "empresa_config": [
+    {
+      "legacy_gf_id": "emp-1",
+      "razao_social": "LIGEIRINHO BEBIDAS LTDA",
+      "nome_fantasia": "Ligeirinho",
+      "cnpj": "00000000000100",
+      "regime_tributario": "simples"
+    }
+  ],
+  "formas_pagamento": [],
+  "tipos_conta": [],
+  "motivos": [],
+  "operacoes_fiscais": [],
+  "familias_produto": [],
+  "categorias_produto": [
+    {
+      "legacy_gf_id": "cat-1",
+      "nome": "Cervejas",
+      "slug": "cervejas",
+      "ordem_separacao": 30
+    }
+  ],
+  "produtos": [],
+  "pessoas": [],
+  "tabelas_preco": [],
+  "tabelas_preco_itens": [],
+  "series_fiscais": [],
+  "estoque_saldos": [],
+  "pedidos_abertos": [],
+  "notas_fiscais": [],
+  "contas_abertas": []
+}
