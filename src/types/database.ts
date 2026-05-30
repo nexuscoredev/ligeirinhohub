@@ -10,6 +10,8 @@ export type CargoHub =
   | 'Logistica'
   | 'Financeiro'
   | 'Comercial'
+  | 'Vendedor'
+  | 'Fiscal'
   | 'Visualizador';
 
 export interface Usuario {

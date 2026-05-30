@@ -10,5 +10,7 @@ export const CARGOS_HUB: readonly CargoHub[] = [
   'Logistica',
   'Financeiro',
   'Comercial',
+  'Vendedor',
+  'Fiscal',
   'Visualizador',
 ] as const;
