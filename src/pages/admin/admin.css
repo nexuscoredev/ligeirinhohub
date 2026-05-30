@@ -1084,3 +1084,53 @@ button.estrategico-card {
     grid-template-rows: auto auto;
   }
 }
+
+.admin-field textarea {
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--hub-border);
+  background: var(--hub-surface-solid);
+  color: var(--hub-text);
+  font-size: 0.88rem;
+  resize: vertical;
+  min-height: 4rem;
+}
+
+.pessoas-filtros {
+  flex-wrap: wrap;
+}
+
+.pessoas-busca {
+  max-width: 420px;
+  margin-bottom: 1rem;
+}
+
+.pessoas-tipos-fieldset {
+  border: 1px solid var(--hub-border);
+  border-radius: var(--hub-raio);
+  padding: 0.65rem 0.75rem;
+  margin: 0 0 0.75rem;
+}
+
+.pessoas-tipos-fieldset legend {
+  font-size: 0.75rem;
+  color: var(--hub-muted);
+  padding: 0 0.25rem;
+}
+
+.pessoas-tipos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+}
+
+.pessoas-linha {
+  grid-template-columns: 1fr auto auto !important;
+}
+
+.pessoas-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: flex-end;
+}
