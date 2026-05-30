@@ -32,7 +32,7 @@ function tpAmb(): number {
 
 let cachedToken: { token: string; exp: number } | null = null;
 
-export async function getToken(): Promise<string> {
+export async function getToken(scope: 'nfce' | 'nfe' = 'nfce'): Promise<string> {
   const now = Date.now();
   if (cachedToken && cachedToken.exp > now + 30_000) return cachedToken.token;
 
@@ -46,7 +46,7 @@ export async function getToken(): Promise<string> {
     grant_type: 'client_credentials',
     client_id: clientId,
     client_secret: clientSecret,
-    scope: 'nfce',
+    scope,
   });
 
   const res = await fetch(AUTH_URL, {
@@ -220,7 +220,7 @@ function parseResposta(data: any): RespostaNfce {
 }
 
 export async function emitirNfce(payload: unknown): Promise<RespostaNfce> {
-  const token = await getToken();
+  const token = await getToken('nfce');
   const res = await fetch(`${baseUrl()}/nfce`, {
     method: 'POST',
     headers: {
@@ -257,7 +257,7 @@ export async function consultarNfce(id: string): Promise<RespostaNfce> {
 }
 
 export async function cancelarNfce(id: string, justificativa: string): Promise<RespostaNfce> {
-  const token = await getToken();
+  const token = await getToken('nfce');
   const res = await fetch(`${baseUrl()}/nfce/${id}/cancelamento`, {
     method: 'POST',
     headers: {
@@ -270,6 +270,134 @@ export async function cancelarNfce(id: string, justificativa: string): Promise<R
   const parsed = parseResposta(data);
   if (res.ok) parsed.status = 'cancelada';
   return parsed;
+}
+
+
+interface PedidoNfe {
+  numero: number;
+  valor_pedido: number;
+}
+
+interface ItemNfe {
+  nome_snapshot: string;
+  qty_pedida: number;
+  preco_unitario: number;
+  produtos?: { sku: string | null; ncm: string | null } | null;
+}
+
+/** Monta payload NF-e modelo 55 (B2B). nNF e serie são ajustados pelo caller. */
+export function montarPayloadNfe(
+  pedido: PedidoNfe,
+  itens: ItemNfe[],
+  dest: { nome: string },
+) {
+  const cnpj = (Deno.env.get('EMITENTE_CPF_CNPJ') ?? '').replace(/\D/g, '');
+  const cUF = Number(Deno.env.get('NFCE_CUF') ?? '35');
+  const cMun = Number(Deno.env.get('EMITENTE_CMUN') ?? '0');
+  const crt = Number(Deno.env.get('EMITENTE_CRT') ?? '1');
+  const cfop = Deno.env.get('NFE_CFOP_PADRAO') ?? Deno.env.get('NFCE_CFOP_PADRAO') ?? '5102';
+  const ncmPadrao = Deno.env.get('NFCE_NCM_PADRAO') ?? '22030000';
+  const csosn = Deno.env.get('NFCE_CSOSN_PADRAO') ?? '102';
+  const origem = Deno.env.get('NFCE_ORIGEM_PADRAO') ?? '0';
+  const serie = Number(Deno.env.get('NFE_SERIE') ?? '1');
+
+  const det = itens.map((it, idx) => {
+    const qtd = Number(it.qty_pedida) || 0;
+    const vUn = Number(it.preco_unitario) || 0;
+    const vProd = Math.round(qtd * vUn * 100) / 100;
+    const ncm = (it.produtos?.ncm ?? ncmPadrao).replace(/\D/g, '').slice(0, 8) || ncmPadrao;
+    const icms =
+      crt === 1
+        ? { ICMSSN102: { orig: origem, CSOSN: csosn } }
+        : { ICMS00: { orig: origem, CST: '00', modBC: 3, vBC: vProd, pICMS: 0, vICMS: 0 } };
+    return {
+      nItem: idx + 1,
+      prod: {
+        cProd: it.produtos?.sku ?? String(idx + 1),
+        cEAN: 'SEM GTIN',
+        xProd: it.nome_snapshot,
+        NCM: ncm,
+        CFOP: cfop,
+        uCom: 'UN',
+        qCom: qtd,
+        vUnCom: vUn,
+        vProd,
+        cEANTrib: 'SEM GTIN',
+        uTrib: 'UN',
+        qTrib: qtd,
+        vUnTrib: vUn,
+        indTot: 1,
+      },
+      imposto: { ICMS: icms },
+    };
+  });
+
+  const vTotal = Math.round((Number(pedido.valor_pedido) || 0) * 100) / 100;
+
+  return {
+    infNFe: {
+      versao: '4.00',
+      ide: {
+        cUF,
+        natOp: 'VENDA DE MERCADORIA',
+        mod: 55,
+        serie,
+        nNF: pedido.numero,
+        dhEmi: new Date().toISOString(),
+        tpNF: 1,
+        idDest: 1,
+        cMunFG: cMun,
+        tpImp: 1,
+        tpEmis: 1,
+        tpAmb: tpAmb(),
+        finNFe: 1,
+        indFinal: 0,
+        indPres: 9,
+      },
+      emit: { CNPJ: cnpj },
+      dest: { xNome: dest.nome.slice(0, 60) || 'CONSUMIDOR' },
+      det,
+      total: {
+        ICMSTot: {
+          vBC: 0,
+          vICMS: 0,
+          vProd: vTotal,
+          vNF: vTotal,
+          vTotTrib: 0,
+        },
+      },
+      transp: { modFrete: 9 },
+      pag: { detPag: [{ tPag: '01', vPag: vTotal }] },
+    },
+  };
+}
+
+export async function emitirNfe(payload: unknown): Promise<RespostaNfce> {
+  const token = await getToken('nfe');
+  const res = await fetch(`${baseUrl()}/nfe`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    return {
+      status: 'rejeitada',
+      chave: null,
+      numero: null,
+      serie: null,
+      protocolo: null,
+      qrcode: null,
+      xml_url: null,
+      danfe_url: null,
+      mensagem: data?.message ?? data?.error ?? `Erro ${res.status} na emissão NF-e.`,
+      id: null,
+    };
+  }
+  return parseResposta(data);
 }
 
 export type { RespostaNfce };
