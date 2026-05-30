@@ -9,6 +9,16 @@ export interface Novidade {
 /** Mais recente primeiro — atualize ao lançar mudanças visíveis ao usuário. */
 export const NOVIDADES: Novidade[] = [
   {
+    id: '2026-05-29-menu-aplicativos',
+    data: '2026-05-29',
+    titulo: 'Menu lateral mais claro',
+    area: 'Hub',
+    itens: [
+      'Seção renomeada de “Apps instalados” para “Aplicativos”',
+      'Badge com a quantidade de apps disponíveis para você',
+    ],
+  },
+  {
     id: '2026-05-28-pdv-operador',
     data: '2026-05-28',
     titulo: 'Novo PDV — frente de caixa de operador',
