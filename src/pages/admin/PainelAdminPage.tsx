@@ -14,6 +14,7 @@ const MODULO_DESC: Record<string, string> = {
   '/admin': 'Central do painel e atalhos',
   '/admin/estrategico': 'KPIs executivos e visão do negócio',
   '/admin/dashboard': 'KPIs e indicadores do dia',
+  '/admin/relatorios': 'Painel gerencial, vendas e fiscal',
   '/admin/produtos': 'Catálogo, preços e categorias',
   '/admin/usuarios': 'Cargos, acesso e permissões',
   '/admin/sistemas': 'Status de conexões e integrações',

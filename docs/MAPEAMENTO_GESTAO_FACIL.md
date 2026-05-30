@@ -41,7 +41,7 @@ Esta implantação **não substitui** PDV, Totem, Operacional ou Marketing. Segu
 | 3 — Nota Eletrônica (Fiscal) | ✅ Concluída | `cursor/gf-fase3-fiscal-fdca` | App Fiscal, `notas_fiscais`, Edge `nfe-emitir` |
 | 4 — Financeiro | ✅ Concluída | `cursor/gf-fase4-financeiro-fdca` | App Financeiro, contas a receber/pagar, comissões, vales |
 | 5 — Controle Estoque | ✅ Concluída | `cursor/gf-fase5-estoque-fdca` | App Estoque, depósitos, saldos, movimentos, lotes |
-| 6 — Relatórios + Dashboard | ⚪ Pendente | — | |
+| 6 — Relatórios + Dashboard | ✅ Concluída | `cursor/gf-fase6-relatorios-fdca` | Painel `/admin/relatorios`, RPCs vendas por hora e mensal fiscal |
 | 7 — Catálogo Digital | ⚪ Pendente | — | |
 | 8 — Configuração avançada | ⚪ Pendente | — | |
 | 9 — Migração dados GF | ⚪ Pendente | — | |
@@ -282,6 +282,16 @@ Replicar Home GF (cards + gráficos):
 Gráficos: vendas por hora; vendas mensais NF-e vs NFC-e (RPCs Supabase).
 
 Menu Relatórios GF → `/admin/relatorios/*`
+
+| Rota HUB | Conteúdo |
+|----------|----------|
+| `/admin/relatorios` | Painel gerencial (7 cards + 2 gráficos) |
+| `/admin/relatorios/vendas` | Vendas por hora (filtro por data) |
+| `/admin/relatorios/fiscal` | NF-e vs NFC-e mensal |
+
+RPCs: `gf_relatorio_vendas_por_hora`, `gf_relatorio_vendas_mensais_fiscal`
+
+API: `src/lib/relatorios/api.ts`
 
 ---
 

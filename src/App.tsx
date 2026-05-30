@@ -12,6 +12,9 @@ import { ProdutosAdminPage } from '@/pages/admin/ProdutosAdminPage';
 import { SistemasPage } from '@/pages/admin/SistemasPage';
 import { UsuariosPage } from '@/pages/admin/UsuariosPage';
 import { VisaoEstrategicaPage } from '@/pages/admin/VisaoEstrategicaPage';
+import { RelatoriosFiscalPage } from '@/pages/admin/relatorios/RelatoriosFiscalPage';
+import { RelatoriosPainelPage } from '@/pages/admin/relatorios/RelatoriosPainelPage';
+import { RelatoriosVendasPage } from '@/pages/admin/relatorios/RelatoriosVendasPage';
 import { BemVindoPage } from '@/pages/BemVindoPage';
 import { PerfilPage } from '@/pages/perfil/PerfilPage';
 import { ClientesPage } from '@/pages/clientes/ClientesPage';
@@ -77,6 +80,9 @@ export default function App() {
               <Route path="/admin/cadastros-base" element={<CadastrosBasePage />} />
               <Route path="/admin/pessoas" element={<PessoasAdminPage />} />
               <Route path="/admin/dashboard" element={<DashboardPage />} />
+              <Route path="/admin/relatorios" element={<RelatoriosPainelPage />} />
+              <Route path="/admin/relatorios/vendas" element={<RelatoriosVendasPage />} />
+              <Route path="/admin/relatorios/fiscal" element={<RelatoriosFiscalPage />} />
               <Route path="/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
               <Route path="/produtos" element={<Navigate to="/admin/produtos" replace />} />
               <Route path="/usuarios" element={<Navigate to="/admin/usuarios" replace />} />

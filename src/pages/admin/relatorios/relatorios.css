@@ -1,0 +1,232 @@
+.rel-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.rel-kpi {
+  background: var(--hub-surface-2, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.08));
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+a.rel-kpi:hover {
+  border-color: var(--hub-accent, #ff6b00);
+  transform: translateY(-1px);
+}
+
+.rel-kpi strong {
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.rel-kpi span {
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
+.rel-kpi small {
+  font-size: 0.7rem;
+  opacity: 0.55;
+}
+
+.rel-kpi--alerta {
+  border-color: rgba(255, 80, 80, 0.45);
+}
+
+.rel-kpi--alerta strong {
+  color: #ff6b6b;
+}
+
+.rel-erro {
+  color: #ff6b6b;
+  margin-bottom: 1rem;
+}
+
+.rel-secao {
+  margin-top: 1.5rem;
+}
+
+.rel-secao h2 {
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+.rel-grid-graficos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+
+.rel-card-grafico {
+  background: var(--hub-surface-2, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.08));
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.rel-card-grafico__topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.rel-card-grafico__topo h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.rel-filtro-data {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.rel-filtro-data input {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.12));
+  border-radius: 0.4rem;
+  color: inherit;
+  padding: 0.35rem 0.5rem;
+}
+
+.rel-barra {
+  margin-bottom: 0.45rem;
+}
+
+.rel-barra__rotulo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  margin-bottom: 0.15rem;
+  opacity: 0.85;
+}
+
+.rel-barra__trilha {
+  height: 0.45rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.rel-barra__preenchimento {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--hub-accent, #ff6b00);
+  min-width: 0;
+  transition: width 0.3s ease;
+}
+
+.rel-grafico-duplo {
+  min-height: 12rem;
+}
+
+.rel-grafico-legenda {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.72rem;
+}
+
+.rel-legenda::before {
+  content: '';
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 2px;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.rel-legenda--a::before {
+  background: #64d2ff;
+}
+
+.rel-legenda--b::before {
+  background: #ff9f0a;
+}
+
+.rel-grafico-colunas {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.35rem;
+  height: 10rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.rel-coluna {
+  flex: 1;
+  min-width: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.rel-coluna__barras {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 8.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.rel-coluna__bar {
+  width: 42%;
+  min-height: 2px;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.3s ease;
+}
+
+.rel-coluna__bar--a {
+  background: #64d2ff;
+}
+
+.rel-coluna__bar--b {
+  background: #ff9f0a;
+}
+
+.rel-coluna__rotulo {
+  font-size: 0.62rem;
+  opacity: 0.7;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.rel-atalhos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.rel-resumo-lista {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.rel-resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.85rem;
+}
+
+.rel-resumo-linha strong {
+  font-variant-numeric: tabular-nums;
+}
