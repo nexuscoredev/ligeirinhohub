@@ -20,6 +20,14 @@ import { FiscalEmitidasPage } from '@/pages/fiscal/FiscalEmitidasPage';
 import { FiscalEmitirPage } from '@/pages/fiscal/FiscalEmitirPage';
 import { FiscalPainelPage } from '@/pages/fiscal/FiscalPainelPage';
 import { FiscalSeriesPage } from '@/pages/fiscal/FiscalSeriesPage';
+import { FinanceiroCaixaPage } from '@/pages/financeiro/FinanceiroCaixaPage';
+import { FinanceiroComissoesPage } from '@/pages/financeiro/FinanceiroComissoesPage';
+import {
+  FinanceiroPagarPage,
+  FinanceiroReceberPage,
+} from '@/pages/financeiro/FinanceiroContasPage';
+import { FinanceiroPainelPage } from '@/pages/financeiro/FinanceiroPainelPage';
+import { FinanceiroValesPage } from '@/pages/financeiro/FinanceiroValesPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MotoristaPage } from '@/pages/motorista/MotoristaPage';
 import { MarketingPainelPage } from '@/pages/marketing/MarketingPainelPage';
@@ -90,6 +98,12 @@ export default function App() {
               <Route path="/fiscal/emitidas" element={<FiscalEmitidasPage />} />
               <Route path="/fiscal/emitir" element={<FiscalEmitirPage />} />
               <Route path="/fiscal/series" element={<FiscalSeriesPage />} />
+              <Route path="/financeiro" element={<FinanceiroPainelPage />} />
+              <Route path="/financeiro/receber" element={<FinanceiroReceberPage />} />
+              <Route path="/financeiro/pagar" element={<FinanceiroPagarPage />} />
+              <Route path="/financeiro/caixa" element={<FinanceiroCaixaPage />} />
+              <Route path="/financeiro/comissoes" element={<FinanceiroComissoesPage />} />
+              <Route path="/financeiro/vales" element={<FinanceiroValesPage />} />
               <Route path="/sobre" element={<SobrePage />} />
             </Route>
             <Route path="*" element={<Navigate to="/bem-vindo" replace />} />
