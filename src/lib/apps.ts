@@ -56,6 +56,7 @@ export const HUB_ADMIN_ITENS: ItemApp[] = [
   { rota: '/admin', titulo: 'Visão geral', icone: '⚙️', prefixo: '/admin' },
   { rota: '/admin/produtos', titulo: 'Produtos', icone: '🍺', prefixo: '/admin/produtos' },
   { rota: '/admin/cadastros-base', titulo: 'Cadastros base', icone: '📋', prefixo: '/admin/cadastros-base' },
+  { rota: '/admin/pessoas', titulo: 'Pessoas', icone: '👥', prefixo: '/admin/pessoas' },
   { rota: '/admin/usuarios', titulo: 'Usuários', icone: '🔐', prefixo: '/admin/usuarios' },
   { rota: '/admin/sistemas', titulo: 'Sistemas', icone: '🔌', prefixo: '/admin/sistemas' },
 ];

@@ -11,10 +11,12 @@ import {
   type GfMotivoTipo,
   type Motivo,
 } from '@/types/cadastrosGf';
+import { ContasBancariasPanel } from '@/pages/admin/cadastros/ContasBancariasPanel';
+import { TiposContaPanel } from '@/pages/admin/cadastros/TiposContaPanel';
 import { AdminSubnav } from '@/pages/admin/AdminSubnav';
 import './admin.css';
 
-type AbaCadastro = 'motivos' | 'formas';
+type AbaCadastro = 'motivos' | 'formas' | 'tipos_conta' | 'contas_bancarias';
 
 const TIPOS_MOTIVO = Object.keys(MOTIVO_TIPO_LABEL) as GfMotivoTipo[];
 const TIPOS_FORMA = Object.keys(FORMA_PAGAMENTO_TIPO_LABEL) as GfFormaPagamentoTipo[];
@@ -180,6 +182,24 @@ export function CadastrosBasePage() {
           onClick={() => setAba('formas')}
         >
           Formas de pagamento
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={aba === 'tipos_conta'}
+          className={aba === 'tipos_conta' ? 'cadastros-aba ativo' : 'cadastros-aba'}
+          onClick={() => setAba('tipos_conta')}
+        >
+          Tipos de conta
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={aba === 'contas_bancarias'}
+          className={aba === 'contas_bancarias' ? 'cadastros-aba ativo' : 'cadastros-aba'}
+          onClick={() => setAba('contas_bancarias')}
+        >
+          Contas bancárias
         </button>
       </div>
 
@@ -381,6 +401,14 @@ export function CadastrosBasePage() {
             </ul>
           </div>
         </div>
+      ) : null}
+
+      {aba === 'tipos_conta' ? (
+        <TiposContaPanel podeEditar={podeEditar} onErro={setErro} onMsg={setMsg} />
+      ) : null}
+
+      {aba === 'contas_bancarias' ? (
+        <ContasBancariasPanel podeEditar={podeEditar} onErro={setErro} onMsg={setMsg} />
       ) : null}
     </PageShell>
   );
