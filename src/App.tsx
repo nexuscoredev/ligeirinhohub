@@ -5,6 +5,7 @@ import { PerfilProvider } from '@/contexts/PerfilContext';
 import { TemaProvider } from '@/contexts/TemaContext';
 import { MainLayout } from '@/layouts/MainLayout';
 import '@/layouts/MainLayout.css';
+import { CadastrosBasePage } from '@/pages/admin/CadastrosBasePage';
 import { PainelAdminPage } from '@/pages/admin/PainelAdminPage';
 import { ProdutosAdminPage } from '@/pages/admin/ProdutosAdminPage';
 import { SistemasPage } from '@/pages/admin/SistemasPage';
@@ -54,6 +55,7 @@ export default function App() {
               <Route path="/admin/usuarios" element={<UsuariosPage />} />
               <Route path="/admin/sistemas" element={<SistemasPage />} />
               <Route path="/admin/produtos" element={<ProdutosAdminPage />} />
+              <Route path="/admin/cadastros-base" element={<CadastrosBasePage />} />
               <Route path="/admin/dashboard" element={<DashboardPage />} />
               <Route path="/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
               <Route path="/produtos" element={<Navigate to="/admin/produtos" replace />} />
