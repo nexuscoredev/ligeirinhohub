@@ -19,7 +19,8 @@ export type PedidoOrigem =
   | 'balcao'
   | 'totem'
   | 'app'
-  | 'hub';
+  | 'hub'
+  | 'catalogo';
 
 export type PedidoModalidade = 'retirada' | 'entrega';
 

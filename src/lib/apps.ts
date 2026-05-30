@@ -10,7 +10,8 @@ export type AppId =
   | 'marketing'
   | 'fiscal'
   | 'financeiro'
-  | 'estoque';
+  | 'estoque'
+  | 'catalogo';
 
 export interface ItemApp {
   rota: string;
@@ -58,6 +59,7 @@ export const HUB_ADMIN_ITENS: ItemApp[] = [
   { rota: '/perfil', titulo: 'Meu perfil', icone: '👤', prefixo: '/perfil' },
   { rota: '/admin', titulo: 'Visão geral', icone: '⚙️', prefixo: '/admin' },
   { rota: '/admin/relatorios', titulo: 'Relatórios', icone: '📈', prefixo: '/admin/relatorios' },
+  { rota: '/admin/catalogo', titulo: 'Catálogo', icone: '🛍️', prefixo: '/admin/catalogo' },
   { rota: '/admin/produtos', titulo: 'Produtos', icone: '🍺', prefixo: '/admin/produtos' },
   { rota: '/admin/cadastros-base', titulo: 'Cadastros base', icone: '📋', prefixo: '/admin/cadastros-base' },
   { rota: '/admin/pessoas', titulo: 'Pessoas', icone: '👥', prefixo: '/admin/pessoas' },
@@ -329,6 +331,26 @@ export const APPS_SISTEMA: AppSistema[] = [
         titulo: 'Inventário app',
         icone: '📱',
         prefixo: '/estoque/inventario/app',
+      },
+    ],
+  },
+  {
+    id: 'catalogo',
+    nome: 'Ligeirinho Catálogo',
+    icone: '🛍️',
+    iconeLabel: 'CAT',
+    tagline: 'Pedidos B2B com tabela de preço do cliente.',
+    descricao: 'Catálogo digital e entrega de pedidos.',
+    corAccent: '#bf5af2',
+    gradient:
+      'radial-gradient(ellipse 95% 70% at 90% 0%, rgba(191,90,242,0.34) 0%, transparent 52%), radial-gradient(ellipse 55% 45% at 0% 85%, rgba(100,210,255,0.1) 0%, transparent 42%)',
+    rotaEntrada: '/catalogo',
+    itens: [
+      {
+        rota: '/catalogo',
+        titulo: 'Entrega de pedidos',
+        icone: '🛍️',
+        prefixo: '/catalogo',
       },
     ],
   },
@@ -606,6 +628,19 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Gerente',
     'Estoquista',
     'Logistica',
+  ],
+  '/catalogo': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+    'Caixa',
+  ],
+  '/admin/catalogo': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
   ],
 };
 

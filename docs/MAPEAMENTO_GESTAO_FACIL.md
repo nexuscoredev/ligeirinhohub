@@ -42,7 +42,7 @@ Esta implantação **não substitui** PDV, Totem, Operacional ou Marketing. Segu
 | 4 — Financeiro | ✅ Concluída | `cursor/gf-fase4-financeiro-fdca` | App Financeiro, contas a receber/pagar, comissões, vales |
 | 5 — Controle Estoque | ✅ Concluída | `cursor/gf-fase5-estoque-fdca` | App Estoque, depósitos, saldos, movimentos, lotes |
 | 6 — Relatórios + Dashboard | ✅ Concluída | `cursor/gf-fase6-relatorios-fdca` | Painel `/admin/relatorios`, RPCs vendas por hora e mensal fiscal |
-| 7 — Catálogo Digital | ⚪ Pendente | — | |
+| 7 — Catálogo Digital | ✅ Concluída | `cursor/gf-fase7-catalogo-fdca` | Portal B2B `/catalogo`, config `/admin/catalogo`, RPC `gf_catalogo_produtos` |
 | 8 — Configuração avançada | ⚪ Pendente | — | |
 | 9 — Migração dados GF | ⚪ Pendente | — | |
 | 10 — Go-live | ⚪ Pendente | — | |
@@ -300,7 +300,17 @@ API: `src/lib/relatorios/api.ts`
 | Submenu GF | HUB |
 |------------|-----|
 | Entrega de Pedidos | Portal B2B ou extensão Operacional |
-| Configurar Catálogo | Admin produtos visíveis + tabela de preço |
+| Configurar Catálogo | `/admin/catalogo` — visibilidade + preços por tabela |
+
+Rotas HUB:
+- `/catalogo` — portal B2B (entrega de pedidos, origem `catalogo`)
+- `/admin/catalogo` — configurar produtos visíveis e preços
+
+Colunas: `produtos.visivel_catalogo`, `produtos.ordem_catalogo`
+
+RPC: `gf_catalogo_produtos(p_tabela_codigo)`
+
+API: `src/lib/catalogoDigital/api.ts`
 
 ---
 
