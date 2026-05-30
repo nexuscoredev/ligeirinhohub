@@ -44,7 +44,7 @@ Esta implantação **não substitui** PDV, Totem, Operacional ou Marketing. Segu
 | 6 — Relatórios + Dashboard | ✅ Concluída | `cursor/gf-fase6-relatorios-fdca` | Painel `/admin/relatorios`, RPCs vendas por hora e mensal fiscal |
 | 7 — Catálogo Digital | ✅ Concluída | `cursor/gf-fase7-catalogo-fdca` | Portal B2B `/catalogo`, config `/admin/catalogo`, RPC `gf_catalogo_produtos` |
 | 8 — Configuração avançada | ✅ Concluída | `cursor/gf-fase8-config-seguranca-fdca` | Cargos Vendedor/Fiscal, `/admin/config/*`, caixas e envio XML |
-| 9 — Migração dados GF | ⚪ Pendente | — | |
+| 9 — Migração dados GF | ✅ Concluída | `cursor/gf-fase9-migracao-fdca` | Scripts `scripts/migracao-gf/`, mapa legacy, validação RPC |
 | 10 — Go-live | ⚪ Pendente | — | |
 
 ---
@@ -349,6 +349,14 @@ Ordem de importação:
 ```
 
 Scripts: `scripts/migracao-gf/` com dry-run e validação pós-migração.
+
+```bash
+npm run migracao:dry-run
+npm run migracao:import -- --yes
+npm run migracao:validar
+```
+
+Tabelas: `gf_migracao_map`, `gf_migracao_lote` · RPC: `gf_migracao_validar()`
 
 ---
 
