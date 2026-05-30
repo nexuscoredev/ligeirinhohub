@@ -52,6 +52,12 @@ describe('apps do sistema', () => {
     expect(fin?.itens.map((i) => i.rota)).toContain('/financeiro/receber');
     expect(appPorRota('/financeiro/caixa')?.app.id).toBe('financeiro');
   });
+  it('Ligeirinho Catálogo aparece no launcher', () => {
+    const cat = APPS_SISTEMA.find((a) => a.id === 'catalogo');
+    expect(cat?.nome).toBe('Ligeirinho Catálogo');
+    expect(cat?.itens.map((i) => i.rota)).toContain('/catalogo');
+    expect(appPorRota('/catalogo')?.app.id).toBe('catalogo');
+  });
   it('Ligeirinho Estoque aparece no launcher', () => {
     const est = APPS_SISTEMA.find((a) => a.id === 'estoque');
     expect(est?.nome).toBe('Ligeirinho Estoque');
@@ -101,6 +107,12 @@ describe('rotaPermitidaParaCargo', () => {
 
   it('permite Gerente no painel admin', () => {
     expect(rotaPermitidaParaCargo('/admin', 'Gerente')).toBe(true);
+  });
+
+  it('permite Comercial no catálogo digital', () => {
+    expect(rotaPermitidaParaCargo('/catalogo', 'Comercial')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/catalogo', 'Comercial')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/catalogo', 'Caixa')).toBe(false);
   });
 
   it('permite Gerente e Financeiro nos relatórios gerenciais', () => {

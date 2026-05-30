@@ -1,0 +1,223 @@
+.cat-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cat-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.cat-topo label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+
+.cat-topo select,
+.cat-topo input {
+  min-width: 12rem;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.12));
+  border-radius: 0.4rem;
+  color: inherit;
+  padding: 0.4rem 0.55rem;
+}
+
+.cat-erro {
+  color: #ff6b6b;
+}
+
+.cat-kpis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.cat-kpi {
+  background: var(--hub-surface-2, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.08));
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  min-width: 7rem;
+}
+
+.cat-kpi strong {
+  display: block;
+  font-size: 1.2rem;
+}
+
+.cat-kpi span {
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+.cat-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(16rem, 22rem);
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .cat-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cat-categorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.cat-cat-btn {
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.12));
+  background: transparent;
+  color: inherit;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.cat-cat-btn.ativo {
+  border-color: var(--app-accent, #bf5af2);
+  background: color-mix(in srgb, var(--app-accent, #bf5af2) 18%, transparent);
+}
+
+.cat-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 0.65rem;
+}
+
+.cat-produto {
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.08));
+  border-radius: 0.65rem;
+  padding: 0.55rem;
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cat-produto img,
+.cat-produto-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 0.4rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.cat-produto strong {
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.cat-produto span {
+  font-size: 0.72rem;
+  opacity: 0.75;
+}
+
+.cat-produto button {
+  margin-top: auto;
+}
+
+.cat-carrinho {
+  position: sticky;
+  top: 1rem;
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.1));
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  background: var(--hub-surface-2, rgba(255, 255, 255, 0.04));
+}
+
+.cat-carrinho h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+}
+
+.cat-carrinho-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-height: 18rem;
+  overflow: auto;
+}
+
+.cat-carrinho-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.35rem;
+  align-items: center;
+  font-size: 0.78rem;
+}
+
+.cat-carrinho-item input {
+  width: 3rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.12));
+  border-radius: 0.35rem;
+  color: inherit;
+  padding: 0.2rem;
+}
+
+.cat-carrinho-total {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.75rem 0;
+  font-weight: 600;
+}
+
+.cat-config-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.cat-config-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.cat-config-tabela th,
+.cat-config-tabela td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.45rem 0.35rem;
+  text-align: left;
+}
+
+.cat-config-tabela input[type='number'] {
+  width: 5.5rem;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--hub-border, rgba(255, 255, 255, 0.12));
+  border-radius: 0.35rem;
+  color: inherit;
+  padding: 0.25rem 0.35rem;
+}
+
+.cat-config-tabela input[type='checkbox'] {
+  width: 1rem;
+  height: 1rem;
+}
+
+.cat-sucesso {
+  border: 1px solid rgba(48, 209, 88, 0.45);
+  background: rgba(48, 209, 88, 0.12);
+  border-radius: 0.65rem;
+  padding: 1rem;
+}

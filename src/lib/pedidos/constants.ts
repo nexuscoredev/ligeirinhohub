@@ -23,6 +23,7 @@ export const ORIGEM_LABEL: Record<PedidoOrigem, string> = {
   totem: 'Totem',
   app: 'App',
   hub: 'Hub',
+  catalogo: 'Catálogo Digital',
 };
 
 /** Status visíveis na fila de separação */

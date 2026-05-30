@@ -15,6 +15,8 @@ import { VisaoEstrategicaPage } from '@/pages/admin/VisaoEstrategicaPage';
 import { RelatoriosFiscalPage } from '@/pages/admin/relatorios/RelatoriosFiscalPage';
 import { RelatoriosPainelPage } from '@/pages/admin/relatorios/RelatoriosPainelPage';
 import { RelatoriosVendasPage } from '@/pages/admin/relatorios/RelatoriosVendasPage';
+import { CatalogoConfigPage } from '@/pages/admin/CatalogoConfigPage';
+import { CatalogoPortalPage } from '@/pages/catalogo/CatalogoPortalPage';
 import { BemVindoPage } from '@/pages/BemVindoPage';
 import { PerfilPage } from '@/pages/perfil/PerfilPage';
 import { ClientesPage } from '@/pages/clientes/ClientesPage';
@@ -83,6 +85,7 @@ export default function App() {
               <Route path="/admin/relatorios" element={<RelatoriosPainelPage />} />
               <Route path="/admin/relatorios/vendas" element={<RelatoriosVendasPage />} />
               <Route path="/admin/relatorios/fiscal" element={<RelatoriosFiscalPage />} />
+              <Route path="/admin/catalogo" element={<CatalogoConfigPage />} />
               <Route path="/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
               <Route path="/produtos" element={<Navigate to="/admin/produtos" replace />} />
               <Route path="/usuarios" element={<Navigate to="/admin/usuarios" replace />} />
@@ -119,6 +122,7 @@ export default function App() {
               <Route path="/estoque/entrada-xml" element={<EstoqueEntradaXmlPage />} />
               <Route path="/estoque/inventario" element={<EstoqueInventarioPage />} />
               <Route path="/estoque/inventario/app" element={<EstoqueInventarioAppPage />} />
+              <Route path="/catalogo" element={<CatalogoPortalPage />} />
               <Route path="/sobre" element={<SobrePage />} />
             </Route>
             <Route path="*" element={<Navigate to="/bem-vindo" replace />} />
