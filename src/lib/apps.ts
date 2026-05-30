@@ -56,6 +56,8 @@ export const HUB_ADMIN_ITENS: ItemApp[] = [
   { rota: '/perfil', titulo: 'Meu perfil', icone: '👤', prefixo: '/perfil' },
   { rota: '/admin', titulo: 'Visão geral', icone: '⚙️', prefixo: '/admin' },
   { rota: '/admin/produtos', titulo: 'Produtos', icone: '🍺', prefixo: '/admin/produtos' },
+  { rota: '/admin/cadastros-base', titulo: 'Cadastros base', icone: '📋', prefixo: '/admin/cadastros-base' },
+  { rota: '/admin/pessoas', titulo: 'Pessoas', icone: '👥', prefixo: '/admin/pessoas' },
   { rota: '/admin/usuarios', titulo: 'Usuários', icone: '🔐', prefixo: '/admin/usuarios' },
   { rota: '/admin/sistemas', titulo: 'Sistemas', icone: '🔌', prefixo: '/admin/sistemas' },
 ];
@@ -118,6 +120,12 @@ export const APPS_SISTEMA: AppSistema[] = [
         titulo: 'Fila operacional',
         icone: '⚡',
         prefixo: '/operacional',
+      },
+      {
+        rota: '/negociacao',
+        titulo: 'Negociações',
+        icone: '📝',
+        prefixo: '/negociacao',
       },
       {
         rota: '/pedidos',
@@ -189,6 +197,44 @@ export const APPS_SISTEMA: AppSistema[] = [
       },
     ],
   },
+  {
+    id: 'fiscal',
+    nome: 'Ligeirinho Fiscal',
+    icone: '🧾',
+    iconeLabel: 'FISC',
+    tagline: 'NF-e e NFC-e — emissão e acompanhamento.',
+    descricao: 'Notas fiscais eletrônicas, séries e emissão NF-e.',
+    corAccent: '#30d158',
+    gradient:
+      'radial-gradient(ellipse 95% 70% at 90% 0%, rgba(48,209,88,0.32) 0%, transparent 52%), radial-gradient(ellipse 55% 45% at 0% 85%, rgba(48,209,88,0.1) 0%, transparent 42%)',
+    rotaEntrada: '/fiscal',
+    itens: [
+      {
+        rota: '/fiscal',
+        titulo: 'Painel',
+        icone: '🧾',
+        prefixo: '/fiscal',
+      },
+      {
+        rota: '/fiscal/emitidas',
+        titulo: 'Notas emitidas',
+        icone: '📄',
+        prefixo: '/fiscal/emitidas',
+      },
+      {
+        rota: '/fiscal/emitir',
+        titulo: 'Emitir NF-e',
+        icone: '✅',
+        prefixo: '/fiscal/emitir',
+      },
+      {
+        rota: '/fiscal/series',
+        titulo: 'Séries',
+        icone: '🔢',
+        prefixo: '/fiscal/series',
+      },
+    ],
+  },
 ];
 
 export const NOME_PLATAFORMA = 'Ligeirinho Hub';
@@ -244,6 +290,19 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Estoquista',
     'Comercial',
   ],
+  '/admin/cadastros-base': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+  ],
+  '/admin/pessoas': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+    'Financeiro',
+  ],
   '/admin/usuarios': ['Desenvolvedor', 'Administrador'],
   '/admin/sistemas': ['Desenvolvedor', 'Administrador'],
   '/admin/dashboard': [
@@ -277,6 +336,20 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Gerente',
     'Estoquista',
     'Logistica',
+  ],
+  '/negociacao': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+    'Caixa',
+  ],
+  '/negociacao/nova': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+    'Caixa',
   ],
   '/pedidos': [
     'Desenvolvedor',
@@ -336,6 +409,29 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Gerente',
     'Comercial',
   ],
+  '/fiscal': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+    'Comercial',
+  ],
+  '/fiscal/emitidas': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+    'Comercial',
+    'Caixa',
+  ],
+  '/fiscal/emitir': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+    'Comercial',
+  ],
+  '/fiscal/series': ['Desenvolvedor', 'Administrador', 'Gerente', 'Financeiro'],
 };
 
 export const ROTAS_PUBLICAS_AUTENTICADAS = ['/bem-vindo', '/perfil'];
