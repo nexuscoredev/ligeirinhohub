@@ -106,6 +106,11 @@ describe('rotaPermitidaParaCargo', () => {
   it('nega Caixa em marketing', () => {
     expect(rotaPermitidaParaCargo('/marketing', 'Caixa')).toBe(false);
   });
+
+  it('permite Desenvolvedor no app fiscal', () => {
+    expect(rotaPermitidaParaCargo('/fiscal', 'Desenvolvedor')).toBe(true);
+    expect(rotaPermitidaParaCargo('/fiscal/emitir', 'Financeiro')).toBe(true);
+  });
   it('permite Financeiro no app financeiro', () => {
     expect(rotaPermitidaParaCargo('/financeiro', 'Financeiro')).toBe(true);
     expect(rotaPermitidaParaCargo('/financeiro/receber', 'Gerente')).toBe(true);
