@@ -60,14 +60,16 @@ export function BemVindoPage() {
               Hub <span>administrativo</span>
             </h2>
           </div>
-          <nav className="admin-subnav admin-subnav--home" aria-label="Atalhos do hub administrativo">
-            {atalhosHub.map((item) => (
-              <Link key={item.rota} to={item.rota} className="admin-subnav-link">
-                <span aria-hidden>{item.icone}</span>
-                {item.titulo}
-              </Link>
-            ))}
-          </nav>
+          <div className="admin-subnav-wrap">
+            <nav className="admin-subnav admin-subnav--home" aria-label="Atalhos do hub administrativo">
+              {atalhosHub.map((item) => (
+                <Link key={item.rota} to={item.rota} className="admin-subnav-link">
+                  <span aria-hidden>{item.icone}</span>
+                  {item.titulo}
+                </Link>
+              ))}
+            </nav>
+          </div>
         </section>
       ) : null}
 

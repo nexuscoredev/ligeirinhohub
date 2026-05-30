@@ -1,20 +1,16 @@
+.admin-subnav-wrap {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
 .admin-subnav {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 0.3rem;
-  margin-bottom: 1rem;
-  padding: 0.3rem;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.35rem;
   border-radius: var(--hub-raio);
   background: var(--hub-admin-subnav-bg);
   border: 1px solid var(--hub-admin-subnav-border);
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.admin-subnav::-webkit-scrollbar {
-  display: none;
 }
 
 .admin-subnav-link {
@@ -30,6 +26,8 @@
   transition: background 0.15s, color 0.15s;
   white-space: nowrap;
   min-height: 36px;
+  flex: 0 1 auto;
+  max-width: 100%;
 }
 
 .admin-subnav-link:hover {
