@@ -1,0 +1,188 @@
+.fisc-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.fisc-kpi {
+  padding: 1rem;
+  border-radius: var(--hub-raio-lg);
+  background: var(--hub-surface);
+  border: 1px solid var(--hub-gold-soft);
+}
+
+.fisc-kpi strong {
+  display: block;
+  font-size: 1.75rem;
+  color: var(--app-accent, var(--hub-orange));
+  line-height: 1.1;
+}
+
+.fisc-kpi span {
+  font-size: 0.75rem;
+  color: var(--hub-muted);
+  font-weight: 600;
+}
+
+.fisc-atalhos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.fisc-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.fisc-toolbar label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--hub-muted);
+  min-width: 140px;
+}
+
+.fisc-toolbar input,
+.fisc-toolbar select {
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--hub-gold-soft);
+  background: var(--hub-bg);
+  color: inherit;
+  font-size: 0.85rem;
+}
+
+.fisc-lista-wrap {
+  overflow-x: auto;
+}
+
+.fisc-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.fisc-tabela th,
+.fisc-tabela td {
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  border-bottom: 1px solid var(--hub-gold-soft);
+}
+
+.fisc-tabela th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--hub-muted);
+}
+
+.fisc-vazio {
+  text-align: center;
+  color: var(--hub-muted);
+  padding: 1.5rem !important;
+}
+
+.fisc-col-num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.fisc-badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.fisc-badge--autorizada {
+  background: rgba(48, 209, 88, 0.15);
+  color: #30d158;
+}
+
+.fisc-badge--rejeitada {
+  background: rgba(255, 69, 58, 0.15);
+  color: #ff453a;
+}
+
+.fisc-badge--processando,
+.fisc-badge--rascunho {
+  background: rgba(255, 159, 10, 0.15);
+  color: #ff9f0a;
+}
+
+.fisc-badge--cancelada,
+.fisc-badge--inutilizada {
+  background: rgba(142, 142, 147, 0.15);
+  color: #8e8e93;
+}
+
+.fisc-origem {
+  font-size: 0.72rem;
+  color: var(--hub-muted);
+}
+
+.fisc-grid-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.fisc-erro {
+  color: #ff453a;
+  font-size: 0.85rem;
+}
+
+.fisc-msg {
+  color: #30d158;
+  font-size: 0.85rem;
+}
+
+.fisc-loading {
+  color: var(--hub-muted);
+  font-size: 0.85rem;
+}
+
+.fisc-btn-primario {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: var(--app-accent, var(--hub-orange));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.fisc-btn-primario:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fisc-btn-secundario {
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--hub-gold-soft);
+  background: transparent;
+  color: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.fisc-btn-secundario:hover {
+  border-color: var(--app-accent, var(--hub-orange));
+}

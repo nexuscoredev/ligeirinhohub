@@ -36,9 +36,9 @@ Esta implantação **não substitui** PDV, Totem, Operacional ou Marketing. Segu
 | Fase | Status | Branch / PR | Notas |
 |------|--------|-------------|-------|
 | **0 — Schema base** | ✅ Concluída | PR #2 | Migration + Cadastros base | `empresa_config`, cadastros auxiliares, colunas fiscais nullable em `produtos` |
-| 1 — Cadastros | ✅ Concluída | `cursor/gf-fase1-cadastros-fdca` | Pessoas, tipos conta, contas bancárias |
-| 2 — Gestão Produtos + Negociação | 🟡 Em andamento | — | |
-| 3 — Nota Eletrônica (Fiscal) | ⚪ Pendente | — | |
+| 1 — Cadastros | ✅ Concluída | PR #3 | Pessoas, tipos conta, contas bancárias |
+| 2 — Gestão Produtos + Negociação | ✅ Concluída | PR #4 | Negociações comerciais, tabelas de preço, operações fiscais |
+| 3 — Nota Eletrônica (Fiscal) | ✅ Concluída | `cursor/gf-fase3-fiscal-fdca` | App Fiscal, `notas_fiscais`, Edge `nfe-emitir` |
 | 4 — Financeiro | ⚪ Pendente | — | |
 | 5 — Controle Estoque | ⚪ Pendente | — | |
 | 6 — Relatórios + Dashboard | ⚪ Pendente | — | |

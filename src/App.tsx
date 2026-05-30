@@ -16,6 +16,10 @@ import { BemVindoPage } from '@/pages/BemVindoPage';
 import { PerfilPage } from '@/pages/perfil/PerfilPage';
 import { ClientesPage } from '@/pages/clientes/ClientesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
+import { FiscalEmitidasPage } from '@/pages/fiscal/FiscalEmitidasPage';
+import { FiscalEmitirPage } from '@/pages/fiscal/FiscalEmitirPage';
+import { FiscalPainelPage } from '@/pages/fiscal/FiscalPainelPage';
+import { FiscalSeriesPage } from '@/pages/fiscal/FiscalSeriesPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MotoristaPage } from '@/pages/motorista/MotoristaPage';
 import { MarketingPainelPage } from '@/pages/marketing/MarketingPainelPage';
@@ -82,6 +86,10 @@ export default function App() {
               <Route path="/marketing/galeria" element={<GaleriaPage />} />
               <Route path="/marketing/promocoes" element={<PromocoesPage />} />
               <Route path="/marketing/tv" element={<TvPreviewPage />} />
+              <Route path="/fiscal" element={<FiscalPainelPage />} />
+              <Route path="/fiscal/emitidas" element={<FiscalEmitidasPage />} />
+              <Route path="/fiscal/emitir" element={<FiscalEmitirPage />} />
+              <Route path="/fiscal/series" element={<FiscalSeriesPage />} />
               <Route path="/sobre" element={<SobrePage />} />
             </Route>
             <Route path="*" element={<Navigate to="/bem-vindo" replace />} />

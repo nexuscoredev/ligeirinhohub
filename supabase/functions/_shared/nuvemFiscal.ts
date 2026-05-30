@@ -248,7 +248,7 @@ export async function emitirNfce(payload: unknown): Promise<RespostaNfce> {
 }
 
 export async function consultarNfce(id: string): Promise<RespostaNfce> {
-  const token = await getToken();
+  const token = await getToken('nfce');
   const res = await fetch(`${baseUrl()}/nfce/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
