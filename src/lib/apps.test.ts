@@ -46,6 +46,12 @@ describe('apps do sistema', () => {
     ]);
     expect(appTemSubmenu(mkt!)).toBe(true);
   });
+  it('Ligeirinho Financeiro aparece no launcher', () => {
+    const fin = APPS_SISTEMA.find((a) => a.id === 'financeiro');
+    expect(fin?.nome).toBe('Ligeirinho Financeiro');
+    expect(fin?.itens.map((i) => i.rota)).toContain('/financeiro/receber');
+    expect(appPorRota('/financeiro/caixa')?.app.id).toBe('financeiro');
+  });
 });
 
 describe('rotaPermitidaParaCargo', () => {
@@ -104,6 +110,10 @@ describe('rotaPermitidaParaCargo', () => {
   it('permite Desenvolvedor no app fiscal', () => {
     expect(rotaPermitidaParaCargo('/fiscal', 'Desenvolvedor')).toBe(true);
     expect(rotaPermitidaParaCargo('/fiscal/emitir', 'Financeiro')).toBe(true);
+  });
+  it('permite Financeiro no app financeiro', () => {
+    expect(rotaPermitidaParaCargo('/financeiro', 'Financeiro')).toBe(true);
+    expect(rotaPermitidaParaCargo('/financeiro/receber', 'Gerente')).toBe(true);
   });
 });
 

@@ -8,7 +8,8 @@ export type AppId =
   | 'totem'
   | 'operacional'
   | 'marketing'
-  | 'fiscal';
+  | 'fiscal'
+  | 'financeiro';
 
 export interface ItemApp {
   rota: string;
@@ -235,6 +236,56 @@ export const APPS_SISTEMA: AppSistema[] = [
       },
     ],
   },
+  {
+    id: 'financeiro',
+    nome: 'Ligeirinho Financeiro',
+    icone: '💰',
+    iconeLabel: 'FIN',
+    tagline: 'Receber, pagar, caixa e comissões.',
+    descricao: 'Contas financeiras, conferência de caixa e vales.',
+    corAccent: '#ffd60a',
+    gradient:
+      'radial-gradient(ellipse 95% 70% at 90% 0%, rgba(255,214,10,0.32) 0%, transparent 52%), radial-gradient(ellipse 55% 45% at 0% 85%, rgba(10,132,255,0.1) 0%, transparent 42%)',
+    rotaEntrada: '/financeiro',
+    itens: [
+      {
+        rota: '/financeiro',
+        titulo: 'Painel',
+        icone: '💰',
+        prefixo: '/financeiro',
+      },
+      {
+        rota: '/financeiro/receber',
+        titulo: 'A receber',
+        icone: '📥',
+        prefixo: '/financeiro/receber',
+      },
+      {
+        rota: '/financeiro/pagar',
+        titulo: 'A pagar',
+        icone: '📤',
+        prefixo: '/financeiro/pagar',
+      },
+      {
+        rota: '/financeiro/caixa',
+        titulo: 'Caixa',
+        icone: '🏦',
+        prefixo: '/financeiro/caixa',
+      },
+      {
+        rota: '/financeiro/comissoes',
+        titulo: 'Comissões',
+        icone: '🤝',
+        prefixo: '/financeiro/comissoes',
+      },
+      {
+        rota: '/financeiro/vales',
+        titulo: 'Vales',
+        icone: '🎫',
+        prefixo: '/financeiro/vales',
+      },
+    ],
+  },
 ];
 
 export const NOME_PLATAFORMA = 'Ligeirinho Hub';
@@ -432,6 +483,43 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Comercial',
   ],
   '/fiscal/series': ['Desenvolvedor', 'Administrador', 'Gerente', 'Financeiro'],
+  '/financeiro': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+  ],
+  '/financeiro/receber': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+  ],
+  '/financeiro/pagar': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+  ],
+  '/financeiro/caixa': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+    'Caixa',
+  ],
+  '/financeiro/comissoes': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+  ],
+  '/financeiro/vales': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+  ],
 };
 
 export const ROTAS_PUBLICAS_AUTENTICADAS = ['/bem-vindo', '/perfil'];
