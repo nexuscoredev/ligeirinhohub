@@ -45,7 +45,7 @@ Esta implantação **não substitui** PDV, Totem, Operacional ou Marketing. Segu
 | 7 — Catálogo Digital | ✅ Concluída | `cursor/gf-fase7-catalogo-fdca` | Portal B2B `/catalogo`, config `/admin/catalogo`, RPC `gf_catalogo_produtos` |
 | 8 — Configuração avançada | ✅ Concluída | `cursor/gf-fase8-config-seguranca-fdca` | Cargos Vendedor/Fiscal, `/admin/config/*`, caixas e envio XML |
 | 9 — Migração dados GF | ✅ Concluída | `cursor/gf-fase9-migracao-fdca` | Scripts `scripts/migracao-gf/`, mapa legacy, validação RPC |
-| 10 — Go-live | ⚪ Pendente | — | |
+| 10 — Go-live | ✅ Concluída | `cursor/gf-fase10-golive-fdca` | Checklist `/admin/go-live`, RPC `gf_golive_avaliar()`, script `golive:validar` |
 
 ---
 
@@ -368,6 +368,12 @@ Critérios:
 - PDV emite NFC-e em produção
 - Contas a receber refletem inadimplência
 - Nenhum pedido novo no GF por 7 dias
+
+UI: `/admin/go-live` · Tabela `gf_golive_checklist` · RPCs `gf_golive_avaliar()`, `gf_golive_confirmar()`
+
+```bash
+npm run golive:validar
+```
 
 ---
 

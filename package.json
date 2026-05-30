@@ -15,7 +15,8 @@
     "test:watch": "vitest",
     "migracao:dry-run": "tsx scripts/migracao-gf/dry-run.ts",
     "migracao:import": "tsx scripts/migracao-gf/importar.ts",
-    "migracao:validar": "tsx scripts/migracao-gf/validar.ts"
+    "migracao:validar": "tsx scripts/migracao-gf/validar.ts",
+    "golive:validar": "tsx scripts/go-live/validar.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.8",

@@ -20,6 +20,7 @@ const MODULO_DESC: Record<string, string> = {
   '/admin/produtos': 'Catálogo, preços e categorias',
   '/admin/usuarios': 'Cargos, acesso e permissões',
   '/admin/sistemas': 'Status de conexões e integrações',
+  '/admin/go-live': 'Checklist para descomissionar o Gestão Fácil',
 };
 
 export function PainelAdminPage() {

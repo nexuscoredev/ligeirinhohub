@@ -13,6 +13,7 @@ export const HUB_ADMIN_MODULOS: ItemApp[] = [
   { rota: '/admin/usuarios', titulo: 'Usuários', icone: '🔐', prefixo: '/admin/usuarios' },
   { rota: '/admin/config', titulo: 'Configuração', icone: '⚙️', prefixo: '/admin/config' },
   { rota: '/admin/sistemas', titulo: 'Sistemas', icone: '🔌', prefixo: '/admin/sistemas' },
+  { rota: '/admin/go-live', titulo: 'Go-live', icone: '🚀', prefixo: '/admin/go-live' },
 ];
 
 export const ADMIN_DESCRICAO =

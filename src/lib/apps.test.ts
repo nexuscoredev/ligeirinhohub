@@ -121,6 +121,14 @@ describe('rotaPermitidaParaCargo', () => {
     expect(rotaPermitidaParaCargo('/financeiro', 'Fiscal')).toBe(false);
   });
 
+  it('permite Gerente e Admin no checklist go-live', () => {
+    expect(rotaPermitidaParaCargo('/admin/go-live', 'Gerente')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/go-live', 'Administrador')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/go-live', 'Desenvolvedor')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/go-live', 'Comercial')).toBe(false);
+    expect(rotaPermitidaParaCargo('/admin/go-live', 'Caixa')).toBe(false);
+  });
+
   it('permite Gerente na configuração avançada', () => {
     expect(rotaPermitidaParaCargo('/admin/config/empresa', 'Gerente')).toBe(true);
     expect(rotaPermitidaParaCargo('/admin/config/fiscal', 'Comercial')).toBe(false);
