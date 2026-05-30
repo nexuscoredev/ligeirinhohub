@@ -66,6 +66,7 @@ export const HUB_ADMIN_ITENS: ItemApp[] = [
   { rota: '/admin/pessoas', titulo: 'Pessoas', icone: '👥', prefixo: '/admin/pessoas' },
   { rota: '/admin/usuarios', titulo: 'Usuários', icone: '🔐', prefixo: '/admin/usuarios' },
   { rota: '/admin/sistemas', titulo: 'Sistemas', icone: '🔌', prefixo: '/admin/sistemas' },
+  { rota: '/admin/go-live', titulo: 'Go-live', icone: '🚀', prefixo: '/admin/go-live' },
 ];
 
 export const APPS_SISTEMA: AppSistema[] = [
@@ -668,6 +669,11 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Gerente',
   ],
   '/admin/config/fiscal': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+  ],
+  '/admin/go-live': [
     'Desenvolvedor',
     'Administrador',
     'Gerente',
