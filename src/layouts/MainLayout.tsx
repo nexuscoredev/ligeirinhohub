@@ -174,15 +174,23 @@ export function MainLayout() {
           type="button"
           className="menu-recolher-btn"
           onClick={alternarMenuRecolhido}
-          aria-label={menuRecolhido ? 'Expandir menu lateral' : 'Recolher menu lateral'}
+          aria-label={
+            menuRecolhido
+              ? 'Mostrar menu completo com nomes'
+              : 'Ativar modo compacto — só ícones'
+          }
           aria-expanded={!menuRecolhido}
-          title={menuRecolhido ? 'Expandir menu' : 'Recolher menu'}
+          title={
+            menuRecolhido
+              ? 'Mostrar menu completo com nomes'
+              : 'Modo compacto — libera mais espaço na tela'
+          }
         >
           <span className="menu-recolher-btn-icone" aria-hidden>
-            {menuRecolhido ? '›' : '‹'}
+            {menuRecolhido ? '»' : '«'}
           </span>
           <span className="menu-recolher-btn-texto">
-            {menuRecolhido ? 'Expandir' : 'Recolher'}
+            {menuRecolhido ? 'Menu completo' : 'Modo compacto'}
           </span>
         </button>
 

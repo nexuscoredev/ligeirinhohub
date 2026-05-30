@@ -214,23 +214,30 @@
     min-height: 2rem;
     margin-bottom: 0.65rem;
     padding: 0.35rem 0.55rem;
-    border-radius: var(--hub-raio);
-    border: 1px solid var(--hub-gold-soft);
-    background: var(--hub-surface);
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--hub-orange) 22%, var(--hub-gold-soft));
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--hub-orange) 6%, var(--hub-surface)) 0%,
+      var(--hub-surface) 100%
+    );
     color: var(--hub-muted);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 700;
+    letter-spacing: 0.01em;
     cursor: pointer;
     transition:
       background 0.15s,
       color 0.15s,
-      border-color 0.15s;
+      border-color 0.15s,
+      box-shadow 0.15s;
   }
 
   .menu-recolher-btn:hover {
-    background: var(--hub-surface-hover);
-    color: var(--hub-text);
-    border-color: color-mix(in srgb, var(--hub-orange) 35%, var(--hub-gold-soft));
+    background: var(--hub-orange-soft);
+    color: var(--hub-orange);
+    border-color: color-mix(in srgb, var(--hub-orange) 45%, var(--hub-gold-soft));
+    box-shadow: 0 2px 10px rgba(255, 107, 0, 0.12);
   }
 
   .menu-recolher-btn:focus-visible {

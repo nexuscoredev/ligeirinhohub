@@ -14,7 +14,7 @@ export const NOVIDADES: Novidade[] = [
     titulo: 'Menu lateral recolhível',
     area: 'Hub',
     itens: [
-      'Botão Recolher/Expandir no menu lateral (desktop)',
+      'Botão Modo compacto / Menu completo no menu lateral (desktop)',
       'Modo compacto mostra só ícones e libera mais espaço na tela',
       'Apps com submenu abrem painel ao passar o mouse',
       'Sua preferência fica salva no navegador',
