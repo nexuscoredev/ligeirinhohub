@@ -52,6 +52,12 @@ describe('apps do sistema', () => {
     expect(fin?.itens.map((i) => i.rota)).toContain('/financeiro/receber');
     expect(appPorRota('/financeiro/caixa')?.app.id).toBe('financeiro');
   });
+  it('Ligeirinho Estoque aparece no launcher', () => {
+    const est = APPS_SISTEMA.find((a) => a.id === 'estoque');
+    expect(est?.nome).toBe('Ligeirinho Estoque');
+    expect(est?.itens.map((i) => i.rota)).toContain('/estoque/movimentos');
+    expect(appPorRota('/estoque/inventario')?.app.id).toBe('estoque');
+  });
 });
 
 describe('rotaPermitidaParaCargo', () => {
@@ -114,6 +120,10 @@ describe('rotaPermitidaParaCargo', () => {
   it('permite Financeiro no app financeiro', () => {
     expect(rotaPermitidaParaCargo('/financeiro', 'Financeiro')).toBe(true);
     expect(rotaPermitidaParaCargo('/financeiro/receber', 'Gerente')).toBe(true);
+  });
+  it('permite Estoquista no app estoque', () => {
+    expect(rotaPermitidaParaCargo('/estoque', 'Estoquista')).toBe(true);
+    expect(rotaPermitidaParaCargo('/estoque/movimentos', 'Logistica')).toBe(true);
   });
 });
 

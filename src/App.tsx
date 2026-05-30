@@ -28,6 +28,10 @@ import {
 } from '@/pages/financeiro/FinanceiroContasPage';
 import { FinanceiroPainelPage } from '@/pages/financeiro/FinanceiroPainelPage';
 import { FinanceiroValesPage } from '@/pages/financeiro/FinanceiroValesPage';
+import { EstoqueEntradaXmlPage } from '@/pages/estoque/EstoqueEntradaXmlPage';
+import { EstoqueInventarioAppPage, EstoqueInventarioPage } from '@/pages/estoque/EstoqueInventarioPage';
+import { EstoqueMovimentosPage } from '@/pages/estoque/EstoqueMovimentosPage';
+import { EstoquePainelPage } from '@/pages/estoque/EstoquePainelPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MotoristaPage } from '@/pages/motorista/MotoristaPage';
 import { MarketingPainelPage } from '@/pages/marketing/MarketingPainelPage';
@@ -104,6 +108,11 @@ export default function App() {
               <Route path="/financeiro/caixa" element={<FinanceiroCaixaPage />} />
               <Route path="/financeiro/comissoes" element={<FinanceiroComissoesPage />} />
               <Route path="/financeiro/vales" element={<FinanceiroValesPage />} />
+              <Route path="/estoque" element={<EstoquePainelPage />} />
+              <Route path="/estoque/movimentos" element={<EstoqueMovimentosPage />} />
+              <Route path="/estoque/entrada-xml" element={<EstoqueEntradaXmlPage />} />
+              <Route path="/estoque/inventario" element={<EstoqueInventarioPage />} />
+              <Route path="/estoque/inventario/app" element={<EstoqueInventarioAppPage />} />
               <Route path="/sobre" element={<SobrePage />} />
             </Route>
             <Route path="*" element={<Navigate to="/bem-vindo" replace />} />

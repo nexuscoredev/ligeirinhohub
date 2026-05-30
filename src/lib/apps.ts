@@ -9,7 +9,8 @@ export type AppId =
   | 'operacional'
   | 'marketing'
   | 'fiscal'
-  | 'financeiro';
+  | 'financeiro'
+  | 'estoque';
 
 export interface ItemApp {
   rota: string;
@@ -286,6 +287,50 @@ export const APPS_SISTEMA: AppSistema[] = [
       },
     ],
   },
+  {
+    id: 'estoque',
+    nome: 'Ligeirinho Estoque',
+    icone: '📦',
+    iconeLabel: 'EST',
+    tagline: 'Entradas, saídas, lotes e inventário.',
+    descricao: 'Controle de estoque por depósito.',
+    corAccent: '#ac8e68',
+    gradient:
+      'radial-gradient(ellipse 95% 70% at 90% 0%, rgba(172,142,104,0.32) 0%, transparent 52%), radial-gradient(ellipse 55% 45% at 0% 85%, rgba(172,142,104,0.1) 0%, transparent 42%)',
+    rotaEntrada: '/estoque',
+    itens: [
+      {
+        rota: '/estoque',
+        titulo: 'Painel',
+        icone: '📦',
+        prefixo: '/estoque',
+      },
+      {
+        rota: '/estoque/movimentos',
+        titulo: 'Movimentos',
+        icone: '🔄',
+        prefixo: '/estoque/movimentos',
+      },
+      {
+        rota: '/estoque/entrada-xml',
+        titulo: 'Entrada XML',
+        icone: '📄',
+        prefixo: '/estoque/entrada-xml',
+      },
+      {
+        rota: '/estoque/inventario',
+        titulo: 'Inventário',
+        icone: '📋',
+        prefixo: '/estoque/inventario',
+      },
+      {
+        rota: '/estoque/inventario/app',
+        titulo: 'Inventário app',
+        icone: '📱',
+        prefixo: '/estoque/inventario/app',
+      },
+    ],
+  },
 ];
 
 export const NOME_PLATAFORMA = 'Ligeirinho Hub';
@@ -519,6 +564,40 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Administrador',
     'Gerente',
     'Financeiro',
+  ],
+  '/estoque': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Estoquista',
+    'Logistica',
+  ],
+  '/estoque/movimentos': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Estoquista',
+    'Logistica',
+  ],
+  '/estoque/entrada-xml': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Estoquista',
+  ],
+  '/estoque/inventario': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Estoquista',
+    'Logistica',
+  ],
+  '/estoque/inventario/app': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Estoquista',
+    'Logistica',
   ],
 };
 
