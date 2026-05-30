@@ -77,19 +77,5 @@ $$;
 revoke all on function public.pode_acessar_config() from public;
 grant execute on function public.pode_acessar_config() to authenticated;
 
--- Cargo Fiscal dedicado no módulo fiscal
-create or replace function public.pode_acessar_fiscal()
-returns boolean
-language sql
-stable
-security definer
-set search_path = public
-as $$
-  select exists (
-    select 1 from public.usuarios u
-    where u.id = auth.uid() and u.ativo
-      and u.cargo in (
-        'Desenvolvedor', 'Administrador', 'Gerente', 'Financeiro', 'Fiscal', 'CEO'
-      )
-  );
-$$;
+-- Nota: atualização de pode_acessar_fiscal() com cargo 'Fiscal' fica na migration
+-- 20260530290100 — enum exige commit antes de usar o novo valor (PostgreSQL 55P04).
