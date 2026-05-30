@@ -57,6 +57,7 @@ export const HUB_ADMIN_ITENS: ItemApp[] = [
   { rota: '/bem-vindo', titulo: 'Bem-vindo', icone: '👋', prefixo: '/bem-vindo' },
   { rota: '/perfil', titulo: 'Meu perfil', icone: '👤', prefixo: '/perfil' },
   { rota: '/admin', titulo: 'Visão geral', icone: '⚙️', prefixo: '/admin' },
+  { rota: '/admin/relatorios', titulo: 'Relatórios', icone: '📈', prefixo: '/admin/relatorios' },
   { rota: '/admin/produtos', titulo: 'Produtos', icone: '🍺', prefixo: '/admin/produtos' },
   { rota: '/admin/cadastros-base', titulo: 'Cadastros base', icone: '📋', prefixo: '/admin/cadastros-base' },
   { rota: '/admin/pessoas', titulo: 'Pessoas', icone: '👥', prefixo: '/admin/pessoas' },
@@ -402,6 +403,13 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
   '/admin/usuarios': ['Desenvolvedor', 'Administrador'],
   '/admin/sistemas': ['Desenvolvedor', 'Administrador'],
   '/admin/dashboard': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Financeiro',
+    'Comercial',
+  ],
+  '/admin/relatorios': [
     'Desenvolvedor',
     'Administrador',
     'Gerente',

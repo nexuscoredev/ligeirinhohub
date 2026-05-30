@@ -103,6 +103,13 @@ describe('rotaPermitidaParaCargo', () => {
     expect(rotaPermitidaParaCargo('/admin', 'Gerente')).toBe(true);
   });
 
+  it('permite Gerente e Financeiro nos relatórios gerenciais', () => {
+    expect(rotaPermitidaParaCargo('/admin/relatorios', 'Gerente')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/relatorios/vendas', 'Financeiro')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/relatorios/fiscal', 'Comercial')).toBe(true);
+    expect(rotaPermitidaParaCargo('/admin/relatorios', 'Caixa')).toBe(false);
+  });
+
   it('permite Comercial em marketing', () => {
     expect(rotaPermitidaParaCargo('/marketing/promocoes', 'Comercial')).toBe(
       true,
