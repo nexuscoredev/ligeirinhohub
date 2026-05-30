@@ -912,3 +912,175 @@ button.estrategico-card {
     grid-template-columns: 1fr;
   }
 }
+
+/* Cadastros base (Gestão Fácil — Fase 0) */
+.admin-intro {
+  margin: 0 0 1rem;
+  font-size: 0.88rem;
+  color: var(--hub-muted);
+  line-height: 1.45;
+}
+
+.admin-erro {
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--hub-raio);
+  background: rgba(220, 53, 69, 0.12);
+  border: 1px solid rgba(220, 53, 69, 0.35);
+  color: #ff8a8a;
+  font-size: 0.85rem;
+}
+
+.admin-ok {
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--hub-raio);
+  background: rgba(40, 167, 69, 0.12);
+  border: 1px solid rgba(40, 167, 69, 0.35);
+  color: #7dcea0;
+  font-size: 0.85rem;
+}
+
+.admin-loading,
+.admin-hint {
+  font-size: 0.85rem;
+  color: var(--hub-muted);
+}
+
+.cadastros-base-abas {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.cadastros-aba {
+  padding: 0.45rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--hub-border);
+  background: transparent;
+  color: var(--hub-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cadastros-aba.ativo {
+  color: var(--hub-gold);
+  border-color: rgba(255, 107, 0, 0.35);
+  background: var(--hub-orange-soft);
+}
+
+.cadastros-base-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.cadastros-form h2,
+.cadastros-lista h2 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--hub-muted);
+}
+
+.admin-field input,
+.admin-field select {
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--hub-border);
+  background: var(--hub-surface-solid);
+  color: var(--hub-text);
+  font-size: 0.88rem;
+}
+
+.cadastros-form-acoes {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.btn-primario,
+.btn-secundario {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-primario {
+  background: var(--hub-orange);
+  color: #fff;
+}
+
+.btn-secundario {
+  background: transparent;
+  border-color: var(--hub-border);
+  color: var(--hub-text);
+}
+
+.cadastros-tabela {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cadastros-linha {
+  display: grid;
+  grid-template-columns: 5rem 1fr auto auto;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border: none;
+  border-bottom: 1px solid var(--hub-border);
+  background: transparent;
+  color: var(--hub-text);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.cadastros-linha:hover:not(:disabled) {
+  background: var(--hub-surface-hover);
+}
+
+.cadastros-linha:disabled {
+  cursor: default;
+}
+
+.cadastros-tag {
+  font-size: 0.72rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  background: var(--hub-orange-soft);
+  color: var(--hub-gold);
+  font-weight: 700;
+}
+
+.cadastros-inativo {
+  font-size: 0.72rem;
+  color: var(--hub-muted);
+}
+
+@media (max-width: 900px) {
+  .cadastros-base-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cadastros-linha {
+    grid-template-columns: 4rem 1fr;
+    grid-template-rows: auto auto;
+  }
+}
