@@ -36,8 +36,8 @@ Esta implantação **não substitui** PDV, Totem, Operacional ou Marketing. Segu
 | Fase | Status | Branch / PR | Notas |
 |------|--------|-------------|-------|
 | **0 — Schema base** | ✅ Concluída | PR #2 | Migration + Cadastros base | `empresa_config`, cadastros auxiliares, colunas fiscais nullable em `produtos` |
-| 1 — Cadastros | 🟡 Em andamento | `cursor/gf-fase1-cadastros-fdca` | Pessoas, tipos conta, contas bancárias |
-| 2 — Gestão Produtos + Negociação | ⚪ Pendente | — | |
+| 1 — Cadastros | ✅ Concluída | `cursor/gf-fase1-cadastros-fdca` | Pessoas, tipos conta, contas bancárias |
+| 2 — Gestão Produtos + Negociação | 🟡 Em andamento | — | |
 | 3 — Nota Eletrônica (Fiscal) | ⚪ Pendente | — | |
 | 4 — Financeiro | ⚪ Pendente | — | |
 | 5 — Controle Estoque | ⚪ Pendente | — | |

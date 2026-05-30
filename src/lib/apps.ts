@@ -121,6 +121,12 @@ export const APPS_SISTEMA: AppSistema[] = [
         prefixo: '/operacional',
       },
       {
+        rota: '/negociacao',
+        titulo: 'Negociações',
+        icone: '📝',
+        prefixo: '/negociacao',
+      },
+      {
         rota: '/pedidos',
         titulo: 'Pedidos',
         icone: '📦',
@@ -278,6 +284,20 @@ export const HUB_CARGOS_POR_ROTA: Record<string, CargoHub[]> = {
     'Gerente',
     'Estoquista',
     'Logistica',
+  ],
+  '/negociacao': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+    'Caixa',
+  ],
+  '/negociacao/nova': [
+    'Desenvolvedor',
+    'Administrador',
+    'Gerente',
+    'Comercial',
+    'Caixa',
   ],
   '/pedidos': [
     'Desenvolvedor',

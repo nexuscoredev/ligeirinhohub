@@ -23,6 +23,8 @@ import { CriarArtePage } from '@/pages/marketing/creator/CriarArtePage';
 import { GaleriaPage } from '@/pages/marketing/creator/GaleriaPage';
 import { PromocoesPage } from '@/pages/marketing/PromocoesPage';
 import { TvPreviewPage } from '@/pages/marketing/TvPreviewPage';
+import { NegociacaoEditorPage } from '@/pages/negociacao/NegociacaoEditorPage';
+import { NegociacaoListaPage } from '@/pages/negociacao/NegociacaoListaPage';
 import { FilaOperacionalPage } from '@/pages/operacional/FilaOperacionalPage';
 import { SeparacaoPage } from '@/pages/operacional/SeparacaoPage';
 import { PedidosPage } from '@/pages/pedidos/PedidosPage';
@@ -68,6 +70,9 @@ export default function App() {
 
               <Route path="/operacional" element={<FilaOperacionalPage />} />
               <Route path="/operacional/separar/:id" element={<SeparacaoPage />} />
+              <Route path="/negociacao" element={<NegociacaoListaPage />} />
+              <Route path="/negociacao/nova" element={<NegociacaoEditorPage />} />
+              <Route path="/negociacao/:id" element={<NegociacaoEditorPage />} />
               <Route path="/pedidos" element={<PedidosPage />} />
               <Route path="/clientes" element={<ClientesPage />} />
               <Route path="/motorista" element={<MotoristaPage />} />
