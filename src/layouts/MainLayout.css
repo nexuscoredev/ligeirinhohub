@@ -14,6 +14,7 @@
   display: flex;
   flex-direction: column;
   padding: 1rem 0.7rem;
+  transition: width 0.22s ease, padding 0.22s ease;
 }
 
 .menu-marca {
@@ -153,6 +154,14 @@
   width: 1.25rem;
   text-align: center;
   opacity: 0.85;
+  flex-shrink: 0;
+}
+
+.menu-link-texto {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .menu-link:hover {
@@ -188,6 +197,110 @@
 
 .menu-rodape .btn-secundario {
   width: 100%;
+}
+
+/* Recolher menu (desktop) */
+.menu-recolher-btn {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  .menu-recolher-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    min-height: 2rem;
+    margin-bottom: 0.65rem;
+    padding: 0.35rem 0.55rem;
+    border-radius: var(--hub-raio);
+    border: 1px solid var(--hub-gold-soft);
+    background: var(--hub-surface);
+    color: var(--hub-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
+
+  .menu-recolher-btn:hover {
+    background: var(--hub-surface-hover);
+    color: var(--hub-text);
+    border-color: color-mix(in srgb, var(--hub-orange) 35%, var(--hub-gold-soft));
+  }
+
+  .menu-recolher-btn:focus-visible {
+    outline: 2px solid var(--hub-orange);
+    outline-offset: 2px;
+  }
+
+  .menu-recolher-btn-icone {
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 800;
+  }
+
+  .menu-lateral--recolhido {
+    width: var(--largura-menu-recolhido);
+    padding: 0.85rem 0.4rem;
+    overflow: visible;
+    z-index: 45;
+  }
+
+  .menu-lateral--recolhido .menu-marca {
+    justify-content: center;
+    padding-inline: 0.15rem;
+  }
+
+  .menu-lateral--recolhido .menu-marca-texto,
+  .menu-lateral--recolhido .menu-secao-titulo,
+  .menu-lateral--recolhido .menu-link-texto,
+  .menu-lateral--recolhido .menu-recolher-btn-texto {
+    display: none;
+  }
+
+  .menu-lateral--recolhido .menu-recolher-btn {
+    padding-inline: 0.25rem;
+  }
+
+  .menu-lateral--recolhido .menu-nav {
+    overflow: visible;
+  }
+
+  .menu-lateral--recolhido .menu-secao-apps {
+    padding: 0.35rem 0.15rem;
+    background: transparent;
+    border: none;
+  }
+
+  .menu-lateral--recolhido .menu-link {
+    justify-content: center;
+    padding-inline: 0.35rem;
+  }
+
+  .menu-lateral--recolhido .menu-rodape {
+    align-items: center;
+  }
+
+  .menu-lateral--recolhido .menu-perfil-sair {
+    width: 2.35rem;
+    min-width: 2.35rem;
+    height: 2.35rem;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+  }
+
+  .menu-lateral--recolhido .menu-rodape-novidades,
+  .menu-lateral--recolhido .menu-rodape-tema {
+    width: 2.35rem;
+    justify-content: center;
+  }
 }
 
 .conteudo-principal {

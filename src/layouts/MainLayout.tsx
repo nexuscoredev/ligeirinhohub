@@ -18,8 +18,9 @@ import {
   type ItemApp,
 } from '@/lib/apps';
 import { appDisplayVersion } from '@/lib/appDisplayVersion';
+import { lerMenuRecolhido, salvarMenuRecolhido } from '@/lib/menuLateral';
 
-function MenuLink({ item }: { item: ItemApp }) {
+function MenuLink({ item, recolhido }: { item: ItemApp; recolhido: boolean }) {
   return (
     <li>
       <NavLink
@@ -28,11 +29,12 @@ function MenuLink({ item }: { item: ItemApp }) {
           isActive ? 'menu-link ativo' : 'menu-link'
         }
         end
+        title={recolhido ? item.titulo : undefined}
       >
         <span className="menu-link-icone" aria-hidden>
           {item.icone}
         </span>
-        {item.titulo}
+        <span className="menu-link-texto">{item.titulo}</span>
       </NavLink>
     </li>
   );
@@ -42,8 +44,17 @@ export function MainLayout() {
   const { usuario, sair, session } = usePerfil();
   const { pathname } = useLocation();
   const [menuAberto, setMenuAberto] = useState(false);
+  const [menuRecolhido, setMenuRecolhido] = useState(lerMenuRecolhido);
 
   useSessionTimeout(Boolean(session && usuario));
+
+  function alternarMenuRecolhido() {
+    setMenuRecolhido((atual) => {
+      const proximo = !atual;
+      salvarMenuRecolhido(proximo);
+      return proximo;
+    });
+  }
 
   useEffect(() => {
     setMenuAberto(false);
@@ -80,7 +91,13 @@ export function MainLayout() {
     ),
   );
 
-  const layoutClass = menuAberto ? 'layout-hub menu-aberto' : 'layout-hub';
+  const layoutClass = [
+    'layout-hub',
+    menuAberto ? 'menu-aberto' : '',
+    menuRecolhido ? 'menu-recolhido' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <div className={layoutClass}>
@@ -136,7 +153,10 @@ export function MainLayout() {
         tabIndex={menuAberto ? 0 : -1}
       />
 
-      <aside id="menu-lateral-drawer" className="menu-lateral">
+      <aside
+        id="menu-lateral-drawer"
+        className={menuRecolhido ? 'menu-lateral menu-lateral--recolhido' : 'menu-lateral'}
+      >
         <NavLink
           to="/sobre"
           className="menu-marca"
@@ -150,13 +170,29 @@ export function MainLayout() {
           </div>
         </NavLink>
 
+        <button
+          type="button"
+          className="menu-recolher-btn"
+          onClick={alternarMenuRecolhido}
+          aria-label={menuRecolhido ? 'Expandir menu lateral' : 'Recolher menu lateral'}
+          aria-expanded={!menuRecolhido}
+          title={menuRecolhido ? 'Expandir menu' : 'Recolher menu'}
+        >
+          <span className="menu-recolher-btn-icone" aria-hidden>
+            {menuRecolhido ? '›' : '‹'}
+          </span>
+          <span className="menu-recolher-btn-texto">
+            {menuRecolhido ? 'Expandir' : 'Recolher'}
+          </span>
+        </button>
+
         <nav className="menu-nav" aria-label="Menu principal">
           {hubVisivel.length > 0 ? (
             <div className="menu-secao">
               <span className="menu-secao-titulo">{NOME_PLATAFORMA}</span>
               <ul>
                 {hubVisivel.map((item) => (
-                  <MenuLink key={item.rota} item={item} />
+                  <MenuLink key={item.rota} item={item} recolhido={menuRecolhido} />
                 ))}
               </ul>
             </div>
@@ -172,7 +208,7 @@ export function MainLayout() {
               </span>
               <ul className="menu-apps-gaveta" aria-label="Apps do ecossistema">
                 {appsVisiveis.map((app) => (
-                  <AppMenuGroup key={app.id} app={app} />
+                  <AppMenuGroup key={app.id} app={app} recolhido={menuRecolhido} />
                 ))}
               </ul>
             </div>
@@ -180,14 +216,16 @@ export function MainLayout() {
         </nav>
 
         <div className="menu-rodape">
-          <NovidadesBotao className="menu-rodape-novidades" />
-          <TemaToggle className="menu-rodape-tema" />
+          <NovidadesBotao compacto={menuRecolhido} className="menu-rodape-novidades" />
+          <TemaToggle compacto={menuRecolhido} className="menu-rodape-tema" />
           <button
             type="button"
             className="btn btn-secundario menu-perfil-sair"
             onClick={() => void sair()}
+            aria-label={menuRecolhido ? 'Sair' : undefined}
+            title={menuRecolhido ? 'Sair' : undefined}
           >
-            Sair
+            {menuRecolhido ? <span aria-hidden>↪</span> : 'Sair'}
           </button>
         </div>
       </aside>

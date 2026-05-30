@@ -9,6 +9,18 @@ export interface Novidade {
 /** Mais recente primeiro — atualize ao lançar mudanças visíveis ao usuário. */
 export const NOVIDADES: Novidade[] = [
   {
+    id: '2026-05-29-menu-recolher',
+    data: '2026-05-29',
+    titulo: 'Menu lateral recolhível',
+    area: 'Hub',
+    itens: [
+      'Botão Recolher/Expandir no menu lateral (desktop)',
+      'Modo compacto mostra só ícones e libera mais espaço na tela',
+      'Apps com submenu abrem painel ao passar o mouse',
+      'Sua preferência fica salva no navegador',
+    ],
+  },
+  {
     id: '2026-05-29-menu-aplicativos',
     data: '2026-05-29',
     titulo: 'Menu lateral mais claro',

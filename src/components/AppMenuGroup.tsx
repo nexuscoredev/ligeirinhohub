@@ -29,9 +29,10 @@ function MenuItemFilho({ item }: { item: ItemApp }) {
 
 interface AppMenuGroupProps {
   app: AppSistema;
+  recolhido?: boolean;
 }
 
-export function AppMenuGroup({ app }: AppMenuGroupProps) {
+export function AppMenuGroup({ app, recolhido = false }: AppMenuGroupProps) {
   const submenu = appTemSubmenu(app);
   const { pathname } = useLocation();
   const detailsRef = useRef<HTMLDetailsElement>(null);
@@ -53,9 +54,15 @@ export function AppMenuGroup({ app }: AppMenuGroupProps) {
         <NavLink
           to={item.rota}
           className={({ isActive }) =>
-            isActive ? 'app-menu-pill ativo' : 'app-menu-pill'
+            [
+              isActive ? 'app-menu-pill ativo' : 'app-menu-pill',
+              recolhido ? 'app-menu-pill--recolhido' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')
           }
           end
+          title={recolhido ? app.nome : undefined}
         >
           <span className="app-menu-pill-icone-wrap">
             <span className="app-menu-pill-icone" aria-hidden>
@@ -69,6 +76,45 @@ export function AppMenuGroup({ app }: AppMenuGroupProps) {
             <span className="app-menu-pill-nome">{app.nome}</span>
           </span>
         </NavLink>
+      </li>
+    );
+  }
+
+  if (recolhido) {
+    return (
+      <li
+        className="app-menu-grupo app-menu-grupo--recolhido"
+        data-app-id={app.id}
+        style={temaApp(app)}
+      >
+        <div className="app-menu-flyout-wrap">
+          <NavLink
+            to={app.rotaEntrada}
+            className={({ isActive }) =>
+              isActive
+                ? 'app-menu-pill ativo app-menu-pill--recolhido'
+                : 'app-menu-pill app-menu-pill--recolhido'
+            }
+            title={app.nome}
+          >
+            <span className="app-menu-pill-icone-wrap">
+              <span className="app-menu-pill-icone" aria-hidden>
+                {app.icone}
+              </span>
+              {app.iconeLabel ? (
+                <span className="app-menu-pill-badge">{app.iconeLabel}</span>
+              ) : null}
+            </span>
+          </NavLink>
+          <div className="app-menu-flyout" role="menu" aria-label={app.nome}>
+            <p className="app-menu-flyout-titulo">{app.nome}</p>
+            <ul className="app-menu-filhos" aria-label={`Telas de ${app.nome}`}>
+              {app.itens.map((item) => (
+                <MenuItemFilho key={item.rota} item={item} />
+              ))}
+            </ul>
+          </div>
+        </div>
       </li>
     );
   }

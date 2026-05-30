@@ -279,3 +279,56 @@
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 14px;
 }
+
+/* Menu recolhido — ícone + flyout ao passar o mouse */
+.app-menu-flyout-wrap {
+  position: relative;
+}
+
+.app-menu-pill--recolhido {
+  justify-content: center;
+  padding: 0.55rem 0.35rem;
+}
+
+.app-menu-pill--recolhido .app-menu-pill-texto {
+  display: none;
+}
+
+.app-menu-flyout {
+  display: none;
+  position: absolute;
+  left: calc(100% + 6px);
+  top: 0;
+  z-index: 80;
+  min-width: 13.5rem;
+  max-width: 16rem;
+  padding: 0.55rem 0.45rem 0.65rem;
+  border-radius: 14px;
+  border: 1px solid var(--app-accent-border, rgba(255, 107, 0, 0.25));
+  background: var(--hub-bg-elevated);
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.app-menu-flyout-titulo {
+  margin: 0 0 0.35rem;
+  padding: 0.15rem 0.55rem 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--app-accent, var(--hub-orange));
+  border-bottom: 1px solid var(--hub-gold-soft);
+}
+
+.app-menu-flyout .app-menu-filhos {
+  margin: 0;
+  padding: 0.25rem 0 0;
+  border-left: none;
+  animation: none;
+}
+
+.app-menu-grupo--recolhido .app-menu-flyout-wrap:hover .app-menu-flyout,
+.app-menu-grupo--recolhido .app-menu-flyout-wrap:focus-within .app-menu-flyout {
+  display: block;
+}
